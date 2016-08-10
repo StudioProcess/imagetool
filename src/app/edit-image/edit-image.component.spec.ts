@@ -3,11 +3,11 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { addProviders, async, inject } from '@angular/core/testing';
-import { FooterComponent } from './footer.component';
+import { EditImageComponent } from './edit-image.component';
 
-describe('Component: Footer', () => {
+describe('Component: EditImage', () => {
   it('should create an instance', () => {
-    let component = new FooterComponent();
+    let component = new EditImageComponent();
     expect(component).toBeTruthy();
   });
 });
