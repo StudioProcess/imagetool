@@ -1,3 +1,4 @@
+import { routing, appRoutingProviders } from './app.routing';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,9 +22,10 @@ import { DownloadComponent } from './download/download.component';
   imports: [
     BrowserModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    routing
   ],
-  providers: [],
+  providers: [ appRoutingProviders ],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })
