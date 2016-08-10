@@ -1,5 +1,9 @@
+<div class="row columns header">Header</div>
 <!-- Routed views go here -->
 <router-outlet></router-outlet>
-<div class="row columns">
-  <a routerLink="" routerLinkActive="active">Einloggen</a> -> <a routerLink="/upload" routerLinkActive="active">Fotos hochladen</a> -> <a routerLink="/titleimage" routerLinkActive="active">Titelfoto auswählen</a> -> <a routerLink="/edit-image" routerLinkActive="active">Titelfoto bearbeiten</a> -> <a routerLink="/download" routerLinkActive="active">Fotos runterladen</a>
+<div class="row">
+  <div class="small-centered columns breadcrumbs">
+    <a routerLink="" routerLinkActive="active">Einloggen</a> <i class="ion-social-euro"></i> <a routerLink="/upload" routerLinkActive="active">Fotos hochladen</a> -> <a routerLink="/titleimage" routerLinkActive="active">Titelfoto auswählen</a> -> <a routerLink="/edit-image" routerLinkActive="active">Titelfoto bearbeiten</a> -> <a routerLink="/download" routerLinkActive="active">Fotos runterladen</a>
+  </div>
 </div>
+<div class="row columns footer">Ein Projekt von <a href="http://process.studio">Studio Process</a>.</div>

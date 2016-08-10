@@ -1,1 +1,24 @@
 @import 'foundation';
+
+.main {
+  height: 100%;
+  width: 100%;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.header {
+  padding-top: 2em;
+  font-weight: 500;
+}
+
+.footer {
+  text-align: center;
+}
+
+.breadcrumbs {
+  margin-top: 2em;
+  text-align: center;
+}
