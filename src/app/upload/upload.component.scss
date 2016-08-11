@@ -1,0 +1,11 @@
+.image-upload {
+  min-height: 400px;
+  background-color: #EFEFEF;
+  border: 1px solid #EFEFEF;
+  transition: border 0.1s ease-in;
+
+  &:hover {
+    //background-color: #EFEFEF;
+    border: 1px solid #CCC;
+  }
+}
