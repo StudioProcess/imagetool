@@ -4,11 +4,12 @@
 
 /*
    FIXME/TODO:
-   * delete before deploy / or some kind of sync
-   * make this a repo
-   * use mac notifications for errors
-   * wait till upload is finished then reload browser
+   x wait till upload is finished then reload browser. https://github.com/morris/vinyl-ftp/issues/30#issuecomment-132110746
    * watch for deletions and delete on ftp
+   * delete before deploy / or some kind of sync
+   * use mac notifications for errors
+   * make this a repo
+   * use gulpfile.babel.js
  */
 
 
@@ -52,41 +53,6 @@ var errorHandler = function(title) {
    };
 };
 
-// get the src glob array from config
-// TODO: error handling
-var srcPath = function(name) {
-   var glob = config.paths[name]['src']; // could be an array of globs
-   if (!Array.isArray(glob)) {
-      glob = [glob];
-   }
-   return glob.map(function (el) {
-      return joinPath(config.basePath, el);
-   });
-};
-// get the dest path (string) from config (optionally appending and ext to the path)
-var destPath = function(name, ext) {
-   var path = config.paths[name]['dest']; // needs to be a string
-   ext = ext || '';
-   return joinPath(config.basePath, path, ext);
-};
-
-// console.log(srcPath('styles'));
-// console.log(destPath('styles', '*'));
-// process.exit();
-
-gulp.task('upload', function() {
-   var globs = srcPath('styles'); // sources (glob array)
-   globs.push( destPath('styles', '*') ); // add everything in destination folder
-   return gulp.src( globs, {base: config.basePath} )
-      .pipe( $.cached() ) // only pass through changed files
-      .pipe( $.ftp.dest(ftpConfig.remoteBase) ).on('end', function(argument) {
-         // console.log("ALL UPLOADED");
-      })
-      // .pipe( $.ftp.newerOrDifferentSize(ftpConfig.remoteBase) )
-      .pipe( $.browserSync.stream({ once: true }) )
-      .pipe( $.size() );
-});
-
 
 /**
  *  start the browsersync server
@@ -100,7 +66,7 @@ gulp.task('browsersync', [], function() {
 
 
 /**
- *  watch styles & scripts (with livereload via browsersync)
+ *  watch files (with livereload via browsersync)
  */
 gulp.task('serve', ['browsersync'], function() {
   // watch src files
@@ -113,19 +79,19 @@ gulp.task('serve', ['browsersync'], function() {
       //   .pipe( $.ftp.dest(ftpConfig.remoteBase) )
       //   .pipe( $.browserSync.stream({ once: true }) )
       //   .pipe( $.size() );
-      //   // browserSync.reload(event.path);
     } else {
       // upload
       gulp.src( event.path, {base: config.basePath} )
         .pipe( $.cached() ) // only pass through changed files
         .pipe( $.ftp.dest(ftpConfig.remoteBase) )
-        .pipe( $.browserSync.stream({ once: true }) )
-        .pipe( $.size() );
-        // browserSync.reload(event.path);
+        .pipe( $.browserSync.stream({once:true}) )
+        .pipe( $.size({showFiles:true}) );
+        // .on('finish', function() {
+        //   $.browserSync.reload();
+        // });
     }
   });
 });
-
 
 
 /**
@@ -140,7 +106,6 @@ gulp.task('deploy', ['build'], function() {
    return gulp.src( config.src.path, {base: config.basePath, buffer: false} )
       .pipe( $.ftp.dest(ftpConfig.remoteBase) );
 });
-
 
 
 /**
