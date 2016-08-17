@@ -4,13 +4,14 @@
 
 /*
    FIXME/TODO:
-   x wait till upload is finished then reload browser. https://github.com/morris/vinyl-ftp/issues/30#issuecomment-132110746
-   x watch for deletions and delete on ftp
-   * delete before deploy / or some kind of sync
    * allow browsersync options via config file
    * use mac notifications for errors
    * make this a repo
    * use gulpfile.babel.js
+   
+   x wait till upload is finished then reload browser. https://github.com/morris/vinyl-ftp/issues/30#issuecomment-132110746
+   x watch for deletions and delete on ftp
+   x delete before deploy / or some kind of sync
  */
 
 
@@ -96,16 +97,20 @@ gulp.task('serve', ['browsersync'], function() {
 
 
 /**
- *  deploy to ftp
+ *  deploy to FTP
  */
-gulp.task('deploy', ['build'], function() {
+gulp.task('deploy', ['clean-remote'], function() {
    // upload everything in base folder
-   // TODO: fix paths beginning with !
-   // globs = globs.map(function(path) {
-   //    return path.join(config.basePath, path);
-   // });
-   return gulp.src( config.src.path, {base: config.basePath, buffer: false} )
+   return gulp.src( config.paths.src, {base: config.basePath, buffer: false} )
       .pipe( $.ftp.dest(ftpConfig.remoteBase) );
+});
+
+
+/**
+ *  delete stuff from FTP that is not present locally (in base folder)
+ */
+gulp.task('clean-remote', function() {
+  $.ftp.clean( path.join(ftpConfig.remoteBase, '/**/*'), config.basePath );
 });
 
 
