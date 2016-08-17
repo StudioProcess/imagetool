@@ -18,8 +18,19 @@
  /**
   *  initialization
   */
+// init gulp and plugins
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')({
+   pattern: ['gulp-*', 'gulp.*', 'browser-sync', 'main-bower-files', 'vinyl-ftp']
+});
+var path = require('path');
+
 // read config files
 var config = require('./config.json');
+var globs = config.globs.map(function(glob) {
+  return path.join(config.basePath, glob);
+});
+
 var ftpConfig;
 try {
   ftpConfig = require(config.ftpConfig);
@@ -28,12 +39,7 @@ try {
   process.exit(1);
 }
 
-// init gulp and plugins
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')({
-   pattern: ['gulp-*', 'gulp.*', 'browser-sync', 'main-bower-files', 'vinyl-ftp']
-});
-var path = require('path');
+
 
 // configure ftp
 ftpConfig.log = $.util.log;
@@ -70,7 +76,7 @@ gulp.task('browsersync', [], function() {
 gulp.task('serve', ['browsersync'], function() {
   // watch src files
   // event: {type:'changed'|'deleted'|'added', path:string}
-  gulp.watch( config.paths.src, function(event) {
+  gulp.watch( globs, function(event) {
     // console.log(event);
     if (event.type == 'deleted') {
       // delete
@@ -98,7 +104,7 @@ gulp.task('serve', ['browsersync'], function() {
  */
 gulp.task('deploy', ['clean-remote'], function() {
    // upload everything in base folder
-   return gulp.src( config.paths.src, {base: config.basePath, buffer: false} )
+   return gulp.src( globs, {base: config.basePath, buffer: false} )
       .pipe( $.ftp.dest(ftpConfig.remoteBase) );
 });
 
