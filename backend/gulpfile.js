@@ -17,7 +17,13 @@
   */
 // read config files
 var config = require('./config.json');
-var ftpConfig = require(config.ftpConfig);
+var ftpConfig;
+try {
+  ftpConfig = require(config.ftpConfig);
+} catch (err) {
+  console.log('Can\'t find FTP credentials file (ftp.config.json). Please inquire at contact@process.studio.');
+  process.exit(1);
+}
 
 // init gulp and plugins
 var gulp = require('gulp');
@@ -32,6 +38,7 @@ $.ftp = $.vinylFtp.create(ftpConfig);
 
 // configure gulp-notify
 // $.notify.logLevel(0);
+
 
 /**
  *  utilities
