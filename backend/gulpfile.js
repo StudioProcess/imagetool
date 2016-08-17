@@ -5,8 +5,9 @@
 /*
    FIXME/TODO:
    x wait till upload is finished then reload browser. https://github.com/morris/vinyl-ftp/issues/30#issuecomment-132110746
-   * watch for deletions and delete on ftp
+   x watch for deletions and delete on ftp
    * delete before deploy / or some kind of sync
+   * allow browsersync options via config file
    * use mac notifications for errors
    * make this a repo
    * use gulpfile.babel.js
@@ -31,7 +32,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({
    pattern: ['gulp-*', 'gulp.*', 'browser-sync', 'main-bower-files', 'vinyl-ftp']
 });
-var joinPath = require('path').join;
+var path = require('path');
 
 // configure ftp
 ftpConfig.log = $.util.log;
@@ -74,11 +75,14 @@ gulp.task('serve', ['browsersync'], function() {
   gulp.watch( config.paths.src, function(event) {
     // console.log(event);
     if (event.type == 'deleted') {
-      // gulp.src( event.path, {base: config.basePath} )
-      //   .pipe( $.cached() ) // only pass through changed files
-      //   .pipe( $.ftp.dest(ftpConfig.remoteBase) )
-      //   .pipe( $.browserSync.stream({ once: true }) )
-      //   .pipe( $.size() );
+      // delete
+      var base = path.normalize(config.basePath);
+      var relative = path.relative(base, event.path);
+      var remotePath = path.join(ftpConfig.remoteBase, relative);
+      // console.log(remotePath);
+      $.ftp.delete(remotePath, function() {
+        $.browserSync.reload();
+      });
     } else {
       // upload
       gulp.src( event.path, {base: config.basePath} )
@@ -86,9 +90,6 @@ gulp.task('serve', ['browsersync'], function() {
         .pipe( $.ftp.dest(ftpConfig.remoteBase) )
         .pipe( $.browserSync.stream({once:true}) )
         .pipe( $.size({showFiles:true}) );
-        // .on('finish', function() {
-        //   $.browserSync.reload();
-        // });
     }
   });
 });
@@ -101,7 +102,7 @@ gulp.task('deploy', ['build'], function() {
    // upload everything in base folder
    // TODO: fix paths beginning with !
    // globs = globs.map(function(path) {
-   //    return joinPath(config.basePath, path);
+   //    return path.join(config.basePath, path);
    // });
    return gulp.src( config.src.path, {base: config.basePath, buffer: false} )
       .pipe( $.ftp.dest(ftpConfig.remoteBase) );
