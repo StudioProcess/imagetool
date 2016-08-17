@@ -1,6 +1,7 @@
 {
   "browserSyncOptions" : {
     "proxy" : "http://ito.process.studio",
+    "startPath" : "/api",
     "browser" : "google chrome"
   },
   "ftpConfig" : "./ftp.config.json",
