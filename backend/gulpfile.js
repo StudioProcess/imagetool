@@ -3,15 +3,15 @@
 'use strict';
 
 /*
-   FIXME/TODO:
-   * allow browsersync options via config file
-   * use mac notifications for errors
-   * make this a repo
-   * use gulpfile.babel.js
-   
-   x wait till upload is finished then reload browser. https://github.com/morris/vinyl-ftp/issues/30#issuecomment-132110746
-   x watch for deletions and delete on ftp
-   x delete before deploy / or some kind of sync
+  FIXME/TODO:
+  * use mac notifications for errors
+  * make this a repo
+  * use gulpfile.babel.js
+
+  x wait till upload is finished then reload browser. https://github.com/morris/vinyl-ftp/issues/30#issuecomment-132110746
+  x watch for deletions and delete on ftp
+  x delete before deploy / or some kind of sync
+  x allow browsersync options via config file
  */
 
 
@@ -60,10 +60,7 @@ var errorHandler = function(title) {
  *  start the browsersync server
  */
 gulp.task('browsersync', [], function() {
-   $.browserSync.init({
-      proxy: config.browserSyncProxy,
-      browser: config.browser
-   });
+   $.browserSync.init(config.browserSyncOptions);
 });
 
 

@@ -1,8 +1,10 @@
 {
-  "browserSyncProxy" : "http://ito.process.studio",
-  "browser" : "google chrome",
+  "browserSyncOptions" : {
+    "proxy" : "http://ito.process.studio",
+    "browser" : "google chrome"
+  },
+
   "ftpConfig" : "./ftp.config.json",
-  "wwwBase": "/",
   "basePath" : "src/",
   "paths" : {
     "src": "src/**/*",
