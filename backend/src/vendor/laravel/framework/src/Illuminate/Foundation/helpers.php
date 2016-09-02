@@ -385,17 +385,26 @@ if (! function_exists('elixir')) {
      */
     function elixir($file, $buildDirectory = 'build')
     {
-        static $manifest;
+        static $manifest = [];
         static $manifestPath;
 
-        if (is_null($manifest) || $manifestPath !== $buildDirectory) {
-            $manifest = json_decode(file_get_contents(public_path($buildDirectory.'/rev-manifest.json')), true);
+        if (empty($manifest) || $manifestPath !== $buildDirectory) {
+            $path = public_path($buildDirectory.'/rev-manifest.json');
 
-            $manifestPath = $buildDirectory;
+            if (file_exists($path)) {
+                $manifest = json_decode(file_get_contents($path), true);
+                $manifestPath = $buildDirectory;
+            }
         }
 
         if (isset($manifest[$file])) {
             return '/'.trim($buildDirectory.'/'.$manifest[$file], '/');
+        }
+
+        $unversioned = public_path($file);
+
+        if (file_exists($unversioned)) {
+            return '/'.trim($file, '/');
         }
 
         throw new InvalidArgumentException("File {$file} not defined in asset manifest.");
@@ -644,7 +653,7 @@ if (! function_exists('resource_path')) {
      */
     function resource_path($path = '')
     {
-        return app()->basePath().DIRECTORY_SEPARATOR.'resources'.($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return app()->resourcePath().($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
 

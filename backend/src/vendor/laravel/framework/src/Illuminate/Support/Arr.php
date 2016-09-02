@@ -288,6 +288,10 @@ class Arr
         foreach ($keys as $key) {
             $subKeyArray = $array;
 
+            if (static::exists($array, $key)) {
+                continue;
+            }
+
             foreach (explode('.', $key) as $segment) {
                 if (static::accessible($subKeyArray) && static::exists($subKeyArray, $segment)) {
                     $subKeyArray = $subKeyArray[$segment];
@@ -448,13 +452,13 @@ class Arr
     }
 
     /**
-     * Sort the array using the given callback.
+     * Sort the array using the given callback or "dot" notation.
      *
      * @param  array  $array
-     * @param  callable  $callback
+     * @param  callable|string  $callback
      * @return array
      */
-    public static function sort($array, callable $callback)
+    public static function sort($array, $callback)
     {
         return Collection::make($array)->sortBy($callback)->all();
     }

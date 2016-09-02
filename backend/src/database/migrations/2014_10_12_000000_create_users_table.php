@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('logo')->default();
+            $table->mediumText('brands');
+            $table->string('theme_color')->default("default");
             $table->rememberToken();
             $table->timestamps();
         });

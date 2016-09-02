@@ -582,7 +582,7 @@ class Builder
     /**
      * Add an "or where" clause to the query.
      *
-     * @param  string  $column
+     * @param  string|\Closure  $column
      * @param  string  $operator
      * @param  mixed   $value
      * @return \Illuminate\Database\Query\Builder|static
@@ -909,7 +909,11 @@ class Builder
 
         $this->wheres[] = compact('type', 'column', 'values', 'boolean');
 
-        $this->addBinding($values, 'where');
+        foreach ($values as $value) {
+            if (! $value instanceof Expression) {
+                $this->addBinding($value, 'where');
+            }
+        }
 
         return $this;
     }
@@ -1954,51 +1958,51 @@ class Builder
      * Retrieve the minimum value of a given column.
      *
      * @param  string  $column
-     * @return float|int
+     * @return mixed
      */
     public function min($column)
     {
-        return $this->numericAggregate(__FUNCTION__, [$column]);
+        return $this->aggregate(__FUNCTION__, [$column]);
     }
 
     /**
      * Retrieve the maximum value of a given column.
      *
      * @param  string  $column
-     * @return float|int
+     * @return mixed
      */
     public function max($column)
     {
-        return $this->numericAggregate(__FUNCTION__, [$column]);
+        return $this->aggregate(__FUNCTION__, [$column]);
     }
 
     /**
      * Retrieve the sum of the values of a given column.
      *
      * @param  string  $column
-     * @return float|int
+     * @return mixed
      */
     public function sum($column)
     {
-        return $this->numericAggregate(__FUNCTION__, [$column]);
+        return $this->aggregate(__FUNCTION__, [$column]);
     }
 
     /**
      * Retrieve the average of the values of a given column.
      *
      * @param  string  $column
-     * @return float|int
+     * @return mixed
      */
     public function avg($column)
     {
-        return $this->numericAggregate(__FUNCTION__, [$column]);
+        return $this->aggregate(__FUNCTION__, [$column]);
     }
 
     /**
      * Alias for the "avg" method.
      *
      * @param  string  $column
-     * @return float|int
+     * @return mixed
      */
     public function average($column)
     {
