@@ -17,11 +17,23 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index');
 
-Route::get('/migrate', function()
+
+/* DEV */
+
+Route::get('/dbmigrate', function()
 {
     $exitCode = Artisan::call('migrate');
+});
 
-    //
+Route::get('/dbreset', function()
+{
+    $exitCode = Artisan::call('migrate:reset');
+});
+
+Route::get('/cmd', function()
+{
+    $exitCode = Artisan::call('artisan vendor:publish --provider="Tymon\JWTAuth\Providers\JWTAuthServiceProvider"');
 });

@@ -582,7 +582,7 @@ class Builder
     /**
      * Add an "or where" clause to the query.
      *
-     * @param  string|\Closure  $column
+     * @param  \Closure|string  $column
      * @param  string  $operator
      * @param  mixed   $value
      * @return \Illuminate\Database\Query\Builder|static
@@ -981,7 +981,7 @@ class Builder
     }
 
     /**
-     * Add a external sub-select to the query.
+     * Add an external sub-select to the query.
      *
      * @param  string   $column
      * @param  \Illuminate\Database\Query\Builder|static  $query
@@ -1984,7 +1984,9 @@ class Builder
      */
     public function sum($column)
     {
-        return $this->aggregate(__FUNCTION__, [$column]);
+        $result = $this->aggregate(__FUNCTION__, [$column]);
+
+        return $result ?: 0;
     }
 
     /**

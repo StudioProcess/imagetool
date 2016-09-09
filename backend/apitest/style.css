@@ -1,0 +1,31 @@
+body {
+	font-family: "Helvetica";
+	font-size: 10px;
+	line-height: 1.2em;
+	padding: 5px;
+}
+
+.nav {
+	min-height: 50px;
+	width: 100%;
+	background: #ececec;
+	text-align: center;
+	border: 1px solid gray;
+	border-bottom: 0px;
+}
+
+.nav .button {
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid gray;
+	padding: 0 10px;
+	margin: 5px 10px;
+	background-color: #fff6ca;
+}
+
+.output {
+	border: 1px solid gray;
+	padding: 10px;
+	background-color: #ececec;
+}

@@ -161,12 +161,12 @@ if (! function_exists('array_has')) {
      * Check if an item exists in an array using "dot" notation.
      *
      * @param  \ArrayAccess|array  $array
-     * @param  string  $key
+     * @param  string|array  $keys
      * @return bool
      */
-    function array_has($array, $key)
+    function array_has($array, $keys)
     {
-        return Arr::has($array, $key);
+        return Arr::has($array, $keys);
     }
 }
 
@@ -334,11 +334,15 @@ if (! function_exists('class_uses_recursive')) {
     /**
      * Returns all traits used by a class, its subclasses and trait of their traits.
      *
-     * @param  string  $class
+     * @param  object|string  $class
      * @return array
      */
     function class_uses_recursive($class)
     {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
         $results = [];
 
         foreach (array_merge([$class => $class], class_parents($class)) as $class) {

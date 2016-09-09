@@ -13,6 +13,7 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
+        '3919eeb97e98d4648304477f8ef734ba' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
@@ -30,6 +31,10 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
+        ),
+        'T' => 
+        array (
+            'Tymon\\JWTAuth\\' => 14,
         ),
         'S' => 
         array (
@@ -107,6 +112,10 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Tymon\\JWTAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tymon/jwt-auth/src',
         ),
         'Symfony\\Polyfill\\Util\\' => 
         array (
@@ -231,6 +240,13 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
     );
 
     public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'System' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+            ),
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 
@@ -242,11 +258,26 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
         ),
+        'N' => 
+        array (
+            'Net' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+            ),
+            'Namshi\\JOSE' => 
+            array (
+                0 => __DIR__ . '/..' . '/namshi/jose/src',
+            ),
+        ),
         'M' => 
         array (
             'Mockery' => 
             array (
                 0 => __DIR__ . '/..' . '/mockery/mockery/library',
+            ),
+            'Math' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
             ),
         ),
         'J' => 
@@ -260,6 +291,13 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
             ),
         ),
+        'F' => 
+        array (
+            'File' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+            ),
+        ),
         'D' => 
         array (
             'Doctrine\\Common\\Inflector\\' => 
@@ -269,6 +307,10 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
         ),
         'C' => 
         array (
+            'Crypt' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+            ),
             'Cron' => 
             array (
                 0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src',
@@ -277,7 +319,6 @@ class ComposerStaticInit62ae86f74753e7e97793675ac9221235
     );
 
     public static $classMap = array (
-        'AddColumsToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_09_02_105019_add_colums_to_users.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
