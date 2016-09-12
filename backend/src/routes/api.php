@@ -13,21 +13,34 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth');
 
 
-Route::post('/register', 'APIController@register');
+Route::group(['prefix' => '/user'], function () {
 
-Route::post('/login', 'APIController@login');
+	Route::post('/register', 'UserController@register');
 
-Route::group(['middleware' => 'jwt-auth'], function () {
+	Route::post('/login', 'UserController@login');
 
-	Route::post('/get_user_details', 'APIController@get_user_details');
+	Route::group(['middleware' => 'jwt-auth'], function () {
+
+		Route::post('/get_user_details', 'UserController@get_user_details');
+
+		Route::post('/update', 'UserController@update');
+
+		Route::get('/logout', 'UserController@logout');
+
+	});
 
 });
 
+Route::group(['middleware' => 'jwt-auth'], function () {
+
+	Route::post('/upload_images', 'APIController@upload_images');
+
+});
 
 // Route::get('/user', function() {
 //      // Only authenticated users may enter...

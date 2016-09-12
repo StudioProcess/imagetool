@@ -22,6 +22,7 @@ body {
 	padding: 0 10px;
 	margin: 5px 10px;
 	background-color: #fff6ca;
+	cursor: pointer;
 }
 
 .output {
