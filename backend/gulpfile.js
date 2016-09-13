@@ -27,9 +27,17 @@ var path = require('path');
 
 // read config files
 var config = require('./config.json');
-var globs = config.globs.map(function(glob) {
-  return path.join(config.basePath, glob);
-});
+
+function prefixGlobs(globs, prefix) {
+  return globs.map(function(glob) {
+    if ( glob.startsWith('!') ) {
+      return '!' + path.join(prefix, glob.substring(1));
+    }
+    return path.join(prefix, glob);
+  });
+}
+
+var globs = prefixGlobs(config.globs, config.basePath);
 
 var ftpConfig;
 try {
@@ -39,6 +47,7 @@ try {
   process.exit(1);
 }
 
+// var remoteGlobs = prefixGlobs(config.globs, ftpConfig.remoteBase);
 
 
 // configure ftp
@@ -76,7 +85,7 @@ gulp.task('browsersync', [], function() {
 gulp.task('serve', ['browsersync'], function() {
   // watch src files
   // event: {type:'changed'|'deleted'|'added', path:string}
-  gulp.watch( globs, function(event) {
+  gulp.watch( globs, {dot:true}, function(event) {
     // console.log(event);
     if (event.type == 'deleted') {
       // delete
@@ -102,9 +111,11 @@ gulp.task('serve', ['browsersync'], function() {
 /**
  *  deploy to FTP
  */
-gulp.task('deploy', ['clean-remote'], function() {
+// gulp.task('deploy', ['clean-remote'], function() {
+gulp.task('deploy', function() {
+// gulp.task('deploy', function() {
    // upload everything in base folder
-   return gulp.src( globs, {base: config.basePath, buffer: false} )
+   return gulp.src( globs, {dot: true, base: config.basePath, buffer: false} )
       .pipe( $.ftp.dest(ftpConfig.remoteBase) );
 });
 
@@ -112,9 +123,10 @@ gulp.task('deploy', ['clean-remote'], function() {
 /**
  *  delete stuff from FTP that is not present locally (in base folder)
  */
-gulp.task('clean-remote', function() {
-  $.ftp.clean( path.join(ftpConfig.remoteBase, '/**/*'), config.basePath );
-});
+// TODO: 'vendor' folder should be left on remote
+// gulp.task('clean-remote', function() {
+//   $.ftp.clean( remoteGlobs, config.basePath);
+// });
 
 
 /**

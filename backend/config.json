@@ -6,7 +6,5 @@
   },
   "ftpConfig" : "./ftp.config.json",
   "basePath" : "src/",
-  "globs" : [
-    "**/*"
-  ]
+  "globs" : ["**/*", "!vendor/**/*"]
 }
