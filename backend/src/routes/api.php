@@ -32,13 +32,17 @@ Route::group(['prefix' => '/user'], function () {
 
 		Route::get('/logout', 'UserController@logout');
 
+		Route::get('/get_userstats', 'UserController@get_userstats');
+
 	});
 
 });
 
 Route::group(['middleware' => 'jwt-auth'], function () {
 
-	Route::post('/upload_images', 'APIController@upload_images');
+	Route::post('/add_images', 'APIController@add_images');
+
+	Route::post('/process_images', 'APIController@process_images');
 
 });
 

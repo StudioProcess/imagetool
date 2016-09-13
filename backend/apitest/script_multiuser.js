@@ -4,15 +4,8 @@ $(document).ready(function() {
 	$NAV = $('.nav');
 	$CONSOLE = $('.output');
 	$FORM = $('#testform');
-	token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2l0by5wcm9jZXNzLnN0dWRpb1wvYXBpXC9wdWJsaWNcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0NzM3ODU0MjUsImV4cCI6MTQ3Mzc4OTAyNSwibmJmIjoxNDczNzg1NDI1LCJqdGkiOiIxNDA1MTgwNzBlMTE1NWQyMjU2ZTkwY2M5OGMwNDk1NCJ9.DIKcJ4RFUzLHjeLFeN87AIiQmHE7IW2PIsbkGZfO0dk";
-	
-	createRequest('test', 'GET', 'test',
-		{
-			"email":"crux23@gmail.com",
-			//"password":"12345678"
-		}
-	);
-	
+	token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6XC9cL2l0by5wcm9jZXNzLnN0dWRpb1wvYXBpXC9wdWJsaWNcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0NzM3ODY3NzIsImV4cCI6MTQ3Mzc5MDM3MiwibmJmIjoxNDczNzg2NzcyLCJqdGkiOiJlOTBmZmY0NTQ0MDVmNTZjZWYxMDUyOTdlZjk3MDkxMyJ9.b1bMKXI-FmXZdbxlRi5hG8drKIbMUDrTCwv5m_GgI8U";
+		
 	createRequest('user/register', 'POST', 'user/register',
 		{
 			"name":"Michael",
@@ -20,13 +13,7 @@ $(document).ready(function() {
 			"password":"12345678"
 		}
 	);
-	createRequest('user/login - invalid', 'POST', 'user/login',
-		{
-			"email":"crux23@gmail.com",
-			"password":"xxxxxxxx"
-		}
-	);
-	createRequest('user/login - valid', 'POST', 'user/login',
+	createRequest('user/login', 'POST', 'user/login',
 		{
 			"email":"crux23@gmail.com",
 			"password":"12345678"
@@ -35,6 +22,19 @@ $(document).ready(function() {
 	createRequest('user/logout', 'GET', 'user/logout',
 		{
 			"token":token
+		}
+	);
+	createRequest('user/register 2', 'POST', 'user/register',
+		{
+			"name":"Gerald",
+			"email":"gerald99@gmail.com",
+			"password":"12345678"
+		}
+	);
+	createRequest('user/login 2', 'POST', 'user/login',
+		{
+			"email":"gerald99@gmail.com",
+			"password":"12345678"
 		}
 	);
 	createRequest('user/get user details - invalid token', 'POST', 'user/get_user_details',
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	
 	$('#images').on('change', handleFileSelect);
 	
-	createFileUploadRequest('add_images', 'POST', 'add_images', {});
+	createFileUploadRequest('upload_images', 'POST', 'upload_images', {});
 	
 	createRequest('process_images', 'POST', 'process_images',
 		{
@@ -167,3 +167,4 @@ function createFileUploadRequest(label, type, route, data) {
 	}); 
 	$NAV.append($button);
 }
+

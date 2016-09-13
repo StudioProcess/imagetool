@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'logo', 'brands', 'theme_color'
+        'name', 'email', 'password', 'brands', 'theme_color'
     ];
 
     /**
@@ -24,6 +24,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at'
+        'password', 'remember_token', 'created_at', 'updated_at'//, 'last_uploaded_images'
     ];
+
+    /**
+     * Get the login stats for the user.
+     */
+    public function loginstats() {
+        return $this->hasMany('App\LoginStat');
+    }
+
+    public function latest_loginstat() {
+        return $this->hasOne('App\LoginStat')->latest();
+    }
 }

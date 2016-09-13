@@ -18,9 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('logo')->default();
             $table->mediumText('brands')->nullable();
             $table->string('theme_color')->default("default");
+            $table->mediumText('last_uploaded_images')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

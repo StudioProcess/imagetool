@@ -30,3 +30,7 @@ body {
 	padding: 10px;
 	background-color: #ececec;
 }
+
+form {
+	padding: 5px 5px 10px;
+}

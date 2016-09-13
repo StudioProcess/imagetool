@@ -45,6 +45,7 @@ class UserController extends Controller
     
     public function login(Request $request) {
         $input = $request->all();
+
         try {
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($input)) {
@@ -62,6 +63,14 @@ class UserController extends Controller
 					'message' => 'Login failed; Could not create token.'
 				], 500);
         }
+
+        $user = JWTAuth::toUser($token);
+
+    	$user->loginstats()->create(
+        	[
+        		'token' => $token
+        	]);
+
         return response()->json(
     		[
 				'status' => 'success',
@@ -121,6 +130,21 @@ class UserController extends Controller
         	[
 				'status' => 'success',
 				'message' => 'Logged out.'
+			], 200);
+	}
+
+	public function get_userstats(Request $request) {
+
+    	$user = JWTAuth::toUser($request['token']);
+
+	    return response()->json(
+        	[
+				'status' => 'success',
+				'message' => 'Logged out.',
+				'data' =>
+					[
+						'userstats' => $user->loginstats
+					]
 			], 200);
 	}
 }
