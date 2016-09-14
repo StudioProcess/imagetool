@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$NAV = $('.nav');
 	$CONSOLE = $('.output');
 	$FORM = $('#testform');
-	token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2l0by5wcm9jZXNzLnN0dWRpb1wvYXBpXC9wdWJsaWNcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0NzM3ODU0MjUsImV4cCI6MTQ3Mzc4OTAyNSwibmJmIjoxNDczNzg1NDI1LCJqdGkiOiIxNDA1MTgwNzBlMTE1NWQyMjU2ZTkwY2M5OGMwNDk1NCJ9.DIKcJ4RFUzLHjeLFeN87AIiQmHE7IW2PIsbkGZfO0dk";
+	token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2l0by5wcm9jZXNzLnN0dWRpb1wvYXBpXC9wdWJsaWNcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0NzM4NzI3ODYsImV4cCI6MTQ3Mzg3NjM4NiwibmJmIjoxNDczODcyNzg2LCJqdGkiOiIzOTJmNDI2NjVhZDQyZGU4NDVhZjVjMThmMDM1ZDNiZiJ9.VRtVgw6yi3-5uBijJYfsuOTdDz6cgAA7aOMF0CMIPDE";
 	
 	createRequest('test', 'GET', 'test',
 		{
@@ -17,16 +17,19 @@ $(document).ready(function() {
 		{
 			"name":"Michael",
 			"email":"crux23@gmail.com",
-			"password":"12345678"
+			"password":"12345678",
+			"brands":["vw", "jeep", "toyota"]
 		}
 	);
-	createRequest('user/login - invalid', 'POST', 'user/login',
+	/*
+createRequest('user/login - invalid', 'POST', 'user/login',
 		{
 			"email":"crux23@gmail.com",
 			"password":"xxxxxxxx"
 		}
 	);
-	createRequest('user/login - valid', 'POST', 'user/login',
+*/
+	createRequest('user/login', 'POST', 'user/login',
 		{
 			"email":"crux23@gmail.com",
 			"password":"12345678"
@@ -37,20 +40,24 @@ $(document).ready(function() {
 			"token":token
 		}
 	);
-	createRequest('user/get user details - invalid token', 'POST', 'user/get_user_details',
+	/*
+createRequest('user/get user details - invalid token', 'POST', 'user/get_user_details',
 		{
 			"token":"kjhkhkhiohöjkh43kjhrlh3z3ufhiruehifuhweiughfeiguiegwiu"
 		}
 	);
+*/
 	createRequest('user/get user details', 'POST', 'user/get_user_details',
 		{
 			"token":token
 		}
 	);
-	createRequest('user/get user details - no data', 'POST', 'user/get_user_details',
+	/*
+createRequest('user/get user details - no data', 'POST', 'user/get_user_details',
 		{
 		}
 	);
+*/
 	createRequest('user/get userstats', 'GET', 'user/get_userstats',
 		{
 			"token":token
@@ -62,17 +69,53 @@ $(document).ready(function() {
 			"name":"Michael",
 			"password":"12345678",
 			"password_confirmation":"12345678",
-			"brands":"brand names",
+			"brands":["vw", "jeep", "toyota"],
 			"theme_color":"theme_color is red",
 			"token":token
 		}
 	);
 	
 	$('#images').on('change', handleFileSelect);
+	createFileUploadRequest('add images', 'POST', 'add_images', {});
 	
-	createFileUploadRequest('add_images', 'POST', 'add_images', {});
+	createRequest('remove image', 'POST', 'remove_image',
+		{
+			"image_id":9,
+			"token":token
+		}
+	);
 	
-	createRequest('process_images', 'POST', 'process_images',
+	createRequest('get images', 'GET', 'get_images',
+		{
+			"token":token
+		}
+	);
+	
+	createRequest('set cover', 'POST', 'set_cover',
+		{
+			"image_id":1,
+			"border":
+				{
+					"color1":"#333",
+					"color2":"#eee",
+					"orientation":"horizontal"
+				},
+			"logos":
+				{
+					"position":3,
+					"brand":"toyota"
+				},
+			"stoerer":
+				{
+					"position":2,
+					"form":"circle",
+					"text":"10.000,-"
+				},
+			"token":token
+		}
+	);
+	
+	createRequest('get cover settings', 'GET', 'get_cover_settings',
 		{
 			"token":token
 		}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use Hash, Validator;
-use JWTAuth, Auth;
+use JWTAuth, Auth, File;
 
 class UserController extends Controller
 {
@@ -14,6 +14,7 @@ class UserController extends Controller
     public function register(Request $request) {        
     	$input = $request->all();
     	$input['password'] = Hash::make($input['password']);
+    	$input['brands'] = json_encode($input['brands']);
 
     	$validator = Validator::make(
 		    ['email' => $input['email']],
@@ -66,10 +67,20 @@ class UserController extends Controller
 
         $user = JWTAuth::toUser($token);
 
+        // set loginstat for this session
     	$user->loginstats()->create(
         	[
         		'token' => $token
         	]);
+
+    	// clear old data
+    	$user->last_uploaded_images = "";
+		$user->save();
+
+		$tempPath = 'temp/'.$user['id'];
+		File::cleanDirectory($tempPath);
+		$destinationPath = 'images/'.$user['id'];
+		File::cleanDirectory($destinationPath);
 
         return response()->json(
     		[
@@ -110,6 +121,8 @@ class UserController extends Controller
 	        $input['password'] = Hash::make($input['password']);
 	    }
 
+	    $input['brands'] = json_encode($input['brands']);
+
 	    $user->fill($input);
 
 	    $user->save();
@@ -117,7 +130,7 @@ class UserController extends Controller
 	    return response()->json(
         	[
 				'status' => 'success',
-				'message' => 'Updated user data.',
+				'message' => 'Udpate user; Updated user data.',
 				'data' => $user
 			], 200);
 	}

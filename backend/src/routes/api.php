@@ -42,7 +42,13 @@ Route::group(['middleware' => 'jwt-auth'], function () {
 
 	Route::post('/add_images', 'APIController@add_images');
 
-	Route::post('/process_images', 'APIController@process_images');
+	Route::post('/remove_image', 'APIController@remove_image');
+
+	Route::get('/get_images', 'APIController@get_images');
+
+	Route::post('/set_cover', 'APIController@set_cover');
+
+	Route::get('/get_cover_settings', 'APIController@get_cover_settings');
 
 });
 
