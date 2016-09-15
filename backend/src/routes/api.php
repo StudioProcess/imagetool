@@ -50,6 +50,8 @@ Route::group(['middleware' => 'jwt-auth'], function () {
 
 	Route::get('/get_cover_settings', 'APIController@get_cover_settings');
 
+	Route::get('/get_image_archive', 'APIController@get_image_archive');
+	
 });
 
 // Route::get('/user', function() {

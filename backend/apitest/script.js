@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$NAV = $('.nav');
 	$CONSOLE = $('.output');
 	$FORM = $('#testform');
-	token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2l0by5wcm9jZXNzLnN0dWRpb1wvYXBpXC9wdWJsaWNcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0NzM4NzI3ODYsImV4cCI6MTQ3Mzg3NjM4NiwibmJmIjoxNDczODcyNzg2LCJqdGkiOiIzOTJmNDI2NjVhZDQyZGU4NDVhZjVjMThmMDM1ZDNiZiJ9.VRtVgw6yi3-5uBijJYfsuOTdDz6cgAA7aOMF0CMIPDE";
+	token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2l0by5wcm9jZXNzLnN0dWRpb1wvYXBpXC9wdWJsaWNcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0NzM5NTM4ODQsImV4cCI6MTQ3Mzk1NzQ4NCwibmJmIjoxNDczOTUzODg0LCJqdGkiOiJmOGVhNDM4NGRlMjBiN2I3ZjY3MzBmYjliYzgyZWY0ZiJ9.ntUC4VXqZVEvCETvX3Z7dH7MCX0rXgv25H5WUumK4Xs";
 	
 	createRequest('test', 'GET', 'test',
 		{
@@ -80,7 +80,7 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 	
 	createRequest('remove image', 'POST', 'remove_image',
 		{
-			"image_id":9,
+			"image_id":2,
 			"token":token
 		}
 	);
@@ -96,19 +96,20 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 			"image_id":1,
 			"border":
 				{
-					"color1":"#333",
-					"color2":"#eee",
+					"color1":"#efe409",
+					"color2":"#ffaf4b",
 					"orientation":"horizontal"
 				},
 			"logos":
 				{
-					"position":3,
+					"position":4,
 					"brand":"toyota"
 				},
-			"stoerer":
+			"eyecatcher":
 				{
 					"position":2,
 					"form":"circle",
+					"color":"#ffffff",
 					"text":"10.000,-"
 				},
 			"token":token
@@ -120,6 +121,14 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 			"token":token
 		}
 	);
+	
+	createRequest('get image archive', 'GET', 'get_image_archive',
+		{
+			"token":token
+		}
+	);
+	
+	
 });
 
 var API_URL = "http://localhost:3000/api/public/api/";

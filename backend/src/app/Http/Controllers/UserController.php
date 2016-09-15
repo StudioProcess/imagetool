@@ -153,7 +153,7 @@ class UserController extends Controller
 	    return response()->json(
         	[
 				'status' => 'success',
-				'message' => 'Logged out.',
+				'message' => 'Get user statistics.',
 				'data' =>
 					[
 						'userstats' => $user->loginstats
