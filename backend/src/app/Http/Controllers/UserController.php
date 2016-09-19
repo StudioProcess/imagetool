@@ -89,18 +89,22 @@ class UserController extends Controller
 				'data' =>
 					[
 						'access_token' => $token
-					]
+					],
+				'token' => $token
 			], 200);
     }
     
     public function get_user_details(Request $request) {
     	$input = $request->all();
     	$user = JWTAuth::toUser($input['token']);
+
+    	$new_token = JWTAuth::refresh($input['token']);
         return response()->json(
         	[
 				'status' => 'success',
 				'message' => 'Get user details.',
-				'data' => $user
+				'data' => $user,
+				'token' => $new_token
 			], 200);
     }
 
@@ -127,11 +131,13 @@ class UserController extends Controller
 
 	    $user->save();
 
+	    $new_token = JWTAuth::refresh($input['token']);
 	    return response()->json(
         	[
 				'status' => 'success',
 				'message' => 'Udpate user; Updated user data.',
-				'data' => $user
+				'data' => $user,
+				'token' => $new_token
 			], 200);
 	}
 
@@ -150,6 +156,7 @@ class UserController extends Controller
 
     	$user = JWTAuth::toUser($request['token']);
 
+    	$new_token = JWTAuth::refresh($request['token']);
 	    return response()->json(
         	[
 				'status' => 'success',
@@ -157,7 +164,8 @@ class UserController extends Controller
 				'data' =>
 					[
 						'userstats' => $user->loginstats
-					]
+					],
+				'token' => $new_token
 			], 200);
 	}
 }
