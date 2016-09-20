@@ -1,0 +1,5 @@
+# Rewrite ./* -> ./public/api/*
+RewriteEngine On
+RewriteRule ^public/ - [NC,L] # allow access to public folder
+RewriteRule ^/?$ - [R=403,L] # block naked root
+RewriteRule ^(.*)$ public/api/$1 [L] # rewrite everything else
