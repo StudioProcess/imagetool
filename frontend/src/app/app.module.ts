@@ -9,6 +9,7 @@ import { UploadComponent } from './upload/upload.component';
 import { TitleimageComponent } from './titleimage/titleimage.component';
 import { EditImageComponent } from './edit-image/edit-image.component';
 import { DownloadComponent } from './download/download.component';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { DownloadComponent } from './download/download.component';
     BrowserModule,
     CommonModule,
     FormsModule,
-    routing
+    routing,
+    HttpModule,
+    JsonpModule
   ],
   providers: [ appRoutingProviders ],
   entryComponents: [AppComponent],

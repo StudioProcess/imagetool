@@ -8,16 +8,18 @@
     <div class="row small-4">
         <form>
             <div class="columns">
-                <input type="text" placeholder="Benutzer" />
+                <input #userLogin type="text" placeholder="Benutzer" />
             </div>
             <div class="columns">
-                <input type="password" placeholder="Passwort" />
+                <input #passwordLogin type="password" placeholder="Passwort" />
             </div>
         </form>
     </div>
     <div class="row small-4">
         <div class="columns">
-            <a href="#" class="medium success button">Login</a>
+          <button routerLink="/upload" class="medium success button" (click)="loginUser(userLogin.value, passwordLogin.value)">
+            Login
+          </button>
         </div>
     </div>
 </div>

@@ -1,8 +1,6 @@
 <div class="row">
-  <div class="small-3 small-centered columns header"><h3>Imagetool</h3></div>
+  <div class="small-3 small-centered columns header"><h2>Imagetool</h2></div>
 </div>
-<!-- Routed views go here -->
-<router-outlet></router-outlet>
 <div class="row">
   <div class="small-centered columns breadcrumbs">
     <a routerLink="/login" routerLinkActive="activeLink">1. Einloggen</a>
@@ -12,4 +10,6 @@
     <i class="ion-ios-arrow-right" title="Track Color"></i> <a routerLink="/download" [routerLinkActive]="'activeLink'">5. Fotos runterladen</a>
   </div>
 </div>
+<!-- Routed views go here -->
+<router-outlet></router-outlet>
 <div class="row columns footer">Ein Projekt von <a href="http://process.studio">Studio Process</a>.</div>
