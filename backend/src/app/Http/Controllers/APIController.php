@@ -27,11 +27,10 @@ class APIController extends Controller {
 			['images.*' => ['image']]
 		);
 		if ($validator->fails()) {
-			return response()->json(
-            	[
+			return response()->json([
 					'status' => 'error',
 					'message' => 'Add images; File(s) must be an image.'
-				], 200);  
+				], 400);  // Error: 'Bad Request'
 		}
 
 		// create user directory if it doesnt exist
@@ -57,11 +56,11 @@ class APIController extends Controller {
 				$upload_id_string = sprintf('%03d', $user->latest_loginstat['uploads']);
 
 				$imagename = $upload_id_string."_".$filename;
-				
+
 				$upload_success = $file->move($tempPath, $imagename.".".$extension);
 
 				if ($upload_success) {
-					
+
 					$image_id = $user->latest_loginstat['uploads'];
 
 					$imagick = new Imagick(public_path()."/".$tempPath."/".$imagename.".".$extension);
@@ -76,10 +75,10 @@ class APIController extends Controller {
 						$imagick->resizeImage($bigSize, $bigSize, imagick::FILTER_LANCZOS, 1, true);
 					}
 					$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
-					
+
 					$imagick->resizeImage($smallSize, $smallSize, imagick::FILTER_LANCZOS, 1, true);
 					$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-thumb.".$extension);
-					
+
 					$imagick->clear();
 					$imagick->destroy();
 
@@ -92,7 +91,7 @@ class APIController extends Controller {
 									'thumb' => $destinationPath."/".$imagename."-thumb.".$extension
 								)
 						);
-					
+
 					File::cleanDirectory($tempPath);
 
 				} else {
@@ -104,8 +103,8 @@ class APIController extends Controller {
 			return response()->json(
 				[
 					'status' => 'error',
-					'message' => 'Add images; No file(s) selected.'
-				], 200);
+					'message' => 'Add images; No file(s) given.'
+				], 400);
 		}
 
 		$uploaded_images_json = json_encode($uploaded_images); //JSON_FORCE_OBJECT
@@ -118,7 +117,7 @@ class APIController extends Controller {
 				[
 					'status' => 'success',
 					'message' => 'Add images; Image(s) uploaded.',
-					'data' => 
+					'data' =>
 						[
 							'last_uploaded_images' => $uploaded_images_json
 						],
@@ -128,10 +127,10 @@ class APIController extends Controller {
 			return response()->json(
 				[
 					'status' => 'error',
-					'message' => 'Add images; There was an error with the upload.'
-				], 200);
+					'message' => 'Add images; There was an processing the upload.'
+				], 500);
 		}
-		
+
 	}
 
 	public function remove_image(Request $request) {
@@ -146,7 +145,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Remove image; No image_id given.'
-				], 200);
+				], 400);
 		}
 
 		if ( empty($uploaded_images) ) {
@@ -154,7 +153,7 @@ class APIController extends Controller {
 					[
 						'status' => 'error',
 						'message' => 'Remove image; No images present.'
-					], 200);
+					], 404); // Error 'Not found'
 		}
 
 		foreach($uploaded_images as $image_key => $image){
@@ -176,7 +175,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Remove image; image_id not found.'
-				], 200);	
+				], 404);
 		}
 
 		$uploaded_images_json = json_encode($uploaded_images); //JSON_FORCE_OBJECT
@@ -188,7 +187,7 @@ class APIController extends Controller {
 			[
 				'status' => 'success',
 				'message' => 'Remove image; Images removed.',
-				'data' => 
+				'data' =>
 					[
 						'last_uploaded_images' => $uploaded_images_json
 					],
@@ -207,7 +206,7 @@ class APIController extends Controller {
 					[
 						'status' => 'error',
 						'message' => 'Get images; No images present.'
-					], 200);
+					], 404);
 		}
 
 		$new_token = JWTAuth::refresh($request->input('token'));
@@ -234,7 +233,7 @@ class APIController extends Controller {
 					[
 						'status' => 'error',
 						'message' => 'Set cover; No images present.'
-					], 200);
+					], 404);
 		}
 
 		$cover_settings = $request->except(['token']);
@@ -245,7 +244,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Set cover; No image_id given.'
-				], 200);
+				], 400);
 		}
 
 		$found = false;
@@ -260,7 +259,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Set cover; image_id not found.'
-				], 200);
+				], 404);
 		}
 
 		$validator = Validator::make($cover_settings, array(
@@ -276,8 +275,8 @@ class APIController extends Controller {
 			return response()->json(
             	[
 					'status' => 'error',
-					'message' => 'Registration failed; Parameters are misssing.'
-				], 200);  
+					'message' => 'Set cover failed; Parameters are misssing.'
+				], 400);
 		}
 
 		// delete old cover file
@@ -296,7 +295,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Set cover; There was an error processing the cover.'
-				], 200);
+				], 500);
 		}
 
 		// save cover settings
@@ -308,7 +307,7 @@ class APIController extends Controller {
 			[
 				'status' => 'success',
 				'message' => 'Set cover; Cover generated.',
-				'data' => 
+				'data' =>
 					[
 						'cover_settings' => $user->cover_settings,
 						'cover_thumb' => $coverUrl
@@ -319,7 +318,7 @@ class APIController extends Controller {
 	}
 
 	public static function processCover($cover_settings, $uploaded_images, $user, $preview){
-		
+
 		$image_version = ($preview) ? 'thumb' : 'full';
 
 		$source_image = null;
@@ -466,7 +465,7 @@ class APIController extends Controller {
 					[
 						'status' => 'error',
 						'message' => 'Get cover settings; No images present.'
-					], 200);
+					], 404);
 		}
 
 		$cover_settings = json_decode($user['cover_settings'], true);
@@ -475,7 +474,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Get cover settings; No cover specified.'
-				], 200);
+				], 400);
 		}
 
 		$source_image = null;
@@ -499,7 +498,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Get image archive; No cover specified.'
-				], 200);
+				], 400);
 		}
 
 		$destinationPath = 'images/'.$user['id'];
@@ -511,7 +510,7 @@ class APIController extends Controller {
 			[
 				'status' => 'success',
 				'message' => 'Get cover settings.',
-				'data' => 
+				'data' =>
 					[
 						'cover_settings' => $cover_settings,
 						'cover_thumb' => $destinationPath."/".$imagename."-cover-thumb.".$extension
@@ -523,7 +522,7 @@ class APIController extends Controller {
 
 	public function get_image_archive(Request $request) {
 
-		$user = JWTAuth::toUser($request['token']);	
+		$user = JWTAuth::toUser($request['token']);
 
 		$uploaded_images = json_decode($user->last_uploaded_images, true);
 		if ( empty($uploaded_images) ) {
@@ -531,7 +530,7 @@ class APIController extends Controller {
 					[
 						'status' => 'error',
 						'message' => 'Get image archive; No images present.'
-					], 200);
+					], 404);
 		}
 
 		$cover_settings = json_decode($user['cover_settings'], true);
@@ -540,7 +539,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Get image archive; No cover specified.'
-				], 200);
+				], 400);
 		}
 
 		$cover_image = null;
@@ -557,7 +556,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Get image archive; No cover specified.'
-				], 200);
+				], 400);
 		}
 
 		// delete old cover file
@@ -576,7 +575,7 @@ class APIController extends Controller {
 				[
 					'status' => 'error',
 					'message' => 'Get image archive; There was an error processing the cover.'
-				], 200);
+				], 500);
 		}
 
 		$log_files = File::glob($destinationPath.'/archive*');
@@ -608,7 +607,7 @@ class APIController extends Controller {
 			[
 				'status' => 'success',
 				'message' => 'Get image archive.',
-				'data' => 
+				'data' =>
 					[
 						'archive' => $destinationPath."/".$zip_name
 					],
