@@ -288,14 +288,28 @@ class APIController extends Controller {
 		    }
 		}
 
-		$coverUrl = APIController::processCover($cover_settings, $uploaded_images, $user, true);
+		$coverUrl = false;
+		$coverError = null;
+		try {
+			$coverUrl = APIController::processCover($cover_settings, $uploaded_images, $user, true);
+		} catch (\Exception $e) {
+			$coverError = $e;
+		}
 
 		if ( !$coverUrl ) {
-			return response()->json(
-				[
-					'status' => 'error',
-					'message' => 'Set cover; There was an error processing the cover.'
-				], 500);
+			$response = [
+				'status' => 'error',
+				'message' => 'Set cover; There was an error processing the cover.',
+			];
+			if ( $coverError ) {
+				$response['exception'] = [
+					'message' => $coverError->getMessage(),
+					'code' => $coverError->getCode(),
+					'file' => $coverError->getFile(),
+					'line' => $coverError->getLine()
+				];
+			}
+			return response()->json($response, 500);
 		}
 
 		// save cover settings
