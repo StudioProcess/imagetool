@@ -269,7 +269,7 @@ class APIController extends Controller {
     			'eyecatcher.position' => 'required',
     			'eyecatcher.form' => 'required',
     			'eyecatcher.color' => 'required',
-    			'eyecatcher.position' => 'required',
+    			'eyecatcher.text' => 'required',
 			));
 		if ($validator->fails()) {
 			return response()->json(
