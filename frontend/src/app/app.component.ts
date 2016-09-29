@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { LoginComponent } from './login/login.component';
+import { BackendService } from './backend.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,10 @@ import { LoginComponent } from './login/login.component';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+
+  constructor(api: BackendService) {
+    console.log( api.test() );
+  }
+
   title = 'app works!';
 }

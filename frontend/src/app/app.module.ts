@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MetaControlComponent } from './meta-control/meta-control.component';
 
+import { BackendService } from './backend.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,10 @@ import { MetaControlComponent } from './meta-control/meta-control.component';
     HttpModule,
     routing
   ],
-  providers: [ appRoutingProviders ],
+  providers: [
+    appRoutingProviders,
+    BackendService
+  ],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })
