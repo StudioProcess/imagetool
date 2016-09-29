@@ -11,6 +11,8 @@ import { TitleimageComponent } from './titleimage/titleimage.component';
 import { EditImageComponent } from './edit-image/edit-image.component';
 import { DownloadComponent } from './download/download.component';
 import { routing, appRoutingProviders } from './app.routing';
+import { HeaderComponent } from './header/header.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { routing, appRoutingProviders } from './app.routing';
     UploadComponent,
     TitleimageComponent,
     EditImageComponent,
-    DownloadComponent
+    DownloadComponent,
+    HeaderComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
