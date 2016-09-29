@@ -1,0 +1,68 @@
+.navigation {
+  margin-bottom: 1em;
+}
+
+li {
+  padding-left: 1em;
+  padding-right: 1em;
+  text-transform: none;
+  display: block;
+  font-size: 19px;
+  font-weight: bolder;
+}
+
+.breadcrumbs {
+  font-size: 19px;
+  font-weight: bolder;
+  margin-top: 0em;
+  text-align: center;
+
+  .menu-text {
+    vertical-align: sub;
+    padding-left: 0.2em;
+    padding-right: 2.0em;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #0000FF;
+    text-decoration: none;
+    .badge {
+      background: #0000FF;
+    }
+  }
+  .activeLink {
+    color: #0000FF;
+    //font-weight: bolder;
+    .badge {
+      background: #0000FF;
+    }
+  }
+
+  .badge {
+    background: #000;
+    margin-left: 2.0em;
+  }
+}
+.meta {
+  text-align: right;
+  padding-right: 5em;
+  a {
+    color: #acacac;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #000;
+    text-decoration: none;
+  }
+  .activeLink {
+    color: #acacac;
+    //font-weight: bolder;
+  }
+}
+
+.breadcrumbs li:not(:last-child)::after{
+  content: none;
+}
