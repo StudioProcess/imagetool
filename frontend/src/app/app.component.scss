@@ -4,6 +4,7 @@
 }
 
 .footer {
+  margin-top: 2em;
   font-size: 14px;
   text-align: center;
   color: #a4a4a4;
@@ -19,4 +20,16 @@
 
 .button:a {
   text-decoration: none;
+}
+
+.page-title {
+  font-weight: 500;
+  font-size: 30px;
+  padding-bottom: 0.5em;
+}
+
+.border {
+  margin-left: 5%;
+  margin-right: 5%;
+  border: 3px solid #000;
 }

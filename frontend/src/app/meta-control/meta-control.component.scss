@@ -1,0 +1,35 @@
+.meta {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  text-align: center;
+  font-weight: bold;
+  .restart {
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #00950f;
+      text-decoration: none;
+    }
+    .activeLink {
+      color: #000;
+      //font-weight: bolder;
+    }
+  }
+  .logout {
+    padding-left: 2em;
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #cc0000;
+      text-decoration: none;
+    }
+    .activeLink {
+      color: #000;
+      //font-weight: bolder;
+    }
+  }
+}

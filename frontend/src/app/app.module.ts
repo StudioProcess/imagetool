@@ -13,6 +13,7 @@ import { DownloadComponent } from './download/download.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { MetaControlComponent } from './meta-control/meta-control.component';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     EditImageComponent,
     DownloadComponent,
     HeaderComponent,
-    NavigationComponent
+    NavigationComponent, MetaControlComponent
   ],
   imports: [
     BrowserModule,
