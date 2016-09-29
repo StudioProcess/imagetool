@@ -24,7 +24,7 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
 Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
-	Route::get('/get_user_details', 'UserController@get_user_details');
+	Route::get('/userdata', 'UserController@get_user_details');
 
 	Route::group(['prefix' => '/admin', 'middleware' => 'permission'], function () {
 

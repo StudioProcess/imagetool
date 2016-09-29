@@ -150,6 +150,23 @@ class UserController extends Controller
     	
     	$user = User::where('id',$input['id'])->first();
 
+    	if ($input['email'] != '') {
+	    	if ($input['email'] != $user->email) {
+		    	$validator = Validator::make($input,
+					array(
+						'email' => 'unique:users'
+					)
+				);
+				if ($validator->fails()) {
+					return response()->json(
+		            	[
+							'status' => 'error',
+							'message' => 'Udpate user; Email already in use.'
+						], 200);
+				}
+			}
+		}
+
 	    if ($input['password'] != '') {
 	    	if ( $input['password'] != $input['password_confirmation'] ) {
 	    		return response()->json(

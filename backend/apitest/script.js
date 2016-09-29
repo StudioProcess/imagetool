@@ -13,7 +13,7 @@ $(document).ready(function() {
 	
 	createRequest('login Admin', 'POST', 'login',
 		{
-			"email":"crux23@gmail.com",
+			"email":"crux123456@gmail.com",
 			"password":"12345678"
 		}
 	,false);
@@ -29,7 +29,7 @@ $(document).ready(function() {
 		}
 	,true);
 	
-	createRequest('get user details', 'GET', 'get_user_details',
+	createRequest('userdata', 'GET', 'userdata',
 		{
 			"token":token
 		}
@@ -61,6 +61,7 @@ $(document).ready(function() {
 		{
 			"id":"2",
 			"name":"Michael",
+			"email":"crux123@gmail.com",
 			"password":"12345678",
 			"password_confirmation":"12345678",
 			"brands":["vw", "jeep", "toyota"],
@@ -73,6 +74,7 @@ $(document).ready(function() {
 		{
 			"id":"1",
 			"name":"Admin",
+			"email":"crux123@gmail.com",
 			"password":"12345678",
 			"password_confirmation":"12345678",
 			"brands":["vw", "jeep", "toyota"],
