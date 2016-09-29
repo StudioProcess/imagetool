@@ -5,9 +5,26 @@
 
 .header {
   padding-top: 3em;
-  //padding-bottom: 0.5em;
+  padding-bottom: 3em;
   font-weight: 500;
-  text-align: center;
+  //text-align: center;
+  vertical-align: middle;
+  .title {
+    padding-top: 0.75em;
+  }
+  .header-logo {
+    text-align: right;
+    img {
+      max-height: 100px;
+    }
+  }
+  .title-header {
+    font-size: 20px;
+    font-weight: lighter;
+  }
+  .dealer-name {
+    font-size: 30px;
+  }
 }
 
 .footer {
@@ -33,6 +50,11 @@
   margin-top: 0em;
   text-align: center;
   margin-bottom: 5em;
+  .menu-text {
+    vertical-align: sub;
+    padding-left: 0.2em;
+    padding-right: 2.0em;
+  }
   a {
     color: #000;
     text-decoration: none;
@@ -40,9 +62,20 @@
   a:hover {
     color: #0000FF;
     text-decoration: none;
+    .badge {
+      background: #0000FF;
+    }
   }
   .activeLink {
     color: #0000FF;
     //font-weight: bolder;
+    .badge {
+      background: #0000FF;
+    }
+  }
+
+  .badge {
+    background: #000;
+    margin-left: 2.0em;
   }
 }

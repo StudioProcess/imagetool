@@ -1,15 +1,25 @@
-<div class="row">
-  <div class="small-3 small-centered columns header"><h2>Imagetool</h2></div>
+<div class="row header">
+  <div class="small-5 columns title">
+    <span class="title-header">IMAGETOOL</span><br />
+    <span class="dealer-name">Automobile Nissen</span>
+  </div>
+  <div class="small-4 columns">
+  </div>
+  <div class="small-3 columns header-logo">
+    <img src="../assets/images/cardealers/logo1.gif">
+  </div>
+  <!-- <div class="small-3 small-centered columns header"><h2>Imagetool</h2></div> -->
 </div>
 <div class="row">
   <div class="small-centered columns breadcrumbs">
-    <a routerLink="/login" routerLinkActive="activeLink">1. Einloggen</a>
-    <i class="ion-ios-arrow-right" title="Track Color"></i> <a routerLink="/upload" routerLinkActive="activeLink">2. Fotos hochladen</a>
-    <i class="ion-ios-arrow-right" title="Track Color"></i> <a routerLink="/titleimage" [routerLinkActive]="'activeLink'">3. Titelfoto auswählen</a>
-    <i class="ion-ios-arrow-right" title="Track Color"></i> <a routerLink="/edit-image" [routerLinkActive]="'activeLink'">4. Titelfoto bearbeiten</a>
-    <i class="ion-ios-arrow-right" title="Track Color"></i> <a routerLink="/download" [routerLinkActive]="'activeLink'">5. Fotos runterladen</a>
+    <a routerLink="/login" routerLinkActive="activeLink"><span class="badge">1</span> <span class="menu-text">Einloggen</span></a>
+    <a routerLink="/upload" routerLinkActive="activeLink"><span class="badge">2</span> <span class="menu-text">Fotos hochladen</span></a>
+    <a routerLink="/titleimage" [routerLinkActive]="'activeLink'"><span class="badge">3</span> <span class="menu-text">Titelfoto auswählen</span></a>
+    <a routerLink="/edit-image" [routerLinkActive]="'activeLink'"><span class="badge">4</span> <span class="menu-text">Titelfoto bearbeiten</span></a>
+    <a routerLink="/download" [routerLinkActive]="'activeLink'"><span class="badge">5</span> <span class="menu-text">Fotos runterladen</span></a>
   </div>
 </div>
 <!-- Routed views go here -->
 <router-outlet></router-outlet>
+<div class="row columns"><i class="ion-log-out" title="Track Color"></i> Logout</div>
 <div class="row columns footer">Ein Projekt von <a href="http://process.studio">Studio Process</a>.</div>
