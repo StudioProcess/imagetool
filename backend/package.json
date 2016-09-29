@@ -23,7 +23,7 @@
     "npm": "^3.10.0"
   },
   "scripts": {
-    "clean-install": "rm -rf node_modules && npm install",
+    "reinstall": "rm -rf node_modules && npm install",
     "start": "gulp serve"
   }
 }
