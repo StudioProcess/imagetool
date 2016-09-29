@@ -25,6 +25,16 @@ body {
 	cursor: pointer;
 }
 
+.nav .seperator {
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid gray;
+	padding: 0 10px;
+	margin: 5px 10px;
+	background-color: #c4fff0;
+}
+
 .output {
 	border: 1px solid gray;
 	padding: 10px;

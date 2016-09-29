@@ -21,6 +21,7 @@ class authJWT {
         try {
 
             $user = JWTAuth::toUser($request->input('token'));
+            $token = JWTAuth::getToken();
 
         } catch (Exception $e) {
 
@@ -52,7 +53,7 @@ class authJWT {
 
         }
 
-        return $next($request);
+         return $next($request);
 
     }
 

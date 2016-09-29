@@ -13,46 +13,52 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth');
+Route::post('/login', 'UserController@login');
+
+Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
+
+	Route::get('/logout', 'UserController@logout');
+
+});
 
 
-Route::group(['prefix' => '/user'], function () {
+Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
-	Route::post('/register', 'UserController@register');
+	Route::get('/get_user_details', 'UserController@get_user_details');
 
-	Route::post('/login', 'UserController@login');
+	Route::group(['prefix' => '/admin', 'middleware' => 'permission'], function () {
 
-	Route::group(['middleware' => 'jwt-auth'], function () {
+		Route::post('/register_user', 'UserController@register_user');
 
-		Route::post('/get_user_details', 'UserController@get_user_details');
+		Route::post('/update_user', 'UserController@update_user');
 
-		Route::post('/update', 'UserController@update');
+		Route::get('/user_list', 'UserController@user_list');
 
-		Route::get('/logout', 'UserController@logout');
-
-		Route::get('/get_userstats', 'UserController@get_userstats');
+		Route::get('/user_stats', 'UserController@user_stats');
 
 	});
 
+	Route::group(['prefix' => '/session'], function () {
+
+		Route::get('/reset', 'UserController@reset_session');
+
+		Route::post('/images', 'APIController@add_images');
+
+		Route::post('/remove', 'APIController@remove_image');
+
+		Route::get('/images', 'APIController@get_images');
+
+		Route::post('/cover', 'APIController@set_cover');
+
+		Route::get('/cover', 'APIController@get_cover_settings');
+
+		Route::get('/archive', 'APIController@get_image_archive');
+
+	});	
+
 });
 
-Route::group(['middleware' => 'jwt-auth'], function () {
 
-	Route::post('/add_images', 'APIController@add_images');
-
-	Route::post('/remove_image', 'APIController@remove_image');
-
-	Route::get('/get_images', 'APIController@get_images');
-
-	Route::post('/set_cover', 'APIController@set_cover');
-
-	Route::get('/get_cover_settings', 'APIController@get_cover_settings');
-
-	Route::get('/get_image_archive', 'APIController@get_image_archive');
-	
-});
 
 // Route::get('/user', function() {
 //      // Only authenticated users may enter...

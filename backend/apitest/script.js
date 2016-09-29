@@ -2,6 +2,7 @@ $(document).ready(function() {
 	console.log("up & running..");
 	
 	var API_URL = "http://localhost:3000/api/public/api/";
+	//var API_URL = "http://ito.process.studio/api/public/api/";
 	var $NAV, $CONSOLE, $FORM;
 	var token;
 
@@ -10,59 +11,55 @@ $(document).ready(function() {
 	$FORM = $('#testform');
 	token = "";
 	
-	createRequest('user/register', 'POST', 'user/register',
-		{
-			"name":"Michael",
-			"email":"crux23@gmail.com",
-			"password":"12345678",
-			"brands":["vw", "jeep", "toyota"]
-		}
-	,false);
-	/*
-createRequest('user/login - invalid', 'POST', 'user/login',
-		{
-			"email":"crux23@gmail.com",
-			"password":"xxxxxxxx"
-		}
-	);
-*/
-	createRequest('user/login', 'POST', 'user/login',
+	createRequest('login Admin', 'POST', 'login',
 		{
 			"email":"crux23@gmail.com",
 			"password":"12345678"
 		}
 	,false);
-	createRequest('user/logout', 'GET', 'user/logout',
+	createRequest('login User1', 'POST', 'login',
 		{
-			"token":token
+			"email":"crux123@gmail.com",
+			"password":"12345678"
 		}
-	,true);
-	/*
-createRequest('user/get user details - invalid token', 'POST', 'user/get_user_details',
-		{
-			"token":"kjhkhkhiohöjkh43kjhrlh3z3ufhiruehifuhweiughfeiguiegwiu"
-		}
-	);
-*/
-	createRequest('user/get user details', 'POST', 'user/get_user_details',
-		{
-			"token":token
-		}
-	,true);
-	/*
-createRequest('user/get user details - no data', 'POST', 'user/get_user_details',
-		{
-		}
-	);
-*/
-	createRequest('user/get userstats', 'GET', 'user/get_userstats',
+	,false);
+	createRequest('logout', 'GET', 'logout',
 		{
 			"token":token
 		}
 	,true);
 	
-	createRequest('user/update', 'POST', 'user/update',
+	createRequest('get user details', 'GET', 'get_user_details',
 		{
+			"token":token
+		}
+	,true);
+
+	createSeperator("admin:");
+
+	createRequest('admin/register_user User1', 'POST', 'admin/register_user',
+		{
+			"name":"Michael",
+			"email":"crux123@gmail.com",
+			"password":"12345678",
+			"brands":["vw", "jeep", "toyota"],
+			"token":token
+		}
+	,true);
+	
+	createRequest('admin/register_user invalid', 'POST', 'admin/register_user',
+		{
+			"name":"Michael",
+			"email":"crux234@gmail.com",
+			"password":"12345678",
+			"brands":["vw", "jeep", "toyota"],
+			"token":token
+		}
+	,true);
+	
+	createRequest('admin/update_user User1', 'POST', 'admin/update_user',
+		{
+			"id":"2",
 			"name":"Michael",
 			"password":"12345678",
 			"password_confirmation":"12345678",
@@ -72,23 +69,60 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 		}
 	,true);
 	
-	$('#images').on('change', handleFileSelect);
-	createFileUploadRequest('add images', 'POST', 'add_images', {});
+	createRequest('admin/update_user Admin', 'POST', 'admin/update_user',
+		{
+			"id":"1",
+			"name":"Admin",
+			"password":"12345678",
+			"password_confirmation":"12345678",
+			"brands":["vw", "jeep", "toyota"],
+			"theme_color":"theme_color is red",
+			"token":token
+		}
+	,true);
 	
-	createRequest('remove image', 'POST', 'remove_image',
+
+	createRequest('admin/user_list', 'GET', 'admin/user_list',
+		{
+			"token":token
+		}
+	,true);
+	
+	
+	createRequest('admin/user_stats', 'GET', 'admin/user_stats',
+		{
+			"id":"2",
+			"token":token
+		}
+	,true);
+	
+	
+	createSeperator("session:");
+	
+	
+	createRequest('session/reset', 'GET', 'session/reset',
+		{
+			"token":token
+		}
+	,true);
+	
+	$('#images').on('change', handleFileSelect);
+	createFileUploadRequest('session/images POST', 'POST', 'session/images', {});
+	
+	createRequest('session/remove', 'POST', 'session/remove',
 		{
 			"image_id":2,
 			"token":token
 		}
 	,true);
 	
-	createRequest('get images', 'GET', 'get_images',
+	createRequest('session/images GET', 'GET', 'session/images',
 		{
 			"token":token
 		}
 	,true);
 	
-	createRequest('set cover', 'POST', 'set_cover',
+	createRequest('session/cover POST', 'POST', 'session/cover',
 		{
 			"image_id":1,
 			"border":
@@ -113,13 +147,13 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 		}
 	,true);
 	
-	createRequest('get cover settings', 'GET', 'get_cover_settings',
+	createRequest('session/cover GET', 'GET', 'session/cover',
 		{
 			"token":token
 		}
 	,true);
 	
-	createRequest('get image archive', 'GET', 'get_image_archive',
+	createRequest('session/archive', 'GET', 'session/archive',
 		{
 			"token":token
 		}
@@ -133,26 +167,60 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 			$CONSOLE.html('loading ...');
 			if (needs_token) {
 				data.token = token;
+				$.ajax({
+					url: API_URL+route,
+					dataType: "json",
+					type: type,
+					data: data,
+					contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+					/*
+beforeSend: function(xhr){
+						xhr.setRequestHeader('Authorization', 'Bearer '+token);
+						xhr.setRequestHeader('Test', 'Bearer '+token);
+					},
+*/
+					success: function (data) {
+						$CONSOLE.html('ajax -> success<br/><br/>status: '+data.status+'<br/>message: '+data.message+'<br/>token: '+data.token+'<br/><br/>data:<br/>'+JSON.stringify(data.data));
+						console.log(API_URL+route);
+						console.log(data);
+						if ( data.token ) {
+							token = data.token;
+						}
+					},
+					error: function (data) {
+						$CONSOLE.html('ajax -> error<br/><br/>status: '+data.status+'<br/>statusText: '+data.statusText+'<br/><br/>responseText:<br/><br/>'+data.responseText);
+						console.log(API_URL+route);
+						console.log(data);
+						if ( data.token ) {
+							token = data.token;
+						}
+					},
+				});
+			} else {
+				$.ajax({
+					url: API_URL+route,
+					dataType: "json",
+					type: type,
+					data: data,
+					success: function (data) {
+						$CONSOLE.html('ajax -> success<br/><br/>status: '+data.status+'<br/>message: '+data.message+'<br/>token: '+data.token+'<br/><br/>data:<br/>'+JSON.stringify(data.data));
+						console.log(API_URL+route);
+						console.log(data);
+						if ( data.token ) {
+							token = data.token;
+						}
+					},
+					error: function (data) {
+						$CONSOLE.html('ajax -> error<br/><br/>status: '+data.status+'<br/>statusText: '+data.statusText+'<br/><br/>responseText:<br/><br/>'+data.responseText);
+						console.log(API_URL+route);
+						console.log(data);
+						if ( data.token ) {
+							token = data.token;
+						}
+					},
+				});
 			}
-			$.ajax({
-				url: API_URL+route,
-				dataType: "json",
-				type: type,
-				data: data,
-				success: function (data) {
-					$CONSOLE.html('ajax -> success<br/><br/>status: '+data.status+'<br/>message: '+data.message+'<br/>token: '+data.token+'<br/><br/>data:<br/>'+JSON.stringify(data.data));
-					console.log(API_URL+route);
-					console.log(data);
-					if ( data.token ) {
-						token = data.token;
-					}
-				},
-				error: function (data) {
-					$CONSOLE.html('ajax -> error<br/><br/>status: '+data.status+'<br/>statusText: '+data.statusText+'<br/><br/>responseText:<br/><br/>'+data.responseText);
-					console.log(API_URL+route);
-					console.log(data);
-				},
-			});
+			
 		}); 
 		$NAV.append($button);
 	}
@@ -209,6 +277,9 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 					$CONSOLE.html('ajax -> error<br/><br/>status: '+data.status+'<br/>statusText: '+data.statusText+'<br/><br/>responseText:<br/><br/>'+data.responseText);
 					console.log(API_URL+route);
 					console.log(data);
+					if ( data.token ) {
+						token = data.token;
+					}
 				},
 				complete: function() {
 		            // Allow form to be submited again
@@ -217,6 +288,14 @@ createRequest('user/get user details - no data', 'POST', 'user/get_user_details'
 			});
 		}); 
 		$NAV.append($button);
+	}
+	
+	function createSeperator(label) {
+		if ( label == undefined ) {
+			label = "&nbsp;";
+		}
+		var $seperator = $('<div class="seperator">'+label+'</div>');
+		$NAV.append($seperator);	
 	}
 	
 });

@@ -119,7 +119,7 @@ class APIController extends Controller {
 					'message' => 'Add images; Image(s) uploaded.',
 					'data' =>
 						[
-							'last_uploaded_images' => $uploaded_images_json
+							'last_uploaded_images' => $uploaded_images
 						],
 					'token' => $new_token
 				], 200);
@@ -189,7 +189,7 @@ class APIController extends Controller {
 				'message' => 'Remove image; Images removed.',
 				'data' =>
 					[
-						'last_uploaded_images' => $uploaded_images_json
+						'last_uploaded_images' => $uploaded_images
 					],
 				'token' => $new_token
 			], 200);
@@ -216,7 +216,7 @@ class APIController extends Controller {
 				'message' => 'Get images; List of images.',
 				'data' =>
 					[
-						'last_uploaded_images' => $user['last_uploaded_images']
+						'last_uploaded_images' => json_decode($user['last_uploaded_images'])
 					],
 				'token' => $new_token
 			], 200);
@@ -323,7 +323,7 @@ class APIController extends Controller {
 				'message' => 'Set cover; Cover generated.',
 				'data' =>
 					[
-						'cover_settings' => $user->cover_settings,
+						'cover_settings' => json_decode($user->cover_settings),
 						'cover_thumb' => $coverUrl
 					],
 				'token' => $new_token

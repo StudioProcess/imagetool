@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('theme_color')->default("default");
             $table->mediumText('last_uploaded_images')->nullable();
             $table->mediumText('cover_settings')->nullable();
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

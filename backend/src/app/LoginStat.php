@@ -13,7 +13,7 @@ class LoginStat extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'token', 'uploads', 'downloads'
+        'user_id', 'session_string', 'uploads', 'downloads'
     ];
 
 }

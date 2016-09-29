@@ -17,7 +17,7 @@ class CreateLoginstatsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->mediumText('token')->nullable();
+            $table->mediumText('session_string')->nullable();
             $table->integer('uploads')->default(0);
             $table->integer('downloads')->default(0);
             $table->timestamps();
