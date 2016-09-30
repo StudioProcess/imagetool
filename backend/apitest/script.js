@@ -13,7 +13,7 @@ $(document).ready(function() {
 	
 	createRequest('login Admin', 'POST', 'login',
 		{
-			"email":"crux123456@gmail.com",
+			"email":"admin@admin.admin",
 			"password":"12345678"
 		}
 	,false);
@@ -68,7 +68,7 @@ $(document).ready(function() {
 		{
 			"id":"1",
 			"name":"Admin",
-			"email":"crux123@gmail.com",
+			"email":"admin@admin.admin",
 			"password":"12345678",
 			"password_confirmation":"12345678",
 			"brands":["vw", "jeep", "toyota"],
