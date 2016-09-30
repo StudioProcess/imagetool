@@ -54,6 +54,12 @@ export class BackendService {
       .catch(this.processToken);
   }
 
+  userData() {
+    return this.http.get(`${this.API_URL}/userdata`, {search:`token=${this.token}`})
+      .map(this.processToken)
+      .catch(this.processToken);
+  }
+
   addImage() {
 
   }
