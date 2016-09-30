@@ -5,60 +5,38 @@
   <span class="page-title">Fotos hochladen</span>
 </div>
 
-<div class="row">
+<div class="row column">
+  Zum Hochladen von Fotos, die Datei(en) über das Feld ziehen. Bereits hochgeladene Fotos erscheinen darunter.
+</div>
+
+<div class="row dropzone-style">
   <div class="columns">
-    <div class="callout" data-closable>
-      <p>Drop your image(s) here!</p>
-      <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <form action="/file-upload" class="dropzone" id="my-awesome-dropzone"></form>
   </div>
 </div>
 
-<div class="row">
-  <div class="columns small-6">
-    <label>Multiple Select Menu
-        <select multiple>
-          <option value="showboat">Showboat</option>
-          <option value="redwing">Redwing</option>
-          <option value="narcho">Narcho</option>
-          <option value="hardball">Hardball</option>
-        </select>
-      </label>
+<div class="row column">
+  <span class="sub-title">Bereits hochgeladene Fotos:</span>
+</div>
+
+<div class="row small-up-1 medium-up-2 large-up-4 previously-uploaded">
+  <div class="column">
+    <img src="//placehold.it/300x400" class="thumbnail" alt="">
   </div>
-  <div class="columns small-6">
-    <label>Multiple Select Menu
-        <select multiple>
-          <option value="showboat">Showboat</option>
-          <option value="redwing">Redwing</option>
-          <option value="narcho">Narcho</option>
-          <option value="hardball">Hardball</option>
-        </select>
-      </label>
+  <div class="column">
+    <img src="//placehold.it/300x400" class="thumbnail" alt="">
+  </div>
+  <div class="column">
+    <img src="//placehold.it/300x400" class="thumbnail" alt="">
+  </div>
+  <div class="column">
+    <img src="//placehold.it/300x400" class="thumbnail" alt="">
+  </div>
+  <div class="column">
+    <img src="//placehold.it/300x400" class="thumbnail" alt="">
   </div>
 </div>
 
-<div class="row">
-  <fieldset class="large-6 columns">
-    <legend>Choose Your Favorite</legend>
-    <input type="radio" name="pokemon" value="Red" id="pokemonRed" required>
-    <label for="pokemonRed">Red</label>
-    <input type="radio" name="pokemon" value="Blue" id="pokemonBlue">
-    <label for="pokemonBlue">Blue</label>
-    <input type="radio" name="pokemon" value="Yellow" id="pokemonYellow">
-    <label for="pokemonYellow">Yellow</label>
-  </fieldset>
-  <fieldset class="large-6 columns">
-    <legend>Check these out</legend>
-    <input id="checkbox1" type="checkbox">
-    <label for="checkbox1">Checkbox 1</label>
-    <input id="checkbox2" type="checkbox">
-    <label for="checkbox2">Checkbox 2</label>
-    <input id="checkbox3" type="checkbox">
-    <label for="checkbox3">Checkbox 3</label>
-  </fieldset>
-</div>
 
 <div class="row column">
   <button class="medium button float-right" routerLink="/titleimage">
