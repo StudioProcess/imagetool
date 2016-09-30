@@ -37,19 +37,21 @@ export class BackendService {
   }
 
   login(email:string, password:string) : Observable<any> {
-    return this.http.post( `${this.API_URL}/login`, {email, password})
+    return this.http.post(`${this.API_URL}/login`, {email, password})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   logout() {
-    return this.http.get( `${this.API_URL}/logout` )
-      .map(this.processToken);
+    return this.http.get(`${this.API_URL}/logout`, {search:`token=${this.token}`})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   resetSession() {
-    return this.http.get( `${this.API_URL}/session/reset` )
-      .map(this.processToken);
+    return this.http.get(`${this.API_URL}/session/reset`, {search:`token=${this.token}`})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   addImage() {

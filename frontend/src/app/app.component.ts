@@ -10,8 +10,6 @@ import { BackendService } from './backend.service';
 export class AppComponent {
 
   constructor(api: BackendService) {
-    api.test();
+    // api.test();
   }
-
-  title = 'app works!';
 }
