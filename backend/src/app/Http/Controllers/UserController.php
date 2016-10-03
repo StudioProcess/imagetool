@@ -101,7 +101,13 @@ class UserController extends Controller
 		}
 
     	try {
-	    	User::create($input);
+	    	$user = User::create($input);
+				
+				// If truthy admin status is given, set it
+				if ( $request->input('is_admin') ) {
+					$user->is_admin = true;
+					$user->save();
+				}
     	} catch (Exception $e) {
 			return response()->json(
 				[
