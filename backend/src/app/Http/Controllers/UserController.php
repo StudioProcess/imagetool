@@ -315,6 +315,12 @@ class UserController extends Controller
 		}
     	
     	$user = User::where('id',$input['id'])->first();
+			if (!$user) {
+				return response()->json([
+						'status' => 'error',
+						'message' => 'Get user statistics; User not found.'
+					], 404);
+			}
 
     	$new_token = JWTAuth::refresh($request->input('token'));
 	    return response()->json(
