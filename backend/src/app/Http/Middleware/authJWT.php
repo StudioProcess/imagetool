@@ -20,7 +20,15 @@ class authJWT {
 
         try {
 
-            $user = JWTAuth::toUser($request->input('token'));
+            try {
+              // Check for X-Access-Token header
+              $user = JWTAuth::toUser($request->header('x-access-token'));
+              // Set as 'token' request param
+              $request->merge(['token' => $request->header('x-access-token')]);
+            } catch (Exception $e) {
+              $user = JWTAuth::toUser($request->input('token'));
+            }
+
             $token = JWTAuth::getToken();
 
         } catch (Exception $e) {
