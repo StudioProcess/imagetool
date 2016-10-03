@@ -53,6 +53,7 @@ class UserController extends Controller
     		[
 				'status' => 'success',
 				'message' => 'Login was successful.',
+				'data' => $user,
 				'token' => $token
 			], 200);
     }
