@@ -29,7 +29,7 @@ class checkPermission {
                 [
                     'status' => 'error',
                     'message' => 'Forbidden.'
-                ], 200);
+                ], 403);
         }
 
         return $next($request);
