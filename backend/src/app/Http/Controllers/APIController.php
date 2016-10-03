@@ -202,11 +202,7 @@ class APIController extends Controller {
 
 		$uploaded_images = json_decode($user->last_uploaded_images, true);
 		if ( empty($uploaded_images) ) {
-			return response()->json(
-					[
-						'status' => 'error',
-						'message' => 'Get images; No images present.'
-					], 404);
+			$uploaded_images = [];
 		}
 
 		$new_token = JWTAuth::refresh($request->input('token'));
@@ -216,7 +212,7 @@ class APIController extends Controller {
 				'message' => 'Get images; List of images.',
 				'data' =>
 					[
-						'last_uploaded_images' => json_decode($user['last_uploaded_images'])
+						'last_uploaded_images' => $uploaded_images
 					],
 				'token' => $new_token
 			], 200);
