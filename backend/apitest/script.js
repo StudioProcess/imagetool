@@ -28,12 +28,6 @@ $(document).ready(function() {
 			"token":token
 		}
 	,true);
-	
-	createRequest('userdata', 'GET', 'userdata',
-		{
-			"token":token
-		}
-	,true);
 
 	createSeperator("admin:");
 
@@ -101,6 +95,11 @@ $(document).ready(function() {
 	
 	createSeperator("session:");
 	
+	createRequest('session/userdata', 'GET', 'session/userdata',
+		{
+			"token":token
+		}
+	,true);
 	
 	createRequest('session/reset', 'GET', 'session/reset',
 		{

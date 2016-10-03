@@ -24,8 +24,6 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
 Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
-	Route::get('/userdata', 'UserController@get_user_details');
-
 	Route::group(['prefix' => '/admin', 'middleware' => 'permission'], function () {
 
 		Route::post('/register_user', 'UserController@register_user');
@@ -39,6 +37,8 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 	});
 
 	Route::group(['prefix' => '/session'], function () {
+		
+		Route::get('/userdata', 'UserController@get_user_details');
 
 		Route::get('/reset', 'UserController@reset_session');
 
