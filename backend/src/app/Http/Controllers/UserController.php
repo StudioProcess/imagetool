@@ -133,7 +133,7 @@ class UserController extends Controller
 			if ($input['id'] == 0 || $input['id'] == 1) {
 				return response()->json([
 					'status' => 'error',
-					'message' => 'Delete User; Can\'t delete Admin.'
+					'message' => 'Delete user; Can\'t delete Super Admin.'
 				], 403);
 			}
 			
@@ -182,6 +182,14 @@ class UserController extends Controller
 					'message' => 'Update user; An user id is missing.'
 				], 400);
 		}
+		
+			if ( ($input['id'] == 0 || $input['id'] == 1) 
+				&& isset($input['is_admin']) ) {
+				return response()->json([
+					'status' => 'error',
+					'message' => 'Update user; Can\'t touch admin status of Super Admin.'
+				], 403);
+			}
     	
     	$user = User::where('id',$input['id'])->first();
 			if (!$user) {
@@ -191,7 +199,7 @@ class UserController extends Controller
 					], 404);
 			}
 
-    	if ($input['email'] != '') {
+    	if ( $request->input('email') ) {
 	    	if ($input['email'] != $user->email) {
 		    	$validator = Validator::make($input,
 					array(
@@ -208,7 +216,7 @@ class UserController extends Controller
 			}
 		}
 
-	    if ($input['password'] != '') {
+	    if ( $request->input('password') ) {
 	    	if ( $input['password'] != $input['password_confirmation'] ) {
 	    		return response()->json(
 					[
@@ -219,7 +227,7 @@ class UserController extends Controller
 	        $input['password'] = Hash::make($input['password']);
 	    }
 
-	    if ($input['name'] != '') {
+	    if ( $request->input('name') ) {
 	    	if ($input['name'] != $user->name) {
 			    $validator = Validator::make($input,
 					array(
@@ -236,8 +244,14 @@ class UserController extends Controller
 			}
 		}
 
-	    $input['brands'] = json_encode($input['brands']);
-
+			if ( $request->input('brands') ) {
+	    	$input['brands'] = json_encode($input['brands']);
+			}
+			
+			// Allow change of admin status
+			if ( $request->input('is_admin') ) {
+				$user->is_admin = $request->input('is_admin');
+			}
 	    $user->fill($input);
 	    $user->save();
 
