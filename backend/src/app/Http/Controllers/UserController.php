@@ -118,6 +118,39 @@ class UserController extends Controller
 				'token' => $new_token
 			], 200);
     }
+		
+		public function delete_user(Request $request) {
+			$input = $request->all();
+			
+			$validator = Validator::make($input, array('id' => 'required'));
+			if ($validator->fails()) {
+				return response()->json([
+					'status' => 'error',
+					'message' => 'Delete user; An user id is missing.'
+				], 400);
+			}
+			
+			if ($input['id'] == 0 || $input['id'] == 1) {
+				return response()->json([
+					'status' => 'error',
+					'message' => 'Delete User; Can\'t delete Admin.'
+				], 403);
+			}
+			
+			$user = User::where('id',$input['id'])->first();
+			if (!$user) {
+				return response()->json([
+					'status' => 'error',
+					'message' => 'Delete user; User not found.'
+				], 404);
+			}
+			
+			$user->delete();
+			return response()->json([
+				'status' => 'success',
+				'message' => 'Deleted user.'
+			], 200);
+		}
     
     public function get_user_details(Request $request) {
     	$user = JWTAuth::toUser($request->input('token'));

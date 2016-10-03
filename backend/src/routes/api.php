@@ -34,6 +34,7 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
 		Route::get('/user_stats', 'UserController@user_stats');
 
+		Route::delete('/user', 'UserController@delete_user');
 	});
 
 	Route::group(['prefix' => '/session'], function () {
