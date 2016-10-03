@@ -49,6 +49,7 @@ class UserController extends Controller
 		$destinationPath = 'images/'.$user['id'];
 		File::cleanDirectory($destinationPath);
 
+		$user['brands'] = json_decode($user['brands']);
         return response()->json(
     		[
 				'status' => 'success',
