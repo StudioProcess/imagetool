@@ -88,14 +88,14 @@ class UserController extends Controller
 	            	[
 						'status' => 'error',
 						'message' => 'Registration failed; Email already in use.'
-					], 200);
+					], 400);
 			}
 			if ($errors->has('name')) {
 			    return response()->json(
 	            	[
 						'status' => 'error',
 						'message' => 'Registration failed; Name already in use.'
-					], 200);
+					], 400);
 			}
 			  
 		}
@@ -146,8 +146,8 @@ class UserController extends Controller
 			return response()->json(
             	[
 					'status' => 'error',
-					'message' => 'Udpate user; An user id is missing.'
-				], 200);
+					'message' => 'Update user; An user id is missing.'
+				], 400);
 		}
     	
     	$user = User::where('id',$input['id'])->first();
@@ -163,8 +163,8 @@ class UserController extends Controller
 					return response()->json(
 		            	[
 							'status' => 'error',
-							'message' => 'Udpate user; Email already in use.'
-						], 200);
+							'message' => 'Update user; Email already in use.'
+						], 400);
 				}
 			}
 		}
@@ -174,8 +174,8 @@ class UserController extends Controller
 	    		return response()->json(
 					[
 						'status' => 'error',
-						'message' => 'Udpate user; Passwords does not match.'
-					], 200);
+						'message' => 'Update user; Passwords does not match.'
+					], 400);
 	    	}
 	        $input['password'] = Hash::make($input['password']);
 	    }
@@ -191,8 +191,8 @@ class UserController extends Controller
 					return response()->json(
 		            	[
 							'status' => 'error',
-							'message' => 'Udpate user; Name already in use.'
-						], 200);
+							'message' => 'Update user; Name already in use.'
+						], 400);
 				}
 			}
 		}
@@ -208,7 +208,7 @@ class UserController extends Controller
 	    return response()->json(
         	[
 				'status' => 'success',
-				'message' => 'Udpate user; Updated user data.',
+				'message' => 'Update user; Updated user data.',
 				'data' => $user,
 				'token' => $new_token
 			], 200);
@@ -253,7 +253,7 @@ class UserController extends Controller
 	    return response()->json(
         	[
 				'status' => 'success',
-				'message' => 'Get user statistics.',
+				'message' => 'Get user list.',
 				'data' => $users,
 				'token' => $new_token
 			], 200);
@@ -272,7 +272,7 @@ class UserController extends Controller
             	[
 					'status' => 'error',
 					'message' => 'Get user statistics; An user id is missing.'
-				], 200);
+				], 400);
 		}
     	
     	$user = User::where('id',$input['id'])->first();
