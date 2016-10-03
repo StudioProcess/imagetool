@@ -26,15 +26,16 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
 	Route::group(['prefix' => '/admin', 'middleware' => 'permission'], function () {
 
-		Route::post('/register_user', 'UserController@register_user');
+		Route::post('/user', 'UserController@register_user');
 
-		Route::post('/update_user', 'UserController@update_user');
+		Route::patch('/user', 'UserController@update_user');
+
+		Route::delete('/user', 'UserController@delete_user');
 
 		Route::get('/user_list', 'UserController@user_list');
 
 		Route::get('/user_stats', 'UserController@user_stats');
 
-		Route::delete('/user', 'UserController@delete_user');
 	});
 
 	Route::group(['prefix' => '/session'], function () {

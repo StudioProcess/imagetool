@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 	createSeperator("admin:");
 
-	createRequest('admin/register_user User1', 'POST', 'admin/register_user',
+	createRequest('admin/user POST (User1)', 'POST', 'admin/user',
 		{
 			"name":"Michael",
 			"email":"crux123@gmail.com",
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		}
 	,true);
 	
-	createRequest('admin/register_user invalid', 'POST', 'admin/register_user',
+	createRequest('admin/user POST (invalid)', 'POST', 'admin/user',
 		{
 			"name":"Michael",
 			"email":"crux234@gmail.com",
@@ -51,7 +51,7 @@ $(document).ready(function() {
 		}
 	,true);
 	
-	createRequest('admin/update_user User1', 'POST', 'admin/update_user',
+	createRequest('admin/user PATCH (User1)', 'PATCH', 'admin/user',
 		{
 			"id":"2",
 			"name":"Michael",
@@ -64,7 +64,7 @@ $(document).ready(function() {
 		}
 	,true);
 	
-	createRequest('admin/update_user Admin', 'POST', 'admin/update_user',
+	createRequest('admin/user PATCH (Admin)', 'PATCH', 'admin/user',
 		{
 			"id":"1",
 			"name":"Admin",
