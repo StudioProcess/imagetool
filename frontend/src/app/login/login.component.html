@@ -1,32 +1,29 @@
 <div class="login">
-  <div class="row small-4 login-header">
-      <div class="columns title">
-        <span class="title-header">IMAGETOOL</span><br />
-        <span class="dealer-name">Gebrauchtwagenhändler</span>
-      </div>
+  <div class="row column small-4 logo">
+    <img src="../../assets/images/ito/ito-logo.png">
   </div>
 
-    <div class="row small-4">
-        <div class="columns">
-            <span class="page-title">Einloggen</span>
-        </div>
+  <div class="row small-4">
+    <div class="columns">
+      <span class="page-title">Einloggen</span>
     </div>
+  </div>
 
-    <div class="row small-4">
-        <form>
-            <div class="columns">
-                <input #userLogin type="text" placeholder="Benutzer" />
-            </div>
-            <div class="columns">
-                <input #passwordLogin type="password" placeholder="Passwort" />
-            </div>
-        </form>
-    </div>
-    <div class="row small-4">
-        <div class="columns">
-          <button class="medium success button" (click)="loginUser(userLogin.value, passwordLogin.value)">
+  <div class="row small-4">
+    <form>
+      <div class="columns">
+        <input #userLogin type="text" placeholder="Benutzer" />
+      </div>
+      <div class="columns">
+        <input #passwordLogin type="password" placeholder="Passwort" />
+      </div>
+    </form>
+  </div>
+  <div class="row small-4">
+    <div class="columns">
+      <button class="medium success button" (click)="loginUser(userLogin.value, passwordLogin.value)">
             Login
           </button>
-        </div>
     </div>
+  </div>
 </div>
