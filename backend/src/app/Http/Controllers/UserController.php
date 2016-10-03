@@ -249,8 +249,8 @@ class UserController extends Controller
 			}
 			
 			// Allow change of admin status
-			if ( $request->input('is_admin') ) {
-				$user->is_admin = $request->input('is_admin');
+			if ( isset($input['is_admin']) ) {
+				$user->is_admin = $request->input('is_admin') ? true : false;
 			}
 	    $user->fill($input);
 	    $user->save();
