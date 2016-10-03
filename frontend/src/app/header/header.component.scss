@@ -7,18 +7,24 @@
 
   .title {
     padding-top: 0.75em;
+    text-align: center;
   }
   .header-logo {
     text-align: right;
-    img {
-      max-height: 100px;
-    }
+  }
+  .ito-logo {
+    text-align: left;
+  }
+  img {
+    max-height: 100px;
   }
   .title-header {
     font-size: 20px;
     font-weight: lighter;
   }
   .dealer-name {
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 2.5;
   }
 }
