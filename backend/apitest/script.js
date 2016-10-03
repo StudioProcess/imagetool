@@ -111,7 +111,7 @@ $(document).ready(function() {
 	$('#images').on('change', handleFileSelect);
 	createFileUploadRequest('session/images POST', 'POST', 'session/images', {});
 	
-	createRequest('session/remove', 'POST', 'session/remove',
+	createRequest('session/images DELETE', 'DELETE', 'session/images',
 		{
 			"image_id":2,
 			"token":token

@@ -44,7 +44,7 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
 		Route::post('/images', 'APIController@add_images');
 
-		Route::post('/remove', 'APIController@remove_image');
+		Route::delete('/images', 'APIController@remove_image');
 
 		Route::get('/images', 'APIController@get_images');
 
