@@ -13,4 +13,8 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
   }
 
+  mouseOverImage(){
+    console.log("asdf");
+  }
+
 }
