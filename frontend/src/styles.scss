@@ -6,7 +6,7 @@
 // foundation
 @import 'settings';
 @import '../node_modules/foundation-sites/scss/foundation';
-@import '../node_modules/dropzone/dist/dropzone.css';
+@import '../node_modules/dropzone/dist/dropzone';
 
 @include foundation-everything;
 
@@ -14,4 +14,10 @@
   font-weight: 500;
   font-size: 30px;
   line-height: 80px;
+}
+
+// Rename the .dropzone class from '../node_modules/dropzone/dist/dropzone'
+// (This class also kicks off js code, which we don't want)
+.dropzone-style {
+  @extend .dropzone;
 }

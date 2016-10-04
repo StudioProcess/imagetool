@@ -6,3 +6,8 @@ declare var System: any;
 declare var module: { id: string };
 declare var require: any;
 
+// For npm module 'dropzone'
+declare module 'dropzone' {
+  var Dropzone: any;
+  export default Dropzone;
+}
