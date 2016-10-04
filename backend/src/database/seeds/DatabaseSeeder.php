@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => "Admin",
-            'email' => 'admin@admin.admin',
+            'email' => 'admin@admin',
             'password' => bcrypt(env('ADMIN_PWD')),
             'theme_color' => "default",
             'is_admin' => true
