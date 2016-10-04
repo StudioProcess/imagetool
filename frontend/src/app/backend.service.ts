@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -43,19 +43,22 @@ export class BackendService {
   }
 
   logout() {
-    return this.http.get(`${this.API_URL}/logout`, {search:`token=${this.token}`})
+    let headers = new Headers({'X-Access-Token': this.token});
+    return this.http.get(`${this.API_URL}/logout`, {headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   resetSession() {
-    return this.http.get(`${this.API_URL}/session/reset`, {search:`token=${this.token}`})
+    let headers = new Headers({'X-Access-Token': this.token});
+    return this.http.get(`${this.API_URL}/session/reset`, {headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   userData() {
-    return this.http.get(`${this.API_URL}/userdata`, {search:`token=${this.token}`})
+    let headers = new Headers({'X-Access-Token': this.token});
+    return this.http.get(`${this.API_URL}/userdata`, {headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
