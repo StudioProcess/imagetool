@@ -5,18 +5,19 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class BackendService {
 
-  constructor(private http: Http) { }
-
   API_URL = 'http://ito.process.studio/api';
 
   private token: string = null;
+  private headers = new Headers({'Content-Type': 'application/json'});
+  
+  constructor(private http: Http) {}
 
   // Process response for token
   // Works with Observable.map and Observable.catch
   private processToken(response) {
     if ( response.headers.get('Content-Type') == 'application/json') {
       let responseJSON = response.json();
-      if (responseJSON.token) this.token = responseJSON.token;
+      if (responseJSON.token) this.headers.set('X-Access-Token', responseJSON.token);
     }
     if (!response.ok) return Observable.throw(response); // for use with catch
     return response; // for use with map
@@ -36,29 +37,26 @@ export class BackendService {
     });
   }
 
-  login(email:string, password:string) : Observable<any> {
+  login(email:string, password:string): Observable<any> {
     return this.http.post(`${this.API_URL}/login`, {email, password})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   logout() {
-    let headers = new Headers({'X-Access-Token': this.token});
-    return this.http.get(`${this.API_URL}/logout`, {headers})
+    return this.http.get(`${this.API_URL}/logout`, {headers:this.headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   resetSession() {
-    let headers = new Headers({'X-Access-Token': this.token});
-    return this.http.get(`${this.API_URL}/session/reset`, {headers})
+    return this.http.get(`${this.API_URL}/session/reset`, {headers:this.headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   userData() {
-    let headers = new Headers({'X-Access-Token': this.token});
-    return this.http.get(`${this.API_URL}/session/userdata`, {headers})
+    return this.http.get(`${this.API_URL}/session/userdata`, {headers:this.headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
@@ -68,16 +66,14 @@ export class BackendService {
   }
 
   removeImage(id: number) {
-    let headers = new Headers({'X-Access-Token': this.token});
     let search = `image_id=${id}`;
-    return this.http.delete(`${this.API_URL}/session/images`, {headers, search})
+    return this.http.delete(`${this.API_URL}/session/images`, {headers:this.headers, search})
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   getImages() {
-    let headers = new Headers({'X-Access-Token': this.token});
-    return this.http.get(`${this.API_URL}/session/images`, {headers})
+    return this.http.get(`${this.API_URL}/session/images`, {headers:this.headers})
       .map(this.processToken)
       .catch(this.processToken);
   }
