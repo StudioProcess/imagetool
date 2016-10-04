@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import 'dropzone';
 
 @Component({
@@ -6,6 +6,7 @@ import 'dropzone';
   templateUrl: 'upload.component.html',
   styleUrls: ['upload.component.scss']
 })
+
 export class UploadComponent implements OnInit {
 
   constructor() { }
@@ -13,8 +14,7 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
   }
 
-  mouseOverImage(){
-    console.log("asdf");
+  deletePhoto(){
+    console.log("deletePhoto: clicked");
   }
-
 }
