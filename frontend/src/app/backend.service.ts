@@ -67,8 +67,12 @@ export class BackendService {
 
   }
 
-  removeImage() {
-
+  removeImage(id: number) {
+    let headers = new Headers({'X-Access-Token': this.token});
+    let search = `image_id=${id}`;
+    return this.http.delete(`${this.API_URL}/session/images`, {headers, search})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   getImages() {
