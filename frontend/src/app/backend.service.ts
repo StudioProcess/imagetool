@@ -8,7 +8,7 @@ export class BackendService {
   API_URL = 'http://ito.process.studio/api';
 
   private token: string = null;
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new Headers();
   
   constructor(private http: Http) {}
 
@@ -61,8 +61,12 @@ export class BackendService {
       .catch(this.processToken);
   }
 
-  addImage() {
-
+  addImage(file: File) {
+    let data: FormData = new FormData();
+    data.append('images', file);
+    return this.http.post(`${this.API_URL}/session/userdata`, data, {headers:this.headers})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   removeImage(id: number) {
@@ -78,16 +82,23 @@ export class BackendService {
       .catch(this.processToken);
   }
 
-  setCover() {
-
+  setCover(id: number, options) {
+    let body = Object.assign({'image_id': id}, options);
+    return this.http.post(`${this.API_URL}/session/cover`, body, {headers:this.headers})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   getCover() {
-
+    return this.http.get(`${this.API_URL}/session/cover`, {headers:this.headers})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   getArchive() {
-
+    return this.http.get(`${this.API_URL}/session/archive`, {headers:this.headers})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
 }
