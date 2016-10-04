@@ -76,7 +76,10 @@ export class BackendService {
   }
 
   getImages() {
-
+    let headers = new Headers({'X-Access-Token': this.token});
+    return this.http.get(`${this.API_URL}/session/images`, {headers})
+      .map(this.processToken)
+      .catch(this.processToken);
   }
 
   setCover() {
