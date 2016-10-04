@@ -6,6 +6,7 @@ import Dropzone from 'dropzone';
   templateUrl: 'upload.component.html',
   styleUrls: ['upload.component.scss']
 })
+
 export class UploadComponent implements OnInit, AfterViewInit {
   private dropzone;
   
