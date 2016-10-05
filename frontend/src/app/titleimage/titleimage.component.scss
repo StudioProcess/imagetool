@@ -1,0 +1,20 @@
+.image-container {
+  position: relative;
+  padding-bottom: 2em;
+}
+.image-container:hover .image-border {
+  outline-offset: (-5px);
+  outline: 5px solid #000;
+}
+
+.image-container:hover .selected-sign {
+  bottom: 30px;
+  right: 35px;
+  position: absolute;
+  display:block;
+  font-size: 30px;
+}
+
+.selected-sign {
+  display:none;
+}

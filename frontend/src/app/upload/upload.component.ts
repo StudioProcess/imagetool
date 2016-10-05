@@ -9,17 +9,21 @@ import Dropzone from 'dropzone';
 
 export class UploadComponent implements OnInit, AfterViewInit {
   private dropzone;
-  
+
   constructor() {
     // console.log('dropzone:', Dropzone);
   }
 
   ngOnInit() {
   }
-  
+
   ngAfterViewInit() {
     this.dropzone = new Dropzone('#dropzone');
     console.log(this.dropzone);
+  }
+
+  deletePhoto() {
+    
   }
 
 }
