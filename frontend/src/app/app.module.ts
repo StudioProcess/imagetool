@@ -17,6 +17,9 @@ import { MetaControlComponent } from './meta-control/meta-control.component';
 
 import { BackendService } from './backend.service';
 
+import { XHRBackend } from '@angular/http';
+import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +40,9 @@ import { BackendService } from './backend.service';
   ],
   providers: [
     appRoutingProviders,
-    BackendService
+    BackendService,
+    { provide: XHRBackend, useClass: CustomXHRBackend },
+    CustomBrowserXhr
   ],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]
