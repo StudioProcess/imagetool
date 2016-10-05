@@ -7,15 +7,15 @@ export class BackendService {
 
   API_URL = 'http://ito.process.studio/api';
 
-  private token: string = null;
   private headers = new Headers();
   
   constructor(private http: Http) {}
 
   // Process response for token
   // Works with Observable.map and Observable.catch
-  private processToken(response) {
-    if ( response.headers.get('Content-Type') == 'application/json') {
+  // (Defined with arrow function to ensure proper this-binding)
+  processToken = (response) => {
+    if (response.headers && response.headers.get('Content-Type') == 'application/json') {
       let responseJSON = response.json();
       if (responseJSON.token) this.headers.set('X-Access-Token', responseJSON.token);
     }
