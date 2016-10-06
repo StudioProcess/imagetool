@@ -53,6 +53,7 @@
   position: relative;
   padding-bottom: 1.0em;
 }
+
 .image-container:hover .delete-button {
   position: absolute;
   //background-color: #FFF;
@@ -61,6 +62,7 @@
   display:block;
   color: #000;
   font-size: 30px;
+  opacity: 1.0;
 }
 
 .delete-button {
@@ -124,6 +126,9 @@ label {
   color: #a5c8a5;
 }
 
+.image-container:hover img {
+  opacity: 0.4;
+}
 
 $base-line-height: 24px;
 $white: rgb(255,255,255);
