@@ -16,7 +16,14 @@
   </div>
 </div>
 
-<div class="row column">
+<div class="row">
+  <div class="columns">
+    <input type="file" name="videoChooser" id="videoChooser" class="inputfile" accept="video/*" (change)="fileSelected($event)">
+    <label for="videoChooser">Choose a file...</label>
+  </div>
+</div>
+
+<!-- <div class="row column">
   <span class="sub-title">Bereits hochgeladene Fotos:</span>
 </div>
 
@@ -41,7 +48,7 @@
     <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
     <img src="//placehold.it/400x300" class="uploaded-image" alt="">
   </div>
-</div>
+</div> -->
 
 
 <div class="row column back-forth">

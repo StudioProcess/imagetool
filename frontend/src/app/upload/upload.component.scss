@@ -14,7 +14,6 @@
   text-align: center;
   margin-top: 1em;
   margin-bottom: 3em;
-  padding-top: 8em;
   min-height: 300px;
   background-color: #EFEFEF;
   border: none;
@@ -41,10 +40,10 @@
   margin-bottom: 1.0em;
 }
 
-.image-container:hover {
-  background-color: #FFF;
-  opacity: 0.8;
-}
+// .image-container:hover {
+//   background-color: #FFF;
+//   opacity: 0.8;
+// }
 
 .image-container {
   position: relative;
@@ -59,4 +58,39 @@
 
 .delete-button {
   display:none;
+}
+
+.inputfile + label {
+    // font-size: 1.25em;
+    // font-weight: 700;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    background-color: #CCC;
+    display: inline-block;
+    color: #000;
+}
+
+.inputfile:focus + label, .inputfile + label:hover {
+  color: #FFF;
+  background-color: #000;
+  cursor: pointer;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+a {
+  font-weight: 500;
+}
+
+label {
+  font-weight: 500;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-upload',
@@ -7,6 +7,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 })
 
 export class UploadComponent implements OnInit, AfterViewInit {
+
+  filePicked = new EventEmitter<File>();
 
   constructor() { }
 
@@ -17,7 +19,15 @@ export class UploadComponent implements OnInit, AfterViewInit {
   }
 
   deletePhoto() {
-    
+
   }
+
+  fileSelected(event) {
+    event.preventDefault();
+    let fileList = event.target.files;
+    if (!fileList.length) return; // no file selected
+    let file = fileList[0];
+    this.filePicked.emit(file);
+}
 
 }
