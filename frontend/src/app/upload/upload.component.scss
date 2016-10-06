@@ -15,14 +15,14 @@
   margin-top: 1em;
   margin-bottom: 3em;
   min-height: 300px;
-  background-color: #EFEFEF;
+  background-color: #f4f4f4;
   border: none;
   font-size: 17px;
   outline-offset: -2px;
   color: #868686;
   outline: 2px dashed #CCC;
   &:hover {
-    background-color: #EFEFEF;
+    background-color: #f4f4f4;
     outline-offset: -2px;
     outline: 2px solid #CCC;
     color: #CCC;
@@ -41,6 +41,7 @@
 
 .image-container {
   position: relative;
+  padding-bottom: 1.0em;
 }
 .image-container:hover .delete-button {
   position: absolute;
@@ -73,6 +74,10 @@
   color: #FFF;
   background-color: #000;
   cursor: pointer;
+}
+
+.imageUploadLabel {
+  margin-top: 1.5em;
 }
 
 .inputfile {
