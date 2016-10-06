@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import Dropzone from 'dropzone';
 
 @Component({
   selector: 'app-upload',
@@ -8,18 +7,13 @@ import Dropzone from 'dropzone';
 })
 
 export class UploadComponent implements OnInit, AfterViewInit {
-  private dropzone;
 
-  constructor() {
-    // console.log('dropzone:', Dropzone);
-  }
+  constructor() { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.dropzone = new Dropzone('#dropzone');
-    console.log(this.dropzone);
   }
 
   deletePhoto() {
