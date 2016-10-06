@@ -14,8 +14,102 @@
   <div class="columns dropzone-style">
     <input type="file" name="imageChooser" id="imageChooser" class="inputfile" accept="image/*" (change)="fileSelected($event)">
     <label for="imageChooser">Choose a file...</label>
+
+    <div class="row small-up-1 medium-up-2 large-up-4 previously-uploaded">
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="secondary progress" role="progressbar" tabindex="0" aria-valuenow="25" aria-valuemin="0" aria-valuetext="25 percent" aria-valuemax="100">
+          <div class="progress-meter" style="width: 25%"></div>
+        </div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="secondary progress" role="progressbar" tabindex="0" aria-valuenow="25" aria-valuemin="0" aria-valuetext="25 percent" aria-valuemax="100">
+          <div class="progress-meter" style="width: 25%"></div>
+        </div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="secondary progress" role="progressbar" tabindex="0" aria-valuenow="25" aria-valuemin="0" aria-valuetext="25 percent" aria-valuemax="100">
+          <div class="progress-meter" style="width: 45%"></div>
+        </div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
+      </div>
+      <div class="column image-container">
+        <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+        <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+        <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<!-- <div class="row small-up-1 medium-up-2 large-up-4 previously-uploaded">
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+  <div class="column image-container">
+    <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deletePhoto()"></i></div>
+    <img src="//placehold.it/400x300" class="uploaded-image" alt="">
+  </div>
+</div> -->
 
 <div class="row">
   <div class="columns">
