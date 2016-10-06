@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../backend.service';
-// import { Http, Response, Headers, RequestOptions } from '@angular/http';
-// import { Observable }     from 'rxjs/Observable';
-// import 'rxjs/Rx';
+import { Router } from '@angular/router';
+import { BackendService, SessionService } from '../';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +9,20 @@ import { BackendService } from '../backend.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor (private api: BackendService) {}
+  constructor (
+    private api: BackendService, 
+    private session: SessionService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
   loginUser(email: string, password: string) {
     this.api.login(email, password).subscribe({
       next: (res) => {
-        console.log('next', res);
+        console.log('login success', res.json());
+        this.session.userData = res.json().data; // save user data
+        this.router.navigate(['/upload']); // navigate to upload view
       },
       error: (res) => {
         console.log('error', res);
