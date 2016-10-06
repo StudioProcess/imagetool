@@ -16,6 +16,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MetaControlComponent } from './meta-control/meta-control.component';
 
 import { BackendService } from './backend.service';
+import { SessionService } from './session.service';
 
 import { XHRBackend } from '@angular/http';
 import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
@@ -41,6 +42,7 @@ import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
   providers: [
     appRoutingProviders,
     BackendService,
+    SessionService,
     { provide: XHRBackend, useClass: CustomXHRBackend },
     CustomBrowserXhr
   ],

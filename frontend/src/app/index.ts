@@ -5,3 +5,6 @@ export * from './edit-image';
 export * from './login';
 export * from './titleimage';
 export * from './upload';
+export * from './backend.service';
+export * from './session.service';
+export * from './xhr-custom';

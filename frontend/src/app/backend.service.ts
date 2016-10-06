@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class BackendService {
@@ -9,7 +10,7 @@ export class BackendService {
 
   private headers = new Headers();
   
-  constructor(private http: Http) {}
+  constructor(private http: Http, private session: SessionService) {}
 
   // Process response for token
   // Works with Observable.map and Observable.catch
@@ -18,7 +19,10 @@ export class BackendService {
     if (response.isProgressEvent) return response; // Skip progress response
     if (response.headers && response.headers.get('Content-Type') == 'application/json') {
       let responseJSON = response.json();
-      if (responseJSON.token) this.headers.set('X-Access-Token', responseJSON.token);
+      if (responseJSON.token) {
+        this.headers.set('X-Access-Token', responseJSON.token);
+        this.session.token = responseJSON.token;
+      }
     }
     if (!response.ok) return Observable.throw(response); // for use with catch
     return response; // for use with map
@@ -40,6 +44,7 @@ export class BackendService {
 
   login(email:string, password:string): Observable<any> {
     return this.http.post(`${this.API_URL}/login`, {email, password})
+      .filter(res => !res['isProgressEvent'])
       .map(this.processToken)
       .catch(this.processToken);
   }
