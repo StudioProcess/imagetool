@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-upload',
@@ -8,9 +9,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
 
 export class UploadComponent implements OnInit, AfterViewInit {
 
-  filePicked = new EventEmitter<File>();
-
-  constructor() { }
+  constructor(private backend: BackendService) { }
 
   ngOnInit() {
   }
@@ -26,8 +25,22 @@ export class UploadComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     let fileList = event.target.files;
     if (!fileList.length) return; // no file selected
-    let file = fileList[0];
-    this.filePicked.emit(file);
-}
+    // TODO : implement for multiple files
+    let file = fileList[0]; // just first file
+    console.log('file', file);
+    
+    this.backend.addImage(file).subscribe({
+      next: (res) => {
+        if (res['isProgressEvent']) {
+          console.log('upload progress', res);
+        } else {
+          console.log('upload success', res.json());
+        }
+      },
+      error: (res) => {
+        console.log('upload error', res.json());
+      }
+    });
+  }
 
 }

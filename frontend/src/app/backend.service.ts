@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
@@ -69,10 +69,10 @@ export class BackendService {
 
   addImage(file: File) {
     let data: FormData = new FormData();
-    data.append('images', file);
-    return this.http.post(`${this.API_URL}/session/userdata`, data, {headers:this.headers})
+    data.append('images[]', file);
+    return this.http.post(`${this.API_URL}/session/images`, data, {headers:this.headers})
       .map(this.processToken)
-      .catch(this.processToken);
+      .catch(this.processToken) as Observable<Response>;
   }
 
   removeImage(id: number) {
