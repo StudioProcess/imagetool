@@ -21,3 +21,7 @@
 .dropzone-style {
   @extend .dropzone;
 }
+
+.callout pre {
+  white-space: pre-wrap;
+}

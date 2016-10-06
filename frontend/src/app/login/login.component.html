@@ -9,6 +9,18 @@
     </div>
   </div> -->
 
+  <div class="row columns small-3">
+    <div class="callout alert" [hidden]="error!='LoginWrong'">
+      <h5>Email oder Passwort falsch</h5>
+      <p>Für Hilfe wenden Sie sich bitte an <a href="mailto:contact@process.studio">contact@process.studio</a></p>
+    </div>
+    <div class="callout alert" [hidden]="error!='Other'">
+      <h5>Fehler</h5>
+      <p>Für Hilfe wenden Sie sich bitte an <a href="mailto:contact@process.studio">contact@process.studio</a></p>
+      <pre>{{errorMessage}}</pre>
+    </div>
+  </div>
+  
   <div class="row small-3">
     <form>
       <div class="columns">
@@ -21,7 +33,7 @@
   </div>
   <div class="row small-3">
     <div class="columns">
-      <button class="medium success button float-right" (click)="loginUser(userLogin.value, passwordLogin.value)">
+      <button [disabled]="submitDisabled" class="medium success button float-right" (click)="loginUser(userLogin.value, passwordLogin.value)">
             Login
           </button>
     </div>

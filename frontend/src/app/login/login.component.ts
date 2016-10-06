@@ -15,10 +15,17 @@ export class LoginComponent implements OnInit {
     private session: SessionService,
     private router: Router
   ) {}
+  
+  error: 'LoginWrong'|'Other' = null;
+  errorMessage: string;
+  submitDisabled: boolean;
 
   ngOnInit() {}
 
   loginUser(email: string, password: string) {
+    this.error = null;
+    this.errorMessage = null;
+    this.submitDisabled = true;
     this.api.login(email, password).subscribe({
       next: (res) => {
         console.log('login success', res.json());
@@ -26,10 +33,16 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/upload']); // navigate to upload view
       },
       error: (res) => {
-        console.log('error', res);
-      },
-      complete: () => {
-        console.log('complete');
+        console.log('login error', res.json());
+        this.submitDisabled = false;
+        if (res.status == 401) { // 401 Unauthorized
+          // Show email/password error callout
+          this.error = 'LoginWrong';
+        } else {
+          // Show catchall error callout
+          this.error = 'Other';
+          this.errorMessage = res.status + ' ' + res.json().message;
+        }
       }
     });
   }
