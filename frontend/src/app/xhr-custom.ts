@@ -49,12 +49,16 @@ export class CustomXHRConnection extends XHRConnection {
     
     let progressResponse = new Observable<Response>( (responseObserver: Observer<Response>) => {
       let onProgress = (event) => {
-        console.log('xhr progress', event);
+        // console.log('xhr progress', event);
         let response = new Response(new ResponseOptions());
-        response.status = 102; // 102 Processing (1xx Informational)
-        response.statusText = 'progress'; 
+        response['isProgressEvent'] = true; // Add unique field to test for this sort of event
+        // response.status = 102; // 102 Processing (1xx Informational)
         response.bytesLoaded = event.loaded;
         response.totalBytes = event.total;
+        // Add all fields from XHR ProgressEvent 
+        response['lengthComputable'] = event.lengthComputable;
+        response['loaded'] = event.loaded;
+        response['total'] = event.total;
         responseObserver.next(response);
       };
       let onLoad = (event) => {

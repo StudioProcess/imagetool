@@ -15,7 +15,7 @@ export class BackendService {
   // Works with Observable.map and Observable.catch
   // (Defined with arrow function to ensure proper this-binding)
   processToken = (response) => {
-    if (response.status == 102) return response; // Informational progress response
+    if (response.isProgressEvent) return response; // Skip progress response
     if (response.headers && response.headers.get('Content-Type') == 'application/json') {
       let responseJSON = response.json();
       if (responseJSON.token) this.headers.set('X-Access-Token', responseJSON.token);
