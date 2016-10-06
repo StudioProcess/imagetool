@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BackendService, SessionService } from '../';
+import { BackendService } from '../backend.service';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-login',
