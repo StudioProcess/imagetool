@@ -16,13 +16,12 @@ export class AppComponent implements OnInit {
     private api: BackendService,
     private session: SessionService
   ) {
+    let sessionData = session.retrieve();
+    console.log('SESSION:', sessionData);
     // api.test();
   }
   
   ngOnInit() {
-    let sessionData = this.session.retrieve();
-    console.log('app init, retrieve session', sessionData);
-    
     // Always keep stored route up to date
     this.router.events
       .filter(e => e instanceof NavigationEnd)

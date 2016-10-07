@@ -30,5 +30,9 @@ export class SessionService {
     if (data) this.data = data;
     return this.data;
   }
+  
+  get(): SessionData {
+    return this.data;
+  }
 
 }

@@ -10,8 +10,13 @@ export class BackendService {
 
   private headers = new Headers();
   
-  constructor(private http: Http, private session: SessionService) {}
-
+  constructor(private http: Http, private session: SessionService) {
+    let token = session.get().token;
+    if (token) {
+      this.headers.set('X-Access-Token', token);
+    }
+  }
+ 
   // Process response for token
   // Works with Observable.map and Observable.catch
   // (Defined with arrow function to ensure proper this-binding)
