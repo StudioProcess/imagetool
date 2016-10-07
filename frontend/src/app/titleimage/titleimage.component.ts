@@ -12,7 +12,8 @@ export class TitleimageComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectTitleImage() {
+  selectTitleImage(event) {
+    
     console.log("selectTitleImage pressed");
   }
 
