@@ -45,17 +45,19 @@
 }
 
 .image-container:hover .delete-button {
-  .uploading {
-    display: none;
-  }
+
   position: absolute;
   //background-color: #FFF;
   top: 23px;
   right: 30px;
   display:block;
   color: #000;
-  font-size: 30px;
-  opacity: 1.0;
+  font-size: 28px;
+  z-index: 100;
+
+  &:hover {
+    color: #ee0000;
+  }
 }
 
 .delete-button {
