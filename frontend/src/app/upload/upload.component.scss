@@ -32,6 +32,9 @@
 .uploaded-image {
   margin-top: 1.0em;
   margin-bottom: 1.0em;
+  min-width: 270px;
+  min-height: 180px;
+  background-color: #cccccc;
 }
 
 // .image-container:hover {
@@ -42,6 +45,8 @@
 .image-container {
   position: relative;
   padding-bottom: 1.0em;
+  min-width: 300px;
+  min-height: 256px;
 }
 
 .image-container:hover .delete-button {
