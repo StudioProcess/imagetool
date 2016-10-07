@@ -16,8 +16,7 @@ export class AppComponent implements OnInit {
     private api: BackendService,
     private session: SessionService
   ) {
-    let sessionData = session.retrieve();
-    console.log('SESSION:', sessionData);
+    console.log('SESSION:', session.get());
     // api.test();
   }
   

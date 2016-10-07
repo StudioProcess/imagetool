@@ -17,6 +17,7 @@ export class SessionService {
       token: null,
       userData : {}
     };
+    this.retrieve();
   }
   
   store(data: SessionData): SessionData {
