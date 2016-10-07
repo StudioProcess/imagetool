@@ -39,22 +39,15 @@
 //   opacity: 0.8;
 // }
 
-.loading-container {
-  margin: auto;
-  margin-top: 1.0em;
-  margin-bottom: 1.0em;
-  padding-top: 5.25em;
-  min-width: 270;
-  min-height: 180px;
-  background-color: #CCC;
-}
-
 .image-container {
   position: relative;
   padding-bottom: 1.0em;
 }
 
 .image-container:hover .delete-button {
+  .uploading {
+    display: none;
+  }
   position: absolute;
   //background-color: #FFF;
   top: 23px;
@@ -108,19 +101,14 @@ label {
   font-weight: 500;
 }
 
-.upload-progress {
-  position: absolute;
-  top: 100px;
-  height: 50px;
-  width: 200px;
-  display:block;
-  background-color: #00FF00;
-}
-
-.uploaded-sign {
-  font-weight: bold;
-  color: #00aa00;
-}
+// .upload-progress {
+//   position: absolute;
+//   top: 100px;
+//   height: 50px;
+//   width: 200px;
+//   display:block;
+//   background-color: #00FF00;
+// }
 
 .image-container:hover .uploaded-sign {
   color: #a5c8a5;
@@ -162,43 +150,84 @@ body {
   background: #333333;
 }
 
-.loading {
-  margin: 0 auto;
-    border-radius: 50%;
-    width: $base-line-height;
-    height: $base-line-height;
-    border: .25rem solid $off-white;
-    border-top-color: $white;
-    animation: spin $spin-duration infinite linear;
-  &--double {
-    border-style: double;
-    border-width: .5rem;
-  }
+.uploaded-sign {
+  font-weight: bold;
+  color: #00aa00;
 }
 
-.loading-pulse {
-  position: relative;
-  width: ($base-line-height / 4);
-  height: $base-line-height;
-  background: $off-white;
-  animation: pulse $pulse-duration infinite;
-  animation-delay: ($pulse-duration / 3);
-  &:before, &:after {
-    content: '';
-    position: absolute;
+.progress {
+  display: none;
+}
+
+.image-container.uploading .delete-button {
+  display: none;
+}
+
+.uploading {
+
+  .progress {
     display: block;
-    height: ($base-line-height / 1.5);
+    margin-bottom: 9px;
+  }
+
+  .delete-button {
+    display:none;
+  }
+
+  .uploaded-sign {
+    display: none;
+  }
+
+  img {
+    display: none;
+  }
+  .loading-container {
+    margin: auto;
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    padding-top: 5.25em;
+    min-width: 270;
+    min-height: 180px;
+    background-color: #CCC;
+  }
+  .loading {
+    margin: 0 auto;
+      border-radius: 50%;
+      width: $base-line-height;
+      height: $base-line-height;
+      border: .25rem solid $off-white;
+      border-top-color: $white;
+      animation: spin $spin-duration infinite linear;
+    &--double {
+      border-style: double;
+      border-width: .5rem;
+    }
+  }
+
+  .loading-pulse {
+    position: relative;
     width: ($base-line-height / 4);
+    height: $base-line-height;
     background: $off-white;
-    top: 50%;
-    transform: translateY(-50%);
     animation: pulse $pulse-duration infinite;
-  }
-  &:before {
-    left: -($base-line-height / 2);
-  }
-  &:after {
-    left: ($base-line-height / 2);
-    animation-delay: ($pulse-duration / 1.5);
+    animation-delay: ($pulse-duration / 3);
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      height: ($base-line-height / 1.5);
+      width: ($base-line-height / 4);
+      background: $off-white;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: pulse $pulse-duration infinite;
+    }
+    &:before {
+      left: -($base-line-height / 2);
+    }
+    &:after {
+      left: ($base-line-height / 2);
+      animation-delay: ($pulse-duration / 1.5);
+    }
   }
 }
