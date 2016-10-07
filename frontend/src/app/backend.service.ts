@@ -21,7 +21,7 @@ export class BackendService {
       let responseJSON = response.json();
       if (responseJSON.token) {
         this.headers.set('X-Access-Token', responseJSON.token);
-        this.session.token = responseJSON.token;
+        this.session.store({token: responseJSON.token});
       }
     }
     if (!response.ok) return Observable.throw(response); // for use with catch

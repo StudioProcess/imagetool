@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.api.login(email, password).subscribe({
       next: (res) => {
         console.log('login success', res.json());
-        this.session.userData = res.json().data; // save user data
+        this.session.store({userData: res.json().data}); // save user data
         this.router.navigate(['/upload']); // navigate to upload view
       },
       error: (res) => {
