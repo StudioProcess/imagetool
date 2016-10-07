@@ -44,6 +44,8 @@ class APIController extends Controller {
 		$total_upload_success = true;
 		//$last_uploaded_images = $user->last_uploaded_images;
 		$uploaded_images = json_decode($user->last_uploaded_images, true);
+		$new_images = [];
+		
 		if ($request->hasFile('images')) {
 			$files = $request->file('images');
 			foreach($files as $file){
@@ -81,8 +83,9 @@ class APIController extends Controller {
 
 					$imagick->clear();
 					$imagick->destroy();
-
-					$uploaded_images[] = array(
+					
+					
+					$new_image = array(
 							'id' => $image_id,
 							'name' => $imagename,
 							'extension' => $extension,
@@ -91,6 +94,9 @@ class APIController extends Controller {
 									'thumb' => $destinationPath."/".$imagename."-thumb.".$extension
 								)
 						);
+					
+					$uploaded_images[] = $new_image;
+					$new_images[] = $new_image;
 
 					File::cleanDirectory($tempPath);
 
@@ -119,7 +125,7 @@ class APIController extends Controller {
 					'message' => 'Add images; Image(s) uploaded.',
 					'data' =>
 						[
-							'last_uploaded_images' => $uploaded_images
+							'images' => $new_images
 						],
 					'token' => $new_token
 				], 200);
