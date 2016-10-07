@@ -21,6 +21,32 @@ export class UploadComponent implements OnInit, AfterViewInit {
 
   }
 
+  fileDropped(dropevent) {
+    dropevent.preventDefault();
+    console.log("file dropped");
+  }
+
+  dragoverHandler(ev) {
+    console.log("Drop");
+    ev.preventDefault();
+    // If dropped items aren't files, reject them
+    var dt = ev.dataTransfer;
+    if (dt.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      for (var i = 0; i < dt.items.length; i++) {
+        if (dt.items[i].kind == "file") {
+          var f = dt.items[i].getAsFile();
+          //console.log("... file[" + i + "].name = " + f.name);
+        }
+      }
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      for (var i = 0; i < dt.files.length; i++) {
+        console.log("... file[" + i + "].name = " + dt.files[i].name);
+      }
+    }
+  }
+
   fileSelected(event) {
     event.preventDefault();
     let fileList = event.target.files;
@@ -28,7 +54,7 @@ export class UploadComponent implements OnInit, AfterViewInit {
     // TODO : implement for multiple files
     let file = fileList[0]; // just first file
     console.log('file', file);
-    
+
     this.backend.addImage(file).subscribe({
       next: (res) => {
         if (res['isProgressEvent']) {

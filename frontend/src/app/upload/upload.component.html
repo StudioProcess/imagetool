@@ -6,14 +6,13 @@
 </div>
 
 <div class="row column">
-  Zum Hochladen von Fotos, die Datei(en) über das Feld ziehen. Bereits hochgeladene Fotos erscheinen weiter unten.<br />
-  Um bereits hochgeladene Fotos wieder zu löschen, mit der Maus über ein Foto navigieren und das entsprechende Symbol klicken.
+  Zum Hochladen von Fotos die Datei(en) über das Feld ziehen oder die entsprechende Schaltfäche verwenden. Erfolgreich hochgeladene Fotos sind mit "Fertig" gekennzeichnet. Um hochgeladene Fotos wieder zu löschen, mit der Maus über ein Foto navigieren und das entsprechende Symbol klicken.
 </div>
 
 <div class="row">
-  <div class="columns dropzone-style">
+  <div class="columns dropzone-style" (drop)="fileDropped($event)" (dragover)="dragoverHandler($event)">
     <input type="file" name="imageChooser" id="imageChooser" class="inputfile" accept="image/*" (change)="fileSelected($event)">
-    <label for="imageChooser" class="imageUploadLabel">Choose a file...</label>
+    <label for="imageChooser" class="imageUploadLabel">Foto(s) auswählen...</label>
 
     <div class="row small-up-1 medium-up-2 large-up-4 previously-uploaded">
 
