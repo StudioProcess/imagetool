@@ -11,12 +11,12 @@ export class CustomBrowserXhr extends BrowserXhr {
   build(): any {
     if (this._useCacheOnce && this._xhr) {
       this._useCacheOnce = false;
-      console.log('deliver cached xhr', this._xhr);
+      // console.log('deliver cached xhr', this._xhr);
       return this._xhr;
     }
     // Create and cache a new XMLHttpRequest object
     this._xhr = super.build();
-    console.log('deliver new xhr', this._xhr);
+    // console.log('deliver new xhr', this._xhr);
     return this._xhr;
   }
   
@@ -47,12 +47,12 @@ export class CustomXHRConnection extends XHRConnection {
     // When subscribed to, creates a new XMLHttpRequest object with an upload progress event listener
     // Makes sure this XHR is reused in the following call to super(), which will then send the XHR.
     let progressResponse = new Observable<Response>( (responseObserver: Observer<Response>) => {
-      console.log('extending xhr with progress');
+      // console.log('extending xhr with progress');
       let xhr = browserXHR.build();
       browserXHR.useCachedForNextBuild();
       
       let onProgress = (event) => {
-        console.log('xhr progress', event);
+        // console.log('xhr progress', event);
         let response = new Response(new ResponseOptions());
         response['isProgressEvent'] = true; // Add unique field to test for this sort of event
         // response.status = 102; // 102 Processing (1xx Informational)
@@ -65,14 +65,13 @@ export class CustomXHRConnection extends XHRConnection {
         responseObserver.next(response);
       };
       let onLoad = (event) => {
-        console.log('xhr complete', event);
+        // console.log('xhr complete', event);
         responseObserver.complete();
       };
-      console.log('XHR', xhr);
       (xhr.upload || xhr).addEventListener('progress', onProgress);
       xhr.addEventListener('load', onLoad);
       return () => {
-        console.log('xhr abort', event);
+        // console.log('xhr abort', event);
         (xhr.upload || xhr).removeEventListener('progress', onProgress);
         xhr.removeEventListener('load', onLoad);
       }
