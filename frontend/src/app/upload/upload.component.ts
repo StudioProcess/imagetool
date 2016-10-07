@@ -18,43 +18,38 @@ export class UploadComponent implements OnInit, AfterViewInit {
   }
 
   deletePhoto() {
-
   }
-
-  fileDropped(dropevent) {
-    dropevent.preventDefault();
-    console.log("file dropped");
-  }
-
-  dragoverHandler(ev) {
-    console.log("Drop");
-    ev.preventDefault();
-    // If dropped items aren't files, reject them
-    var dt = ev.dataTransfer;
-    if (dt.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      for (var i = 0; i < dt.items.length; i++) {
-        if (dt.items[i].kind == "file") {
-          var f = dt.items[i].getAsFile();
-          //console.log("... file[" + i + "].name = " + f.name);
-        }
-      }
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      for (var i = 0; i < dt.files.length; i++) {
-        console.log("... file[" + i + "].name = " + dt.files[i].name);
-      }
-    }
-  }
-
-  fileSelected(event) {
+  
+  onFileSelected(event) {
     event.preventDefault();
     let fileList = event.target.files;
     if (!fileList.length) return; // no file selected
-    // TODO : implement for multiple files
-    let file = fileList[0]; // just first file
-    console.log('file', file);
+    // TODO: implement for multiple files
+    let file = fileList[0]; // just first file (FIXME)
+    console.log('file selected', file);
+    // this.uploadImage(file);
+  }
+  
+  onFileDragged(event) {
+    event.preventDefault();
+    // console.log("file dragged");
+  }
 
+  onFileDropped(event) {
+    event.preventDefault();
+    
+    let fileList = [];
+    // If dropped items aren't files, reject them
+    let dt = event.dataTransfer;
+    fileList = dt.files;
+    if (!fileList.length) return; // no file selected
+    // TODO: implement for multiple files
+    let file = fileList[0]; // just first file (FIXME)
+    console.log('file dropped', file);
+    // this.uploadImage(file);
+  }
+
+  uploadImage(file: File) {
     this.backend.addImage(file).subscribe({
       next: (res) => {
         if (res['isProgressEvent']) {
