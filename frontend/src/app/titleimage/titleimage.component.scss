@@ -3,18 +3,50 @@
   padding-bottom: 2em;
 }
 .image-container:hover .image-border {
-  outline-offset: (-5px);
-  outline: 5px solid #000;
+  outline-offset: (-7px);
+  outline: 7px solid #000;
 }
 
 .image-container:hover .selected-sign {
-  bottom: 35px;
+  width: 40px;
+  height: 40px;
+  bottom: 45px;
   right: 35px;
   position: absolute;
-  display:block;
+  //display:block;
+  text-align: center;
   font-size: 30px;
+  background-color: #FFF;
+  border-radius: 80px;
+}
+
+.image-container:hover img {
+  opacity: 0.6;
 }
 
 .selected-sign {
   display:none;
+}
+
+.selected.image-container .image-border {
+    z-index: 100;
+    outline-offset: (-7px);
+    outline: 7px solid #00950f;
+    opacity: 1.0;
+
+}
+
+.selected.image-container .selected-sign {
+  width: 40px;
+  height: 40px;
+  z-index: 100;
+  bottom: 45px;
+  right: 35px;
+  position: absolute;
+  text-align: center;
+  display:block;
+  font-size: 30px;
+  color: #FFF;
+  background-color: #00950f;
+  border-radius: 80px;
 }

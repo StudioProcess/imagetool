@@ -6,15 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['titleimage.component.scss']
 })
 export class TitleimageComponent implements OnInit {
+  images = [];
+  selected = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }
 
   selectTitleImage(event) {
-    
-    console.log("selectTitleImage pressed");
+    this.selected = !this.selected;
+
+    console.log("selectTitleImage pressed "+this.selected);
   }
 
 }
