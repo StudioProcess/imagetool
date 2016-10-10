@@ -5,11 +5,12 @@ import { UploadComponent } from './upload/upload.component';
 import { TitleimageComponent } from './titleimage/titleimage.component';
 import { EditImageComponent } from './edit-image/edit-image.component';
 import { DownloadComponent } from './download/download.component';
+import { LogoutComponent, RestartComponent } from './shared';
 
 const appRoutes: Routes = [
   { path: 'upload',
     component: UploadComponent,
-    data: { title: 'Fotos hochladen'}
+    data: { title: 'Fotos hochladen' }
   },
   { path: 'titleimage',
     component: TitleimageComponent,
@@ -22,6 +23,14 @@ const appRoutes: Routes = [
   { path: 'download',
     component: DownloadComponent,
     data: { title: 'Fotos runterladen' }
+  },
+  { path: 'logout',
+    component: LogoutComponent,
+    data: { title: 'Ausloggen' }
+  },
+  { path: 'restart',
+    component: RestartComponent,
+    data: { title: 'Neu anfangen' }
   },
   { path: '**',
     component: LoginComponent,
