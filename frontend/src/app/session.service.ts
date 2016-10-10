@@ -4,6 +4,7 @@ interface SessionData {
   route?: string;
   token?: string;
   userData?: {};
+  images?: any[];
 }
 
 @Injectable()
@@ -15,13 +16,14 @@ export class SessionService {
     this.data = {
       route: null,
       token: null,
-      userData : {}
+      userData: {},
+      images: []
     };
     this.retrieve();
   }
   
-  store(data: SessionData): SessionData {
-    Object.assign(this.data, data);
+  store(data: SessionData = {}): SessionData {
+    this.set(data);
     localStorage.setItem('session', JSON.stringify(this.data));
     return this.data;
   }
@@ -33,6 +35,11 @@ export class SessionService {
   }
   
   get(): SessionData {
+    return this.data;
+  }
+  
+  set(data: SessionData = {}): SessionData {
+    Object.assign(this.data, data);
     return this.data;
   }
 
