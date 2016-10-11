@@ -82,9 +82,10 @@ export class BackendService {
       .catch(this.processToken) as Observable<Response>;
   }
 
-  removeImage(id: number) {
+  removeImage(id: number): Observable<any> {
     let search = `image_id=${id}`;
     return this.http.delete(`${this.API_URL}/session/images`, {headers:this.headers, search})
+      .filter(res => !res['isProgressEvent'])
       .map(this.processToken)
       .catch(this.processToken);
   }

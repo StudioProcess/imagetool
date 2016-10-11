@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { SessionService } from '../session.service';
 
@@ -8,7 +8,7 @@ import { SessionService } from '../session.service';
   styleUrls: ['upload.component.scss']
 })
 
-export class UploadComponent implements OnInit, AfterViewInit {
+export class UploadComponent implements OnInit {
   images = [];
   
   constructor(private backend: BackendService, private session: SessionService) { }
@@ -17,10 +17,26 @@ export class UploadComponent implements OnInit, AfterViewInit {
     this.images = this.session.get().images;
   }
 
-  ngAfterViewInit() {
-  }
-
-  deletePhoto() {
+  deleteImage(image) {
+    if (!image.data) {
+      console.log('delete error: no image data');
+      image.uploadState = { error: true };
+      return;
+    }
+    
+    image.uploadState = { deleting: true };
+    this.backend.removeImage(image.data.id).subscribe({
+      next: (res) => {
+        // remove image from session
+        console.info('deleted', res.json());
+        this.images.splice(this.images.indexOf(image), 1);
+        this.session.set({images: this.images});
+      },
+      error: (err) => {
+        console.log('delete error', err.json());
+        image.uploadState = { error: true };
+      }
+    });
   }
   
   onFileSelected(event) {
