@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../session.service';
+import { BackendService } from '../backend.service';
+
 
 @Component({
   selector: 'app-titleimage',
@@ -9,9 +12,10 @@ export class TitleimageComponent implements OnInit {
   images = [];
   selected = false;
 
-  constructor() {}
+  constructor(private backend: BackendService, private session: SessionService) {}
 
   ngOnInit() {
+    this.images = this.session.get().images;
   }
 
   selectTitleImage(event) {
