@@ -53,7 +53,12 @@ export class UploadComponent implements OnInit, AfterViewInit {
 
   uploadImage(file: File) {
     let image = {
-      isUploading: true,
+      state: {
+        uploading: true,
+        processing: false,
+        deleting: false,
+        error: false
+      } as any,
       uploadProgress: 0,
       src: '',
       id: null,
@@ -67,10 +72,13 @@ export class UploadComponent implements OnInit, AfterViewInit {
         if (res['isProgressEvent']) {
           // console.log('upload progress', res);
           image.uploadProgress = res['loaded'] / res['total'] * 100;
+          if (image.uploadProgress >= 99.9) {
+            image.state = { processing:true };
+          }
         } else {
           console.log('upload success', res.json());
           let data = res.json().data;
-          image.isUploading = false;
+          image.state = {}; // uploading success
           image.src = 'http://ito.process.studio/api/public/' + data.images[0].urls.thumb;
           image.id = data.images[0].id;
           image.data = data.images[0];
@@ -81,7 +89,7 @@ export class UploadComponent implements OnInit, AfterViewInit {
       },
       error: (res) => {
         console.log('upload error', res.json());
-        image.isUploading = false;
+        image.state = { error:true };
       }
     });
   }
