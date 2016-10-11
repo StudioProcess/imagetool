@@ -35,7 +35,7 @@ export class SessionService {
   }
   
   get(): SessionData {
-    return this.data;
+    return Object.assign({}, this.data); // Return copy of data
   }
   
   set(data: SessionData = {}): SessionData {

@@ -14,6 +14,7 @@ export class UploadComponent implements OnInit, AfterViewInit {
   constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
+    this.images = this.session.get().images;
   }
 
   ngAfterViewInit() {
@@ -53,15 +54,8 @@ export class UploadComponent implements OnInit, AfterViewInit {
 
   uploadImage(file: File) {
     let image = {
-      state: {
-        uploading: true,
-        processing: false,
-        deleting: false,
-        error: false
-      } as any,
+      uploadState: { uploading: true } as any,
       uploadProgress: 0,
-      src: '',
-      id: null,
       data: null
     };
     
@@ -73,23 +67,21 @@ export class UploadComponent implements OnInit, AfterViewInit {
           // console.log('upload progress', res);
           image.uploadProgress = res['loaded'] / res['total'] * 100;
           if (image.uploadProgress >= 99.9) {
-            image.state = { processing:true };
+            image.uploadState = { processing:true };
           }
         } else {
           console.log('upload success', res.json());
           let data = res.json().data;
-          image.state = {}; // uploading success
-          image.src = 'http://ito.process.studio/api/public/' + data.images[0].urls.thumb;
-          image.id = data.images[0].id;
           image.data = data.images[0];
+          image.uploadState = {}; // uploading success
+          
           // Add uploaded image to session
-          let sessionImages = this.session.get().images;
-          sessionImages.push(image);
+          this.session.set({images: this.images});
         }
       },
       error: (res) => {
         console.log('upload error', res.json());
-        image.state = { error:true };
+        image.uploadState = { error:true };
       }
     });
   }
