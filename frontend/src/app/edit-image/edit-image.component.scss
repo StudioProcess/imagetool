@@ -33,20 +33,23 @@ $pulse-duration: 750ms;
   img {
     filter: grayscale(20);
   }
-  
+
   .loading-container {
     position:absolute;
     top:0;
     left:0;
     right:0;
     bottom:0;
-    margin: auto;
-    padding-top: 4.5em;
-    min-height: 180px;
+    //margin: auto;
+    //padding-top: 6.5em;
+    min-height: 80px;
     background-color: rgba(#CCC, 0.8);
   }
   .loading {
-    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    //margin: 0 auto;
     border-radius: 50%;
     width: $base-line-height;
     height: $base-line-height;
