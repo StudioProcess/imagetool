@@ -10,7 +10,7 @@ import { BackendService } from '../backend.service';
 })
 export class TitleimageComponent implements OnInit {
   images = [];
-  selected = false;
+  selectedImageId = -1;
 
   constructor(private backend: BackendService, private session: SessionService) {}
 
@@ -18,10 +18,8 @@ export class TitleimageComponent implements OnInit {
     this.images = this.session.get().images;
   }
 
-  selectTitleImage(event) {
-    this.selected = !this.selected;
-
-    console.log("selectTitleImage pressed "+this.selected);
+  selectTitleImage(image) {
+    this.selectedImageId = image.data.id;
   }
 
 }
