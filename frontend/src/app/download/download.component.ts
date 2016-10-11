@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../session.service';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-download',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['download.component.scss']
 })
 export class DownloadComponent implements OnInit {
+  images = [];
 
-  constructor() { }
+  constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
+    this.images = this.session.get().images;
   }
 
 }
