@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../session.service';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-edit-image',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['edit-image.component.scss']
 })
 export class EditImageComponent implements OnInit {
-
-  constructor() { }
+  image;
+  
+  constructor(private session: SessionService, private backend: BackendService) {}
 
   ngOnInit() {
+    this.image = this.session.get().selectedImage;
   }
 
 }
