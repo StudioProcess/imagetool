@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../backend.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -6,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private backend: BackendService, private router: Router) { }
 
   ngOnInit() {
-    console.log('LOGOUT component');
+    console.log('logging out...');
+    this.backend.logout().subscribe({
+      next: (res) => {
+        console.info('success logging out', res.json());
+        this.router.navigate(['login']);
+      },
+      error: (err) => {
+        console.log('error logging out', err.json());
+        this.router.navigate(['login']);
+      }
+    });
   }
 
 }

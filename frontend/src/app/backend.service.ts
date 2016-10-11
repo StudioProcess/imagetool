@@ -54,14 +54,16 @@ export class BackendService {
       .catch(this.processToken);
   }
 
-  logout() {
+  logout(): Observable<any> {
     return this.http.get(`${this.API_URL}/logout`, {headers:this.headers})
+      .filter(res => !res['isProgressEvent'])
       .map(this.processToken)
       .catch(this.processToken);
   }
 
-  resetSession() {
+  resetSession(): Observable<any> {
     return this.http.get(`${this.API_URL}/session/reset`, {headers:this.headers})
+      .filter(res => !res['isProgressEvent'])
       .map(this.processToken)
       .catch(this.processToken);
   }
