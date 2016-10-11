@@ -30,10 +30,6 @@ $pulse-duration: 750ms;
 .title-image {
   position: relative;
 
-  img {
-    filter: grayscale(20);
-  }
-
   .loading-container {
     position:absolute;
     top:0;
@@ -43,7 +39,7 @@ $pulse-duration: 750ms;
     //margin: auto;
     //padding-top: 6.5em;
     min-height: 80px;
-    background-color: rgba(#CCC, 0.8);
+    background-color: rgba(#CCC, 0.7);
   }
   .loading {
     top: 50%;
