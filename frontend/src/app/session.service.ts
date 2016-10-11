@@ -5,6 +5,7 @@ interface SessionData {
   token?: string;
   userData?: {};
   images?: any[];
+  selectedImage?: any;
 }
 
 @Injectable()
@@ -17,7 +18,8 @@ export class SessionService {
       route: null,
       token: null,
       userData: {},
-      images: []
+      images: [],
+      selectedImage: null
     };
     this.retrieve();
   }
