@@ -27,27 +27,32 @@ $pulse-duration: 750ms;
   }
 }
 
-.processing {
+.title-image {
+  position: relative;
+
   img {
     filter: grayscale(20);
   }
+  
   .loading-container {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
     margin: auto;
-    margin-top: 1.0em;
-    margin-bottom: 1.0em;
     padding-top: 4.5em;
-    min-width: 270;
     min-height: 180px;
-    background-color: #CCC;
+    background-color: rgba(#CCC, 0.8);
   }
   .loading {
     margin: 0 auto;
-      border-radius: 50%;
-      width: $base-line-height;
-      height: $base-line-height;
-      border: .25rem solid $off-white;
-      border-top-color: $white;
-      animation: spin $spin-duration infinite linear;
+    border-radius: 50%;
+    width: $base-line-height;
+    height: $base-line-height;
+    border: .25rem solid $off-white;
+    border-top-color: $white;
+    animation: spin $spin-duration infinite linear;
     &--double {
       border-style: double;
       border-width: .5rem;
