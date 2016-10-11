@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { BackendService } from '../backend.service';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-upload',
@@ -10,7 +11,7 @@ import { BackendService } from '../backend.service';
 export class UploadComponent implements OnInit, AfterViewInit {
   images = [];
   
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
   }
@@ -54,8 +55,9 @@ export class UploadComponent implements OnInit, AfterViewInit {
     let image = {
       isUploading: true,
       uploadProgress: 0,
+      src: '',
       id: null,
-      src: ''
+      data: null
     };
     
     this.images.push(image);
@@ -71,6 +73,10 @@ export class UploadComponent implements OnInit, AfterViewInit {
           image.isUploading = false;
           image.src = 'http://ito.process.studio/api/public/' + data.images[0].urls.thumb;
           image.id = data.images[0].id;
+          image.data = data.images[0];
+          // Add uploaded image to session
+          let sessionImages = this.session.get().images;
+          sessionImages.push(image);
         }
       },
       error: (res) => {

@@ -30,7 +30,7 @@ export class SessionService {
   
   retrieve(): SessionData {
     let data = JSON.parse( localStorage.getItem('session') );
-    if (data) this.data = data;
+    if (data) this.set(data);
     return this.data;
   }
   
