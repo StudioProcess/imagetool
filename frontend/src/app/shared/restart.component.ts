@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../backend.service';
 import { Router } from '@angular/router';
+import { BackendService } from '../backend.service';
+import { SessionService } from '../session.service';
+
 
 @Component({
   selector: 'app-restart',
@@ -8,13 +10,18 @@ import { Router } from '@angular/router';
 })
 export class RestartComponent implements OnInit {
 
-  constructor(private backend: BackendService, private router: Router) { }
+  constructor(
+    private router: Router, 
+    private backend: BackendService, 
+    private session: SessionService
+  ) {}
 
   ngOnInit() {
     console.log('restarting session...');
     this.backend.resetSession().subscribe({
       next: (res) => {
         console.info('success restarting session', res.json());
+        this.session.set({images: []});
         this.router.navigate(['upload']);
       },
       error: (err) => {
