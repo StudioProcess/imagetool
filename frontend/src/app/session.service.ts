@@ -23,9 +23,14 @@ export class SessionService {
   }
   
   store(data: SessionData = {}): SessionData {
-    this.set(data);
+    Object.assign(this.data, data);
     localStorage.setItem('session', JSON.stringify(this.data));
     return this.data;
+  }
+  
+  // Alias of store
+  set(data: SessionData = {}): SessionData {
+    return this.store(data);
   }
   
   retrieve(): SessionData {
@@ -36,11 +41,6 @@ export class SessionService {
   
   get(): SessionData {
     return Object.assign({}, this.data); // Return copy of data
-  }
-  
-  set(data: SessionData = {}): SessionData {
-    Object.assign(this.data, data);
-    return this.data;
   }
 
 }
