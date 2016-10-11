@@ -158,13 +158,13 @@ $pulse-duration: 750ms;
 html {
   height: 100%;
 }
-body {
-  @extend html;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: #000;
-}
+// body {
+//   @extend html;
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   background: #000;
+// }
 
 .uploaded-sign {
   font-weight: bold;
@@ -348,33 +348,6 @@ body {
     &--double {
       border-style: double;
       border-width: .5rem;
-    }
-  }
-
-  .loading-pulse {
-    position: relative;
-    width: ($base-line-height / 4);
-    height: $base-line-height;
-    background: $off-white;
-    animation: pulse $pulse-duration infinite;
-    animation-delay: ($pulse-duration / 3);
-    &:before, &:after {
-      content: '';
-      position: absolute;
-      display: block;
-      height: ($base-line-height / 1.5);
-      width: ($base-line-height / 4);
-      background: $off-white;
-      top: 50%;
-      transform: translateY(-50%);
-      animation: pulse $pulse-duration infinite;
-    }
-    &:before {
-      left: -($base-line-height / 2);
-    }
-    &:after {
-      left: ($base-line-height / 2);
-      animation-delay: ($pulse-duration / 1.5);
     }
   }
 }

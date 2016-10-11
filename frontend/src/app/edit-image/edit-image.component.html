@@ -6,8 +6,11 @@
 </div>
 
 <div class="row">
-  <div class="small-8 columns">
+  <div class="small-8 columns processing">
     <img [src]="image ? 'http://ito.process.studio/api/public/' + image.data.urls.full: null" width="770px" alt="">
+    <div class="loading-container" [style.background]="url()">
+      <div class="loading"></div>
+  </div>
   </div>
   <div class="small-4 columns">
     <div class="row column edit-titleimage">
