@@ -32,6 +32,10 @@ export class BackendService {
     if (!response.ok) return Observable.throw(response); // for use with catch
     return response; // for use with map
   }
+  
+  noProgressEvents = (res) => {
+    return !res['isProgressEvent'];
+  }
 
   test() {
     this.login('lol', 'lol').subscribe({
@@ -49,27 +53,28 @@ export class BackendService {
 
   login(email:string, password:string): Observable<any> {
     return this.http.post(`${this.API_URL}/login`, {email, password})
-      .filter(res => !res['isProgressEvent'])
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   logout(): Observable<any> {
     return this.http.get(`${this.API_URL}/logout`, {headers:this.headers})
-      .filter(res => !res['isProgressEvent'])
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   resetSession(): Observable<any> {
     return this.http.get(`${this.API_URL}/session/reset`, {headers:this.headers})
-      .filter(res => !res['isProgressEvent'])
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   userData() {
     return this.http.get(`${this.API_URL}/session/userdata`, {headers:this.headers})
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
@@ -85,13 +90,14 @@ export class BackendService {
   removeImage(id: number): Observable<any> {
     let search = `image_id=${id}`;
     return this.http.delete(`${this.API_URL}/session/images`, {headers:this.headers, search})
-      .filter(res => !res['isProgressEvent'])
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   getImages() {
     return this.http.get(`${this.API_URL}/session/images`, {headers:this.headers})
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
@@ -99,18 +105,21 @@ export class BackendService {
   setCover(id: number, options) {
     let body = Object.assign({'image_id': id}, options);
     return this.http.post(`${this.API_URL}/session/cover`, body, {headers:this.headers})
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   getCover() {
     return this.http.get(`${this.API_URL}/session/cover`, {headers:this.headers})
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
 
   getArchive() {
     return this.http.get(`${this.API_URL}/session/archive`, {headers:this.headers})
+      .filter(this.noProgressEvents)
       .map(this.processToken)
       .catch(this.processToken);
   }
