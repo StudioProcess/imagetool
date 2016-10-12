@@ -32,4 +32,19 @@
       //font-weight: bolder;
     }
   }
+  .help {
+    padding-left: 2em;
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #edb715;
+      text-decoration: none;
+    }
+    .activeLink {
+      color: #000;
+      //font-weight: bolder;
+    }
+  }
 }
