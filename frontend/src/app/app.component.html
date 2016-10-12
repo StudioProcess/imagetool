@@ -1,4 +1,6 @@
-<!-- Routed views go here -->
-<router-outlet></router-outlet>
+<main [class.loading]="loading">
+  <!-- Routed views go here -->
+  <router-outlet></router-outlet>
 
-<div class="row columns footer">Ein Projekt von <a href="http://process.studio">Studio Process</a>.</div>
+  <div class="row columns footer">Ein Projekt von <a href="http://process.studio">Studio Process</a>.</div>
+</main>
