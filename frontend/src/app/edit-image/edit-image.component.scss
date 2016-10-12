@@ -39,11 +39,14 @@ $pulse-duration: 750ms;
     //margin: auto;
     //padding-top: 6.5em;
     min-height: 80px;
-    background-color: rgba(#CCC, 0.7);
+    background-color: rgba(#EFEFEF, 0.7);
   }
   .loading {
     top: 50%;
     left: 50%;
+    margin-top: -13px;
+    margin-left: -13px;
+    // transform: translateY(-13px);
     position: absolute;
     //margin: 0 auto;
     border-radius: 50%;
