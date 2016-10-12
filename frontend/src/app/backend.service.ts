@@ -25,6 +25,7 @@ export class BackendService {
     if (response.headers && response.headers.get('Content-Type') == 'application/json') {
       let responseJSON = response.json();
       if (responseJSON.token) {
+        // console.log('new token:', responseJSON.token);
         this.headers.set('X-Access-Token', responseJSON.token);
         this.session.store({token: responseJSON.token});
       }
@@ -33,95 +34,85 @@ export class BackendService {
     return response; // for use with map
   }
   
-  noProgressEvents = (res) => {
-    return !res['isProgressEvent'];
+  // Build a request using a factory function
+  // By using Observable.defer and a factory, we ensure the request is created when subscribed.
+  // This way the latest token is used.
+  // Also add token processing.
+  buildRequest = (requestFactory, withProgressEvents = false): Observable<any> => {
+    let req = Observable.defer(requestFactory);
+    // Filter out progress events (default) or not
+    if (!withProgressEvents) {
+      req = req.filter( res => !res['isProgressEvent'] );
+    }
+    // Process tokens in responses
+    req = req.map(this.processToken).catch(this.processToken);
+    return req;
   }
-
-  test() {
-    this.login('lol', 'lol').subscribe({
-      next: (res) => {
-        console.log('next', res);
-      },
-      error: (res) => {
-        console.log('error', res);
-      },
-      complete: () => {
-        console.log('complete');
-      }
-    });
-  }
+  
 
   login(email:string, password:string): Observable<any> {
-    return this.http.post(`${this.API_URL}/login`, {email, password})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.post(`${this.API_URL}/login`, {email, password})
+    );
   }
 
   logout(): Observable<any> {
-    return this.http.get(`${this.API_URL}/logout`, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/logout`, {headers:this.headers})
+    );
   }
 
   resetSession(): Observable<any> {
-    return this.http.get(`${this.API_URL}/session/reset`, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/session/reset`, {headers:this.headers})
+    );
   }
 
-  userData() {
-    return this.http.get(`${this.API_URL}/session/userdata`, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+  userData(): Observable<any> {
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/session/userdata`, {headers:this.headers})
+    );
   }
 
   addImage(file: File) {
     let data: FormData = new FormData();
     data.append('images[]', file);
-    return this.http.post(`${this.API_URL}/session/images`, data, {headers:this.headers})
-      .map(this.processToken)
-      .catch(this.processToken) as Observable<Response>;
+    return this.buildRequest(
+      () => this.http.post(`${this.API_URL}/session/images`, data, {headers:this.headers}),
+      true
+    );
   }
 
   removeImage(id: number): Observable<any> {
     let search = `image_id=${id}`;
-    return this.http.delete(`${this.API_URL}/session/images`, {headers:this.headers, search})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.delete(`${this.API_URL}/session/images`, {headers:this.headers, search})
+    );
   }
 
-  getImages() {
-    return this.http.get(`${this.API_URL}/session/images`, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+  getImages(): Observable<any> {
+    return this.buildRequest(
+      () => this.http.get( `${this.API_URL}/session/images`, {headers:this.headers} )
+    );
   }
 
   setCover(id: number, options) {
     let body = Object.assign({'image_id': id}, options);
-    return this.http.post(`${this.API_URL}/session/cover`, body, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.post(`${this.API_URL}/session/cover`, body, {headers:this.headers})
+    );
   }
 
   getCover() {
-    return this.http.get(`${this.API_URL}/session/cover`, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/session/cover`, {headers:this.headers})
+    );
   }
 
   getArchive() {
-    return this.http.get(`${this.API_URL}/session/archive`, {headers:this.headers})
-      .filter(this.noProgressEvents)
-      .map(this.processToken)
-      .catch(this.processToken);
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/session/archive`, {headers:this.headers})
+    );
   }
 
 }
