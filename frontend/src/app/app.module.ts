@@ -14,6 +14,7 @@ import { routing, appRoutingProviders } from './app.routing';
 import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MetaControlComponent } from './meta-control/meta-control.component';
+import { HelpComponent } from './help/help.component';
 import { LogoutComponent, RestartComponent } from './shared';
 
 import { BackendService } from './backend.service';
@@ -33,8 +34,10 @@ import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
     HeaderComponent,
     NavigationComponent,
     MetaControlComponent,
+    HelpComponent,
     LogoutComponent,
-    RestartComponent
+    RestartComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
