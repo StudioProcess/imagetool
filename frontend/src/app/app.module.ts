@@ -33,11 +33,9 @@ import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
     HeaderComponent,
     NavigationComponent,
     MetaControlComponent,
-    HelpComponent,
     LogoutComponent,
-    RestartComponent,
-    HelpComponent
-  ],
+    RestartComponent
+    ],
   imports: [
     BrowserModule,
     CommonModule,
