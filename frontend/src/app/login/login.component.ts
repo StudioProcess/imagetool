@@ -11,11 +11,11 @@ import { SessionService } from '../session.service';
 export class LoginComponent implements OnInit {
 
   constructor (
-    private api: BackendService, 
+    private api: BackendService,
     private session: SessionService,
     private router: Router
   ) {}
-  
+
   error: 'LoginWrong'|'Other' = null;
   errorMessage: string;
   submitDisabled: boolean;

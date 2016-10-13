@@ -1,4 +1,4 @@
-<div class="login">
+<div class="login" (keypress)="loginUser(userLogin.value, passwordLogin.value)">
   <div class="row column small-4 logo">
     <img src="../../assets/images/ito/ito-logo_r.png">
   </div>
@@ -12,7 +12,7 @@
   <div class="row small-3">
     <form>
       <div class="columns">
-        <input #userLogin type="text" placeholder="Benutzer" />
+        <input #userLogin type="text" placeholder="Email" autofocus="autofocus" />
       </div>
       <div class="columns">
         <input #passwordLogin type="password" placeholder="Passwort" />
@@ -34,7 +34,7 @@
 
   <div class="row small-3">
     <div class="columns">
-      <button [disabled]="submitDisabled" class="medium success button float-right" (click)="loginUser(userLogin.value, passwordLogin.value)">
+      <button [disabled]="submitDisabled" if="LoginButton" class="medium success button float-right" (click)="loginUser(userLogin.value, passwordLogin.value)">
             Login
           </button>
     </div>
