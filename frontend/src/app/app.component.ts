@@ -62,14 +62,14 @@ export class AppComponent implements OnInit {
     });
     
     return updateUser.switchMapTo(updateImages).do(res => {
-      console.log('resume success', res.json());
+      console.log('resuming', res.json());
       let url = this.session.get().route;
       if (!url) url = '/upload';
       console.info('resuming to', url);
       this.router.navigateByUrl(url);
     }).catch(err => {
       if (err.status == 401) { // Unauthorized i.e. not logged in
-        console.info('No valid token, redirecting to login')
+        console.info('No valid token, redirecting to login', err);
         this.router.navigate(['login']);
       } else {
         console.error('resume error', err);

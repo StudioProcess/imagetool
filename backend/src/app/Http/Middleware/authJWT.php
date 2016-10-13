@@ -19,17 +19,13 @@ class authJWT {
     public function handle($request, Closure $next) {
 
         try {
-
-            try {
-              // Check for X-Access-Token header
-              $user = JWTAuth::toUser($request->header('x-access-token'));
-              // Set as 'token' request param
-              $request->merge(['token' => $request->header('x-access-token')]);
-            } catch (Exception $e) {
-              $user = JWTAuth::toUser($request->input('token'));
-            }
-
-            $token = JWTAuth::getToken();
+          // Check for X-Access-Token header
+          $header_token = $request->header('x-access-token');
+          if ( !empty($header_token) ) {
+            // Set as 'token' request param
+            $request->merge(['token' => $header_token]);
+          }
+          $user = JWTAuth::toUser($request->input('token'));
 
         } catch (Exception $e) {
 
@@ -38,7 +34,8 @@ class authJWT {
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'Authentication failed; Token is invalid.'
+                        'message' => 'Authentication failed; Token is invalid.',
+                        'token_given' => $request->input('token')
                     ], 401);
 
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){

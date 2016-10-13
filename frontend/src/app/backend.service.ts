@@ -25,9 +25,9 @@ export class BackendService {
     if (response.headers && response.headers.get('Content-Type') == 'application/json') {
       let responseJSON = response.json();
       if (responseJSON.token) {
-        // console.log('new token:', responseJSON.token);
         this.headers.set('X-Access-Token', responseJSON.token);
         this.session.store({token: responseJSON.token});
+        console.log('token set:', responseJSON.token);
       }
     }
     if (!response.ok) return Observable.throw(response); // for use with catch
