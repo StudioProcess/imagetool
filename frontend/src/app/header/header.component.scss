@@ -25,21 +25,34 @@
     font-weight: lighter;
   }
 
-  @media screen and (min-width: 1160px) {
-    .dealer-name {
-      font-size: 42px;
-      font-weight: bold;
-      line-height: 2;
-      text-transform: uppercase;
-    }
+  /* Small only */
+@media screen and (max-width: 39.9375em) {
+  .dealer-name {
+    font-size: 18px;
+    font-weight: bold;
+    //line-height: 2;
+    text-transform: uppercase;
   }
-  @media screen and (max-width: 1159px) {
-    .dealer-name {
-      font-size: 20px;
-      font-weight: bold;
-      line-height: 2;
-      text-transform: uppercase;
-    }
+}
+
+/* Medium and up */
+@media screen and (min-width: 40em) {
+  .dealer-name {
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 1.5;
+    text-transform: uppercase;
   }
+}
+
+/* Large and up */
+@media screen and (min-width: 64em) {
+  .dealer-name {
+    font-size: 37px;
+    font-weight: bold;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+}
 
 }
