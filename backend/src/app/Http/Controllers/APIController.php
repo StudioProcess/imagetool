@@ -638,5 +638,19 @@ class APIController extends Controller {
 			], 200);
 
 	}
+	
+	public function get_session_data(Request $request) {
+		$user_data = app('App\Http\Controllers\UserController')
+			->get_user_details($request)->getData()->data;
+		$image_data = $this->get_images($request)->getData()->data;
+		$cover_data = $this->get_cover_settings($request)->getData()->data;
+		$data = array_merge( ['user' => $user_data], (array) $image_data, (array) $cover_data );
+		
+		return response()->json([
+				'status' => 'success',
+				'message' => 'Get session data.',
+				'data' => $data
+			], 200);
+	}
 
 }

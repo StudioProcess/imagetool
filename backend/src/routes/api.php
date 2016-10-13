@@ -40,6 +40,8 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 
 	Route::group(['prefix' => '/session'], function () {
 		
+		Route::get('/data', 'APIController@get_session_data');
+		
 		Route::get('/userdata', 'UserController@get_user_details');
 
 		Route::get('/reset', 'UserController@reset_session');
