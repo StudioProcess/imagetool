@@ -497,10 +497,12 @@ class APIController extends Controller {
 
 		$source_image = null;
 		$found = false;
-		foreach($uploaded_images as $image){
-			if ( $image['id'] == $cover_settings['image_id'] ) {
-				$found = true;
-				$source_image = $image;
+		if ( !empty((array)$cover_settings) ) {
+			foreach($uploaded_images as $image){
+				if ( $image['id'] == $cover_settings['image_id'] ) {
+					$found = true;
+					$source_image = $image;
+				}
 			}
 		}
 		
