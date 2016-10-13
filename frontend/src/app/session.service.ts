@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
 interface SessionData {
   route?: string;
@@ -11,38 +12,40 @@ interface SessionData {
 @Injectable()
 export class SessionService {
 
-  private data: SessionData;
+  private _data: SessionData;
+  private dataSubject: BehaviorSubject<SessionData>;
+  data: Observable<SessionData>;
 
   constructor() {
-    this.data = {
+    this._data = {
       route: null,
       token: null,
       userData: {},
       images: [],
       selectedImage: null
     };
-    this.retrieve();
+    let storedData = this.retrieve();
+    if (storedData) this._data = storedData;
+    this.dataSubject = new BehaviorSubject(this._data);
+    this.data = this.dataSubject.asObservable();
   }
 
-  store(data: SessionData = {}): SessionData {
-    Object.assign(this.data, data);
-    localStorage.setItem('session', JSON.stringify(this.data));
-    return this.data;
+  private retrieve(): SessionData {
+    return JSON.parse( localStorage.getItem('session') );
+  }
+
+  store(data: SessionData = {}) {
+    Object.assign(this._data, data);
+    localStorage.setItem('session', JSON.stringify(this._data));
+    this.dataSubject.next(this.get()); // Push copy of data to observers
   }
 
   // Alias of store
-  set(data: SessionData = {}): SessionData {
-    return this.store(data);
-  }
-
-  retrieve(): SessionData {
-    let data = JSON.parse( localStorage.getItem('session') );
-    if (data) this.set(data);
-    return this.data;
+  set(data: SessionData = {}) {
+    this.store(data);
   }
 
   get(): SessionData {
-    return Object.assign({}, this.data); // Return copy of data
+    return Object.assign({}, this._data); // Return copy of data
   }
-
 }
