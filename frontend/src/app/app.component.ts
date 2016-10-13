@@ -49,12 +49,15 @@ export class AppComponent implements OnInit {
            -> navigate to stored route
      */
     
+    // Refresh session token
+    let refreshSession = this.backend.refreshSession();
+     
     // Update local session data
     let updateSession = this.backend.sessionData().do(res => {
       this.session.store(res.json().data); // Save session data
     });
     
-    return updateSession.do(res => {
+    return refreshSession.switchMapTo(updateSession).do(res => {
       console.log('resuming', res.json());
       let url = this.session.get().route;
       if (!url) url = '/upload';
