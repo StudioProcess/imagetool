@@ -10,11 +10,13 @@ import { SessionService } from '../session.service';
 
 export class UploadComponent implements OnInit {
   images = [];
+  selectedImage = null;
   
   constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
     this.images = this.session.get().images;
+    this.selectedImage = this.session.get().selectedImage;
   }
 
   deleteImage(image) {
@@ -31,6 +33,9 @@ export class UploadComponent implements OnInit {
         console.info('deleted', res.json());
         this.images.splice(this.images.indexOf(image), 1);
         this.session.set({images: this.images});
+        if (this.selectedImage && this.selectedImage.id == image.id) {
+          this.session.set({selectedImage: null});
+        }
       },
       error: (err) => {
         console.log('delete error', err.json());
