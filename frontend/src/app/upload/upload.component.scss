@@ -19,7 +19,7 @@
   outline-offset: -1em;
   color: #868686;
   padding: 1em;
-  outline: 2px dashed #acacac;
+  outline: 2px dashed #959595;
   // &:hover {
   //   background-color: #f4f4f4;
   //   outline-offset: -2px;
@@ -80,14 +80,15 @@
 .inputfile + label {
     // font-size: 1.25em;
     // font-weight: 700;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    color: white;
-    background-color: #CCC;
+    // padding-left: 15px;
+    // padding-right: 15px;
+    // padding-top: 5px;
+    // padding-bottom: 5px;
+    padding: 0.85em 1em;
+    margin-top: 2em;
+    background-color: #333;
     display: inline-block;
-    color: #000;
+    color: #FFF;
 }
 
 .inputfile:focus + label, .inputfile + label:hover {

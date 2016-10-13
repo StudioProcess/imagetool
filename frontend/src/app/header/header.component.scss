@@ -1,14 +1,16 @@
 .header {
+  margin-top: 2em;
   padding-top: 2.0em;
   padding-bottom: 1.5em;
   font-weight: 500;
   vertical-align: middle;
 
   .title {
-    padding-top: 0.75em;
+    padding-top: 0.85em;
     font-weight: bold;
     vertical-align: bottom;
-    text-align: center;
+    //text-align: center;
+    text-align: left;
   }
   .header-logo {
     text-align: right;
@@ -24,8 +26,10 @@
     font-weight: lighter;
   }
   .dealer-name {
-    font-size: 28px;
+    font-size: 45px;
     font-weight: bold;
-    line-height: 2.5;
+    line-height: 2;
+    text-transform: uppercase;
+
   }
 }
