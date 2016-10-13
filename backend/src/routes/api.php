@@ -43,6 +43,8 @@ Route::group(['middleware' => ['before' => 'jwt-auth']], function () {
 		Route::get('/userdata', 'UserController@get_user_details');
 
 		Route::get('/reset', 'UserController@reset_session');
+		
+		Route::get('/refresh', 'UserController@refresh_session');
 
 		Route::post('/images', 'APIController@add_images');
 

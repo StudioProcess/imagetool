@@ -301,6 +301,16 @@ class UserController extends Controller
 			], 200);
 	}
 
+	public function refresh_session(Request $request) {
+		$new_token = JWTAuth::refresh($request->input('token'));
+		
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Refresh session token.',
+			'token' => $new_token
+		], 200);
+	}
+
 	public function user_list(Request $request) {
     	$users = User::all();
 
