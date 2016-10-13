@@ -1,11 +1,11 @@
 <app-header></app-header>
 <app-navigation></app-navigation>
 
-<div class="row column">
+<div class="row column colored">
   <span class="page-title">Titelfoto bearbeiten</span>
 </div>
 
-<div class="row">
+<div class="row colored">
   <div class="small-8 columns">
     <div class="title-image processing">
       <img [src]="image ? 'http://ito.process.studio/api/public/' + image.data.urls.full: ''" alt="">
@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<div class="row column back-forth">
+<div class="row column back-forth colored">
   <button class="medium button float-left" routerLink="/titleimage">
     <i class="ion-arrow-left-b" title="Back"></i> Zurück
   </button>

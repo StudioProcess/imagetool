@@ -1,17 +1,17 @@
 <app-header></app-header>
 <app-navigation></app-navigation>
 
-<div class="row column">
+<div class="row column colored">
   <span class="page-title">Fotos hochladen</span>
 </div>
 
-<div class="row column">
+<div class="row column colored">
   Zum Hochladen von Fotos die Datei(en) über das Feld ziehen oder die entsprechende Schaltfäche verwenden. Erfolgreich hochgeladene Fotos sind mit "Fertig" gekennzeichnet. Um hochgeladene Fotos wieder zu löschen, mit der Maus über ein Foto navigieren und
   das entsprechende Symbol klicken.
 </div>
 
 
-<div class="row">
+<div class="row colored">
   <div class="columns dropzone-style" (drop)="onFileDropped($event)" (dragover)="onFileDragged($event)">
     <input type="file" name="imageChooser" id="imageChooser" class="inputfile" accept="image/*" (change)="onFileSelected($event)">
     <label for="imageChooser" class="imageUploadLabel">Foto(s) auswählen...</label>
@@ -40,7 +40,7 @@
 </div>
 
 
-<div class="row column back-forth">
+<div class="row column back-forth colored">
   <button class="medium button float-right" routerLink="/titleimage">
     Weiter <i class="ion-arrow-right-b" title="Continue"></i>
   </button>
