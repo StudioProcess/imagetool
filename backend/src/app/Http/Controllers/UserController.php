@@ -48,16 +48,18 @@ class UserController extends Controller
 		File::cleanDirectory($tempPath);
 		$destinationPath = 'images/'.$user['id'];
 		File::cleanDirectory($destinationPath);
-
-		$user['brands'] = json_decode($user['brands']);
-        return response()->json(
-    		[
-				'status' => 'success',
-				'message' => 'Login was successful.',
-				'data' => $user,
-				'token' => $token
-			], 200);
-    }
+		
+		// $user['brands'] = json_decode($user['brands']);
+		$session_data = app('App\Http\Controllers\APIController')
+			->get_session_data($request)->getData()->data;
+		
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Login was successful.',
+			'data' => $session_data,
+			'token' => $token
+		], 200);
+  }
 
     public function logout(Request $request) {
 
