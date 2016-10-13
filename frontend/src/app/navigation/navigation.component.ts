@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
   constructor(private session: SessionService) { }
 
   ngOnInit() {
-    this.userColor = this.session.get().userData.theme_color;
+    this.userColor = this.session.get().user.theme_color;
   }
 
 }

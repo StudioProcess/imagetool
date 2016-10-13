@@ -26,10 +26,11 @@ export class LoginComponent implements OnInit {
     this.error = null;
     this.errorMessage = null;
     this.submitDisabled = true;
+    
     this.api.login(email, password).subscribe({
       next: (res) => {
         console.log('login success', res.json());
-        this.session.store({userData: res.json().data}); // save user data
+        this.session.store( res.json().data ); // save session data
         this.router.navigate(['/upload']); // navigate to upload view
       },
       error: (res) => {

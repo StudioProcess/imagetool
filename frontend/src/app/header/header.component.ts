@@ -13,8 +13,7 @@ export class HeaderComponent implements OnInit {
   constructor(private session: SessionService) { }
 
   ngOnInit() {
-    this.userName = this.session.get().userData.name;
-
+    this.userName = this.session.get().user.name;
   }
 
 }

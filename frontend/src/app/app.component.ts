@@ -49,19 +49,12 @@ export class AppComponent implements OnInit {
            -> navigate to stored route
      */
     
-    // Update local user data
-    let updateUser = this.backend.userData().do(res => {
-      // console.log('update user', res);
-      this.session.store({userData: res.json().data});
+    // Update local session data
+    let updateSession = this.backend.sessionData().do(res => {
+      this.session.store(res.json().data); // Save session data
     });
     
-    // Update local image data
-    let updateImages = this.backend.getImages().do(res => {
-      // console.log('update images', res);
-      this.session.store({images: res.json().data.last_uploaded_images});
-    });
-    
-    return updateUser.switchMapTo(updateImages).do(res => {
+    return updateSession.do(res => {
       console.log('resuming', res.json());
       let url = this.session.get().route;
       if (!url) url = '/upload';

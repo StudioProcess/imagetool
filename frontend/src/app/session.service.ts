@@ -4,8 +4,10 @@ import { Observable, BehaviorSubject } from 'rxjs/Rx';
 interface SessionData {
   route?: string;
   token?: string;
-  userData?: any;
+  user?: any;
   images?: any[];
+  cover_settings?: any;
+  cover_thumb?: string;
   selectedImage?: any;
 }
 
@@ -20,8 +22,10 @@ export class SessionService {
     this._data = {
       route: null,
       token: null,
-      userData: {},
+      user: {},
       images: [],
+      cover_settings: {},
+      cover_thumb: null,
       selectedImage: null
     };
     let storedData = this.retrieve();

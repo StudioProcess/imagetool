@@ -67,10 +67,22 @@ export class BackendService {
       () => this.http.get(`${this.API_URL}/session/reset`, {headers:this.headers})
     );
   }
+  
+  refreshSession(): Observable<any> {
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/session/refresh`, {headers:this.headers})
+    );
+  }
 
   userData(): Observable<any> {
     return this.buildRequest(
       () => this.http.get(`${this.API_URL}/session/userdata`, {headers:this.headers})
+    );
+  }
+  
+  sessionData(): Observable<any> {
+    return this.buildRequest(
+      () => this.http.get(`${this.API_URL}/session/data`, {headers:this.headers})
     );
   }
 

@@ -18,14 +18,14 @@ export class UploadComponent implements OnInit {
   }
 
   deleteImage(image) {
-    if (!image.data) {
-      console.log('delete error: no image data');
+    if (!image.id) {
+      console.log('delete error: no image id');
       image.uploadState = { error: true };
       return;
     }
     
     image.uploadState = { deleting: true };
-    this.backend.removeImage(image.data.id).subscribe({
+    this.backend.removeImage(image.id).subscribe({
       next: (res) => {
         // remove image from session
         console.info('deleted', res.json());
@@ -71,8 +71,7 @@ export class UploadComponent implements OnInit {
   uploadImage(file: File) {
     let image = {
       uploadState: { uploading: true } as any,
-      uploadProgress: 0,
-      data: null
+      uploadProgress: 0
     };
     
     this.images.push(image);
@@ -88,9 +87,10 @@ export class UploadComponent implements OnInit {
         } else {
           console.log('upload success', res.json());
           let data = res.json().data;
-          image.data = data.images[0];
+          // image.data = data.images[0];
+          // Add image properties from server response
+          Object.assign(image, data.images[0]);
           image.uploadState = {}; // uploading success
-          
           // Add uploaded image to session
           this.session.set({images: this.images});
         }
