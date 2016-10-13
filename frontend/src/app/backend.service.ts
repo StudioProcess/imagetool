@@ -9,7 +9,7 @@ export class BackendService {
   API_URL = 'http://ito.process.studio/api';
 
   private headers = new Headers();
-  
+
   constructor(private http: Http, private session: SessionService) {
     let token = session.get().token;
     if (token) {
@@ -33,7 +33,7 @@ export class BackendService {
     if (!response.ok) return Observable.throw(response); // for use with catch
     return response; // for use with map
   }
-  
+
   // Build a request using a factory function
   // By using Observable.defer and a factory, we ensure the request is created when subscribed.
   // This way the latest token is used.
@@ -48,7 +48,7 @@ export class BackendService {
     req = req.map(this.processToken).catch(this.processToken);
     return req;
   }
-  
+
 
   login(email:string, password:string): Observable<any> {
     return this.buildRequest(

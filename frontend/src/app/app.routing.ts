@@ -33,10 +33,6 @@ const appRoutes: Routes = [
     component: RestartComponent,
     data: { title: 'Neu anfangen' }
   },
-  { path: 'help',
-    component: HelpComponent,
-    data: { title: 'Hilfe' }
-  },
   { path: '**',
     component: LoginComponent,
     data: { title: 'Einloggen' }
