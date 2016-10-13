@@ -20,14 +20,15 @@
   a {
     color: #000;
     border-bottom: 1px solid #000;
-    &:hover {
-      color: #0000FF;
-      border-bottom: 1px solid #0000FF;
-    }
+  }
+  a:hover {
+    color: #0000FF;
+    border-bottom: 1px solid #0000FF;
   }
 
   .logo {
-    margin-top: 8em;
+    margin-top: 3em;
+    margin-bottom: 6em;
   }
 
   .step {
@@ -38,4 +39,11 @@
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 4em;
+  }
+
+  .credits {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 6em;
+    margin-bottom: 2em;
   }

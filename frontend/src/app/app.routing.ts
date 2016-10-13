@@ -5,7 +5,6 @@ import { UploadComponent } from './upload/upload.component';
 import { TitleimageComponent } from './titleimage/titleimage.component';
 import { EditImageComponent } from './edit-image/edit-image.component';
 import { DownloadComponent } from './download/download.component';
-import { HelpComponent } from './help/help.component';
 import { LogoutComponent, RestartComponent } from './shared';
 
 const appRoutes: Routes = [
