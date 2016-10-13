@@ -195,7 +195,7 @@ class APIController extends Controller {
 				'message' => 'Remove image; Images removed.',
 				'data' =>
 					[
-						'last_uploaded_images' => $uploaded_images
+						'images' => $uploaded_images
 					],
 				// 'token' => $new_token
 			], 200);
@@ -218,7 +218,7 @@ class APIController extends Controller {
 				'message' => 'Get images; List of images.',
 				'data' =>
 					[
-						'last_uploaded_images' => $uploaded_images
+						'images' => $uploaded_images
 					],
 				// 'token' => $new_token
 			], 200);
