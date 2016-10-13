@@ -116,12 +116,12 @@ class UserController extends Controller
 				], 500);
     	}
 
-    	$new_token = JWTAuth::refresh($request->input('token'));
+    	// $new_token = JWTAuth::refresh($request->input('token'));
         return response()->json(
 			[
 				'status' => 'success',
 				'message' => 'Registration was successful.',
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
     }
 		
@@ -163,13 +163,13 @@ class UserController extends Controller
 
     	$user['brands'] = json_decode($user['brands']);
 
-    	$new_token = JWTAuth::refresh($request->input('token'));
+    	// $new_token = JWTAuth::refresh($request->input('token'));
         return response()->json(
         	[
 				'status' => 'success',
 				'message' => 'Get user details.',
 				'data' => $user,
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
     }
 
@@ -263,13 +263,13 @@ class UserController extends Controller
 
 	    $user['brands'] = json_decode($user['brands']);
 
-	    $new_token = JWTAuth::refresh($request->input('token'));
+	    // $new_token = JWTAuth::refresh($request->input('token'));
 	    return response()->json(
         	[
 				'status' => 'success',
 				'message' => 'Update user; Updated user data.',
 				'data' => $user,
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 	}
 
@@ -318,13 +318,13 @@ class UserController extends Controller
     		$user['brands'] = json_decode($user['brands']);
     	}
 
-    	$new_token = JWTAuth::refresh($request->input('token'));
+    	// $new_token = JWTAuth::refresh($request->input('token'));
 	    return response()->json(
         	[
 				'status' => 'success',
 				'message' => 'Get user list.',
 				'data' => $users,
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 	}
 
@@ -352,7 +352,7 @@ class UserController extends Controller
 					], 404);
 			}
 
-    	$new_token = JWTAuth::refresh($request->input('token'));
+    	// $new_token = JWTAuth::refresh($request->input('token'));
 	    return response()->json(
         	[
 				'status' => 'success',
@@ -361,7 +361,7 @@ class UserController extends Controller
 					[
 						'userstats' => $user->loginstats
 					],
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 	}
 }

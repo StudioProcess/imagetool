@@ -118,7 +118,7 @@ class APIController extends Controller {
 		$user->save();
 
 		if ($total_upload_success) {
-			$new_token = JWTAuth::refresh($request->input('token'));
+			// $new_token = JWTAuth::refresh($request->input('token'));
 			return response()->json(
 				[
 					'status' => 'success',
@@ -127,7 +127,7 @@ class APIController extends Controller {
 						[
 							'images' => $new_images
 						],
-					'token' => $new_token
+					// 'token' => $new_token
 				], 200);
 		} else {
 			return response()->json(
@@ -188,7 +188,7 @@ class APIController extends Controller {
 		$user->last_uploaded_images = $uploaded_images_json;
 		$user->save();
 
-		$new_token = JWTAuth::refresh($request->input('token'));
+		// $new_token = JWTAuth::refresh($request->input('token'));
 		return response()->json(
 			[
 				'status' => 'success',
@@ -197,7 +197,7 @@ class APIController extends Controller {
 					[
 						'last_uploaded_images' => $uploaded_images
 					],
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 
 	}
@@ -211,7 +211,7 @@ class APIController extends Controller {
 			$uploaded_images = [];
 		}
 
-		$new_token = JWTAuth::refresh($request->input('token'));
+		// $new_token = JWTAuth::refresh($request->input('token'));
 		return response()->json(
 			[
 				'status' => 'success',
@@ -220,7 +220,7 @@ class APIController extends Controller {
 					[
 						'last_uploaded_images' => $uploaded_images
 					],
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 
 	}
@@ -318,7 +318,7 @@ class APIController extends Controller {
 		$user->cover_settings = json_encode($cover_settings);
 		$user->save();
 
-		$new_token = JWTAuth::refresh($request->input('token'));
+		// $new_token = JWTAuth::refresh($request->input('token'));
 		return response()->json(
 			[
 				'status' => 'success',
@@ -328,7 +328,7 @@ class APIController extends Controller {
 						'cover_settings' => json_decode($user->cover_settings),
 						'cover_thumb' => $coverUrl
 					],
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 
 	}
@@ -521,7 +521,7 @@ class APIController extends Controller {
 		$imagename = $source_image['name'];
 		$extension = $source_image['extension'];
 
-		$new_token = JWTAuth::refresh($request->input('token'));
+		// $new_token = JWTAuth::refresh($request->input('token'));
 		return response()->json(
 			[
 				'status' => 'success',
@@ -531,7 +531,7 @@ class APIController extends Controller {
 						'cover_settings' => $cover_settings,
 						'cover_thumb' => $destinationPath."/".$imagename."-cover-thumb.".$extension
 					],
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 
 	}
@@ -618,7 +618,7 @@ class APIController extends Controller {
 
 		$user->latest_loginstat->increment('downloads');
 
-		$new_token = JWTAuth::refresh($request->input('token'));
+		// $new_token = JWTAuth::refresh($request->input('token'));
 		return response()->json(
 			[
 				'status' => 'success',
@@ -627,7 +627,7 @@ class APIController extends Controller {
 					[
 						'archive' => $destinationPath."/".$zip_name
 					],
-				'token' => $new_token
+				// 'token' => $new_token
 			], 200);
 
 	}
