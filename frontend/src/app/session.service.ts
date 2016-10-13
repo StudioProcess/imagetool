@@ -25,7 +25,9 @@ export class SessionService {
       selectedImage: null
     };
     let storedData = this.retrieve();
-    if (storedData) this._data = storedData;
+    if (storedData) {
+      Object.assign(this._data, storedData);
+    }
     this.dataSubject = new BehaviorSubject(this._data);
     this.data = this.dataSubject.asObservable();
   }
