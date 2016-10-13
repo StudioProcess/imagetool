@@ -170,7 +170,9 @@ class UserController extends Controller
         	[
 				'status' => 'success',
 				'message' => 'Get user details.',
-				'data' => $user,
+				'data' => [
+					'user' => $user
+				],
 				// 'token' => $new_token
 			], 200);
     }

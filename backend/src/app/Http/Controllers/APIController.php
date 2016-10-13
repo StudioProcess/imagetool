@@ -646,7 +646,7 @@ class APIController extends Controller {
 			->get_user_details($request)->getData()->data;
 		$image_data = $this->get_images($request)->getData()->data;
 		$cover_data = $this->get_cover_settings($request)->getData()->data;
-		$data = array_merge( ['user' => $user_data], (array) $image_data, (array) $cover_data );
+		$data = array_merge( (array)$user_data, (array)$image_data, (array)$cover_data );
 		
 		return response()->json([
 				'status' => 'success',
