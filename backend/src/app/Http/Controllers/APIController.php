@@ -476,22 +476,24 @@ class APIController extends Controller {
 		$user = JWTAuth::toUser($request['token']);
 
 		$uploaded_images = json_decode($user->last_uploaded_images, true);
-		if ( empty($uploaded_images) ) {
-			return response()->json(
-					[
-						'status' => 'error',
-						'message' => 'Get cover settings; No images present.'
-					], 404);
-		}
+		if ( empty($uploaded_images) ) $uploaded_images = [];
+		// if ( empty($uploaded_images) ) {
+		// 	return response()->json(
+		// 			[
+		// 				'status' => 'error',
+		// 				'message' => 'Get cover settings; No images present.'
+		// 			], 404);
+		// }
 
 		$cover_settings = json_decode($user['cover_settings'], true);
-		if (empty($cover_settings)) {
-			return response()->json(
-				[
-					'status' => 'error',
-					'message' => 'Get cover settings; No cover specified.'
-				], 400);
-		}
+		if ( empty($cover_settings) ) $cover_settings = (object)[];
+		// if (empty($cover_settings)) {
+		// 	return response()->json(
+		// 		[
+		// 			'status' => 'error',
+		// 			'message' => 'Get cover settings; No cover specified.'
+		// 		], 400);
+		// }
 
 		$source_image = null;
 		$found = false;
@@ -501,25 +503,30 @@ class APIController extends Controller {
 				$source_image = $image;
 			}
 		}
+		
+		// TODO: this is redundant, remove:
+		// $found = false;
+		// foreach($uploaded_images as $image){
+		// 	if ( $image['id'] == $cover_settings['image_id'] ) {
+		// 		$found = true;
+		// 	}
+		// }
 
-		$found = false;
-		foreach($uploaded_images as $image){
-			if ( $image['id'] == $cover_settings['image_id'] ) {
-				$found = true;
-			}
+		// if ( !$found ) {
+		// 	return response()->json(
+		// 		[
+		// 			'status' => 'error',
+		// 			'message' => 'Get cover settings; No cover specified.'
+		// 		], 400);
+		// }
+		
+		$cover_thumb = '';
+		if ($found) {
+			$destinationPath = 'images/'.$user['id'];
+			$imagename = $source_image['name'];
+			$extension = $source_image['extension'];
+			$cover_thumb = $destinationPath."/".$imagename."-cover-thumb.".$extension;
 		}
-
-		if ( !$found ) {
-			return response()->json(
-				[
-					'status' => 'error',
-					'message' => 'Get image archive; No cover specified.'
-				], 400);
-		}
-
-		$destinationPath = 'images/'.$user['id'];
-		$imagename = $source_image['name'];
-		$extension = $source_image['extension'];
 
 		// $new_token = JWTAuth::refresh($request->input('token'));
 		return response()->json(
@@ -529,7 +536,7 @@ class APIController extends Controller {
 				'data' =>
 					[
 						'cover_settings' => $cover_settings,
-						'cover_thumb' => $destinationPath."/".$imagename."-cover-thumb.".$extension
+						'cover_thumb' => $cover_thumb
 					],
 				// 'token' => $new_token
 			], 200);
