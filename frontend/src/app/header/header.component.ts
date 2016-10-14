@@ -8,12 +8,12 @@ import { SessionService } from '../session.service';
 })
 export class HeaderComponent implements OnInit {
 
-  userName: string;
+  user;
 
   constructor(private session: SessionService) { }
 
   ngOnInit() {
-    this.userName = this.session.get().user.name;
+    this.user = this.session.get().user;
   }
 
 }

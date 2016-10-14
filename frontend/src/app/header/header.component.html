@@ -1,9 +1,9 @@
 <div class="row header">
   <div class="small-6 medium-4 large-3 columns header-logo">
-    <img src="../../assets/images/cardealers/deschberger.png">
+    <img [src]="user?.id ? 'http://ito.process.studio/api/public/user-logos/' + user.id + '.png' : ''">
   </div>
   <div class="small-6 medium-8 large-9 columns title">
-    <span class="dealer-name">{{userName}}</span>
+    <span class="dealer-name">{{user?.name}}</span>
     <!-- <img src="../../assets/images/ito/ito-logo_r.png" alt="ITO — Image Tool Online" title="ITO — Image Tool Online"> -->
   </div>
   <!-- <div class="small-7 columns title">
