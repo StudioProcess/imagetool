@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.error = null;
     this.errorMessage = null;
     this.submitDisabled = true;
-    
+
     this.api.login(email, password).subscribe({
       next: (res) => {
         console.log('login success', res.json());
@@ -46,6 +46,14 @@ export class LoginComponent implements OnInit {
         }
       }
     });
+  }
+
+  loginUserKey(email: string, password: string, ev: KeyboardEvent){
+    if(ev.keyCode == 13){
+      this.loginUser(email, password);
+    } else {
+      console.log("wrong key");
+    }
   }
 
 }
