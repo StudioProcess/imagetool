@@ -5,22 +5,20 @@
 .checkbox-text {
   font-size: 16px;
 }
-
 $base-line-height: 24px;
 $white: rgb(255,255,255);
 $off-white: rgba($white, 0.2);
 $spin-duration: 1s;
 $pulse-duration: 750ms;
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
-
 @keyframes pulse {
   50% {
     background: $white;
@@ -29,19 +27,31 @@ $pulse-duration: 750ms;
 
 .title-image {
   position: relative;
+}
 
+.loading-container {
+  display: none;
+}
+.loading {
+  display: none;
+}
+
+.processing {
   .loading-container {
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     //margin: auto;
     //padding-top: 6.5em;
     min-height: 80px;
     background-color: rgba(#EFEFEF, 0.7);
   }
+
   .loading {
+    display: block;
     top: 50%;
     left: 50%;
     margin-top: -13px;
@@ -52,17 +62,18 @@ $pulse-duration: 750ms;
     border-radius: 50%;
     width: $base-line-height;
     height: $base-line-height;
-    border: .25rem solid $off-white;
+    border: 0.25rem solid $off-white;
     border-top-color: $white;
     animation: spin $spin-duration infinite linear;
+
     &--double {
       border-style: double;
-      border-width: .5rem;
+      border-width: 0.5rem;
     }
   }
 }
 
-.empty-array{
+.empty-array {
   // padding-top: 2em;
   // padding-bottom: 10em;
   color: #ee0000;
