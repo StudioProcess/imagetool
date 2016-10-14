@@ -16,7 +16,7 @@ export class DownloadComponent implements OnInit {
 
   ngOnInit() {
     this.images = this.session.get().images;
-    this.emptyImagesArray = !this.images;
+    this.emptyImagesArray = !this.images.length;
   }
   
   onDownloadButtonClick(e) {
