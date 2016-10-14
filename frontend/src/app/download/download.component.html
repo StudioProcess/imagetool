@@ -14,7 +14,7 @@
 </div>
 
 <div class="row column colored" *ngIf="!emptyImagesArray">
-  <button class="large success button float-center" [disabled]="isProcessing">
+  <button class="large success button float-center" [disabled]="isProcessing" (click)="onDownloadButtonClick($event)">
     {{isProcessing ? 'Wird verarbeitet...' : 'Download starten'}} <i class="ion-arrow-down-a" title="Download" *ngIf="!isProcessing"></i>
   </button>
 </div>

@@ -18,5 +18,16 @@ export class DownloadComponent implements OnInit {
     this.images = this.session.get().images;
     this.emptyImagesArray = !this.images;
   }
+  
+  onDownloadButtonClick(e) {
+    this.isProcessing = true;
+    this.backend.getArchive().subscribe(res => {
+      console.log(res);
+      this.isProcessing = false;
+    }, err => {
+      console.log(err);
+      this.isProcessing = false;
+    });
+  }
 
 }
