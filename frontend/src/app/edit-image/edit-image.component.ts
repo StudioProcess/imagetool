@@ -10,10 +10,10 @@ import { BackendService } from '../backend.service';
 export class EditImageComponent implements OnInit {
   image;
   titleimageChosen: boolean;
-  brandNames = ['Alfa Romeo', 'Crysler', 'Fiat', 'Jeep', 'Maserati'];
+  brandNames = ['Alfa Romeo', 'Chrysler', 'Fiat', 'Jeep', 'Maserati'];
   brands;
   useSticker: boolean = false;
-  isProcessing: boolean = true;
+  isProcessing: boolean = false;
 
   constructor(private session: SessionService, private backend: BackendService) {
     this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(' ', '_')}) );
