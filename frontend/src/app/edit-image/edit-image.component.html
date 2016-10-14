@@ -13,7 +13,7 @@
 <div *ngIf="titleimageChosen" class="row colored">
   <div class="small-8 columns">
     <div class="title-image" [class.processing]="isProcessing">
-      <img [src]="image ? 'http://ito.process.studio/api/public/' + image.urls.full: ''" alt="">
+      <img [src]="'http://ito.process.studio/api/public/' + coverURL" alt="">
       <div class="loading-container"><div class="loading"></div></div>
     </div>
   </div>
@@ -26,7 +26,7 @@
         Automarke
       </div>
       <div class="small-9 columns">
-          <select>
+          <select #brandSelect>
             <option value="none">– keine –</option>
             <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
           </select>
@@ -34,15 +34,15 @@
     </div>
     <div class="row">
       <fieldset class="small-12 columns">
-        <input id="checkbox1" type="checkbox" (change)="onCheckboxChanged($event)"><label for="checkbox1"> <span class="checkbox-text">Sticker verwenden?</span></label>
+        <input #stickerCheckbox id="checkbox1" type="checkbox" (change)="onCheckboxChanged($event)"><label for="checkbox1"> <span class="checkbox-text">Sticker verwenden?</span></label>
       </fieldset>
     </div>
     <div class="row column">
-      <input type="text" name="stoererText" placeholder="Text für Sticker" [disabled]="!useSticker">
+      <input #stickerText type="text" name="stoererText" placeholder="Text für Sticker" [disabled]="!useSticker">
     </div>
     <div class="row">
       <div class="small-12 column">
-        <button class="medium button float-left" [disabled]="isProcessing">
+        <button class="medium button float-left" [disabled]="isProcessing" (click)="onSubmitButtonClicked(brandSelect.value, stickerCheckbox.checked, stickerText.value)">
           <i class="ion-loop" title="Back"></i> {{isProcessing ? 'Wird verarbeitet...' : 'Bild generieren'}}
         </button>
       </div>

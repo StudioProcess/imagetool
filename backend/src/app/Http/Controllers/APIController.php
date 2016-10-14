@@ -401,10 +401,10 @@ class APIController extends Controller {
 		$image_height = $imagick->getImageHeight();
 
 		// Place logos
-		$userlogo = new Imagick(public_path()."/userlogos/".str_slug($user->name).".png");
+		$userlogo = new Imagick(public_path()."/user-logos/".str_slug($user->id, '_').".png");
 		$userlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
 
-		$brandlogo = new Imagick(public_path()."/carbrands/".str_slug($logos_brand).".png");
+		$brandlogo = new Imagick(public_path()."/brand-logos/".str_slug($logos_brand, '_').".png");
 		$brandlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
 
 		$logo_compound_width = $userlogo->getImageWidth() + $brandlogo->getImageWidth() + $unit;
