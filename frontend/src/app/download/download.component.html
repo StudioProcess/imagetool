@@ -5,17 +5,21 @@
   <span class="page-title">Fotos herunterladen</span>
 </div>
 
-<div class="row column colored">
+<div *ngIf="emptyImagesArray" class="row column empty-array colored">
+  Es wurden noch keine Fotos hochgeladen.
+</div>
+
+<div class="row column colored" *ngIf="!emptyImagesArray">
   <span class="sub-title">Archiv herunterladen</span><br /><br />Hier sind alle hochgeladenen und berarbeiteten Fotos zu sehen. Um Änderungen vorzunehmen, einfach zum entsprechenden Menupunkt wechseln. Das gesamte Archiv der bearbeiteten Fotos kann als ZIP-Datei runtergeladen werden.<br /><br />
 </div>
 
-<div class="row column colored">
+<div class="row column colored" *ngIf="!emptyImagesArray">
   <button class="large success button float-center disabled">
     Download starten <i class="ion-arrow-down-a" title="Download"></i>
   </button>
 </div>
 
-<div class="row column colored">
+<div class="row column colored" *ngIf="!emptyImagesArray">
   <div class="row column">
     <span class="sub-title">Das Archiv besteht aus diesen Fotos:</span>
   </div>
