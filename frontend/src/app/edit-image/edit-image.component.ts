@@ -61,6 +61,7 @@ export class EditImageComponent implements OnInit {
   }
   
   processImage() {
+    if (!this.titleimageChosen) return;
     this.isProcessing = true;
     this.backend.setCover(this.image.id, this.coverOptions).subscribe(res => {
       console.info('image processed', res.json());
