@@ -19,6 +19,7 @@
   }
   img {
     //max-height: 100px;
+    padding-bottom: 0.3em;
   }
   .title-header {
     font-size: 20px;
@@ -53,6 +54,13 @@
     line-height: 1.5;
     text-transform: uppercase;
   }
+}
+
+.center-content {
+  text-align: center;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 }
