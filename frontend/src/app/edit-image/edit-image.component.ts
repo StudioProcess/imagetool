@@ -10,16 +10,22 @@ import { BackendService } from '../backend.service';
 export class EditImageComponent implements OnInit {
   image;
   titleimageChosen: boolean;
+  brandNames = ['Alfa Romeo', 'Crysler', 'Fiat', 'Jeep', 'Maserati'];
+  brands;
+  useSticker: boolean = false;
+  isProcessing: boolean = true;
 
-  constructor(private session: SessionService, private backend: BackendService) {}
+  constructor(private session: SessionService, private backend: BackendService) {
+    this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(' ', '_')}) );
+  }
 
   ngOnInit() {
     this.image = this.session.get().selectedImage;
-    if(this.image == null){
-      this.titleimageChosen = false;
-    } else {
-      this.titleimageChosen = true;
-    }
+    this.titleimageChosen = this.image;
+  }
+  
+  onCheckboxChanged(e) {
+    this.useSticker = e.target.checked;
   }
 
 }

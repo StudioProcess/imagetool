@@ -12,7 +12,7 @@
 
 <div *ngIf="titleimageChosen" class="row colored">
   <div class="small-8 columns">
-    <div class="title-image processing">
+    <div class="title-image" [class.processing]="isProcessing">
       <img [src]="image ? 'http://ito.process.studio/api/public/' + image.urls.full: ''" alt="">
       <div class="loading-container"><div class="loading"></div></div>
     </div>
@@ -27,26 +27,23 @@
       </div>
       <div class="small-9 columns">
           <select>
-            <option value="husker">Alfa Romeo</option>
-            <option value="starbuck">Chrysler</option>
-            <option value="starbuck">Fiat</option>
-            <option value="hotdog">Jeep</option>
-            <option value="apollo">Maserati</option>
+            <option value="none">– keine –</option>
+            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
           </select>
       </div>
     </div>
     <div class="row">
       <fieldset class="small-12 columns">
-        <input id="checkbox1" type="checkbox"><label for="checkbox1"> <span class="checkbox-text">Störer verwenden?</span></label>
+        <input id="checkbox1" type="checkbox" (change)="onCheckboxChanged($event)"><label for="checkbox1"> <span class="checkbox-text">Sticker verwenden?</span></label>
       </fieldset>
     </div>
     <div class="row column">
-      <input type="text" name="stoererText" placeholder="Text für Störer">
+      <input type="text" name="stoererText" placeholder="Text für Sticker" [disabled]="!useSticker">
     </div>
     <div class="row">
       <div class="small-12 column">
-        <button class="medium button float-left">
-          <i class="ion-loop" title="Back"></i> Bild generieren
+        <button class="medium button float-left" [disabled]="isProcessing">
+          <i class="ion-loop" title="Back"></i> {{isProcessing ? 'Wird verarbeitet...' : 'Bild generieren'}}
         </button>
       </div>
     </div>
