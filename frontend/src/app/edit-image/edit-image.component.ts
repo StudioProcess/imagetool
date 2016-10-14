@@ -9,11 +9,17 @@ import { BackendService } from '../backend.service';
 })
 export class EditImageComponent implements OnInit {
   image;
-  
+  titleimageChosen: boolean;
+
   constructor(private session: SessionService, private backend: BackendService) {}
 
   ngOnInit() {
     this.image = this.session.get().selectedImage;
+    if(this.image == null){
+      this.titleimageChosen = false;
+    } else {
+      this.titleimageChosen = true;
+    }
   }
 
 }
