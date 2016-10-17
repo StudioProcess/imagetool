@@ -9,14 +9,18 @@ import { BackendService } from '../backend.service';
 })
 export class DownloadComponent implements OnInit {
   images = [];
+  coverThumb: string;
   emptyImagesArray: boolean;
   isProcessing: boolean = false;
 
   constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
+    let coverId = this.session.get().cover_settings.image_id;
+    this.coverThumb = this.session.get().cover_urls.thumb;
     this.images = this.session.get().images;
     this.emptyImagesArray = !this.images.length;
+    this.images = this.images.filter(img => img.id != coverId);
   }
   
   onDownloadButtonClick(e) {
