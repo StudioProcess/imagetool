@@ -89,7 +89,6 @@
     display: block;
     font-size: 19px;
     font-weight: bolder;
-    padding-bottom: 0.2em;
   }
   .breadcrumbs {
     font-size: 19px;
@@ -100,7 +99,7 @@
     .menu-text {
       vertical-align: sub;
       padding-left: 0.2em;
-      padding-right: 5.1em;
+      padding-right: 0.4em;
     }
     a {
       color: #000;
@@ -123,7 +122,7 @@
 
     .badge {
       background: #000;
-      margin-left: 15.0em;
+      margin-left: 2.0em;
     }
   }
 }
