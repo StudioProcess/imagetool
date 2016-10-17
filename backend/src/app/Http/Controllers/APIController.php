@@ -477,7 +477,7 @@ class APIController extends Controller {
 
 			// Add text
 			$text = new ImagickDraw();
-			$text->setFont('fonts/Asap-Regular.ttf');
+			$text->setFont('fonts/Anton.ttf');
 			$text->setFontSize(30);
 			$text->setFillColor('black');
 
