@@ -421,25 +421,34 @@ class APIController extends Controller {
 
 		$image_width = $imagick->getImageWidth();
 		$image_height = $imagick->getImageHeight();
-
+		
+		
 		// Place logos
+		$brand_missing = empty($logos_brand) || $logos_brand == 'none' || $logos_brand == 'n/a';
 		$userlogo = new Imagick(public_path()."/user-logos/".str_slug($user->id, '_').".png");
 		$userlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
-
-		$brandlogo = new Imagick(public_path()."/brand-logos/".str_slug($logos_brand, '_').".png");
-		$brandlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
-
-		$logo_compound_width = $userlogo->getImageWidth() + $brandlogo->getImageWidth() + $unit;
+		
+		if (!$brand_missing) {
+			$brandlogo = new Imagick(public_path()."/brand-logos/".str_slug($logos_brand, '_').".png");
+			$brandlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
+		}
+			
+		$logo_compound_width = $userlogo->getImageWidth() + $unit;
+		if (!$brand_missing) { $logo_compound_width += $brandlogo->getImageWidth(); }
 		$logo_compound = new Imagick();
 		$logo_compound->newImage($logo_compound_width, $logo_height, 'none');
 
 		$logo_compound->compositeImage( $userlogo, imagick::COMPOSITE_OVER, 0, 0);
-		$logo_compound->compositeImage( $brandlogo, imagick::COMPOSITE_OVER, $userlogo->getImageWidth() + $unit, 0);
+		if (!$brand_missing) {
+			$logo_compound->compositeImage( $brandlogo, imagick::COMPOSITE_OVER, $userlogo->getImageWidth() + $unit, 0);
+		}
 		
 		$userlogo->clear();
 		$userlogo->destroy();
-		$brandlogo->clear();
-		$brandlogo->destroy();
+		if (!$brand_missing) {
+			$brandlogo->clear();
+			$brandlogo->destroy();
+		}
 
 		$offset = $border_width + $unit;
 

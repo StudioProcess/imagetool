@@ -23,8 +23,8 @@ export class EditImageComponent implements OnInit {
       "orientation": "horizontal"
     },
     "logos": {
-      "position": 4,
-      "brand": "fiat"
+      // "position": 4,
+      "brand": ""
     },
     "eyecatcher": {
       // "position": 2,
@@ -53,7 +53,6 @@ export class EditImageComponent implements OnInit {
   
   onSubmitButtonClicked(brand, stickerChecked, stickerText) {
     console.log('SUBMIT', brand, stickerChecked, stickerText);
-    if (brand == 'none') brand = 'fiat';
     this.coverOptions.logos.brand = brand;
     if (this.useSticker) {
       this.coverOptions.eyecatcher.text = stickerText;
