@@ -33,55 +33,55 @@
 
 
   /* Small only */
-@media screen and (max-width: 39.9375em) {
-  li {
-    padding-left: 0.1em;
-    padding-right: 5.1em;
-    padding-top: 0.5em;
-    text-transform: none;
-    display: block;
-    font-size: 16px;
-    font-weight: bolder;
-  }
-  .breadcrumbs {
-    font-size: 16px;
-    font-weight: bolder;
-    margin-top: 0em;
-    text-align: center;
-
-    .menu-text {
-      vertical-align: sub;
-      padding-left: 0.1em;
-      padding-right: 0.1em;
-    }
-    a {
-      color: #000;
-      text-decoration: none;
-    }
-    a:hover {
-      color: $dealercolor;
-      text-decoration: none;
-      .badge {
-        background: $dealercolor;
-      }
-    }
-    .activeLink {
-      color: $dealercolor;
-      //font-weight: bolder;
-      .badge {
-        background: $dealercolor;
-      }
-    }
-
-    .badge {
-      background: #000;
-      margin-left: 6.5em;
-    }
-  }
-}
+// @media screen and (max-width: 39.9375em) {
+//   li {
+//     padding-left: 0.1em;
+//     padding-right: 5.1em;
+//     padding-top: 0.5em;
+//     text-transform: none;
+//     display: block;
+//     font-size: 16px;
+//     font-weight: bolder;
+//   }
+//   .breadcrumbs {
+//     font-size: 16px;
+//     font-weight: bolder;
+//     margin-top: 0em;
+//     text-align: center;
+//
+//     .menu-text {
+//       vertical-align: sub;
+//       padding-left: 0.1em;
+//       padding-right: 0.1em;
+//     }
+//     a {
+//       color: #000;
+//       text-decoration: none;
+//     }
+//     a:hover {
+//       color: $dealercolor;
+//       text-decoration: none;
+//       .badge {
+//         background: $dealercolor;
+//       }
+//     }
+//     .activeLink {
+//       color: $dealercolor;
+//       //font-weight: bolder;
+//       .badge {
+//         background: $dealercolor;
+//       }
+//     }
+//
+//     .badge {
+//       background: #000;
+//       margin-left: 6.5em;
+//     }
+//   }
+// }
 
 /* Medium and up */
-@media screen and (min-width: 40em) and (max-width: 76.9375em) {
+@media screen and (max-width: 76.9375em) {
   li {
     padding-left: 0.5em;
     padding-right: 0.5em;
