@@ -11,11 +11,11 @@ export class EditImageComponent implements OnInit {
   image;
   coverURL: string;
   titleimageChosen: boolean;
-  brandNames = ['Alfa Romeo', 'Chrysler', 'Fiat', 'Jeep', 'Maserati'];
+  brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia', 'Maserati'];
   brands;
   useSticker: boolean = false;
   isProcessing: boolean = false;
-  
+
   coverOptions = {
     "border": {
       "color1": "#efe409",
@@ -33,7 +33,7 @@ export class EditImageComponent implements OnInit {
       "text": ""
     }
   };
-  
+
   constructor(private session: SessionService, private backend: BackendService) {
     this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(' ', '_')}) );
   }
@@ -43,14 +43,14 @@ export class EditImageComponent implements OnInit {
     this.image = sessionData.selectedImage;
     this.coverURL = sessionData.cover_thumb;
     this.titleimageChosen = this.image;
-    
+
     this.processImage();
   }
-  
+
   onCheckboxChanged(e) {
     this.useSticker = e.target.checked;
   }
-  
+
   onSubmitButtonClicked(brand, stickerChecked, stickerText) {
     console.log('SUBMIT', brand, stickerChecked, stickerText);
     this.coverOptions.logos.brand = brand;
@@ -62,7 +62,7 @@ export class EditImageComponent implements OnInit {
     console.log(this.coverOptions);
     this.processImage();
   }
-  
+
   processImage() {
     if (!this.titleimageChosen) return;
     this.isProcessing = true;
