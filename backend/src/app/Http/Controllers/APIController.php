@@ -308,17 +308,17 @@ class APIController extends Controller {
 		    }
 		}
 
-		$coverUrl = false;
+		$coverUrls = false;
 		$coverError = null;
 		try {
-			$coverUrl = APIController::processCover($cover_settings, $uploaded_images, $user, true);
+			$coverUrls = APIController::processCover($cover_settings, $uploaded_images, $user);
 		} catch (\Exception $e) {
 			$coverError = $e;
 		}
 		
 		// $coverUrl = null;
 		
-		if ( !$coverUrl ) {
+		if ( !$coverUrls ) {
 			$response = [
 				'status' => 'error',
 				'message' => 'Set cover; There was an error processing the cover.',
@@ -348,17 +348,14 @@ class APIController extends Controller {
 				'data' =>
 					[
 						'cover_settings' => json_decode($user->cover_settings),
-						'cover_thumb' => $coverUrl
+						'cover_urls' => $coverUrls
 					],
 				// 'token' => $new_token
 			], 200);
 
 	}
 
-	public static function processCover($cover_settings, $uploaded_images, $user, $preview){
-
-		$image_version = ($preview) ? 'thumb' : 'full';
-
+	public static function processCover($cover_settings, $uploaded_images, $user) {
 		$source_image = null;
 		$found = false;
 		foreach($uploaded_images as $image_key => $image){
@@ -390,7 +387,7 @@ class APIController extends Controller {
 		$eyecatcher_color = $cover_settings['eyecatcher']['color'];
 		$eyecatcher_text = $cover_settings['eyecatcher']['text'];
 
-		$imagick = new Imagick(public_path()."/".$destinationPath."/".$imagename."-".$image_version.".".$extension);
+		$imagick = new Imagick(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
 
 		$image_width = $imagick->getImageWidth();
 		$image_height = $imagick->getImageHeight();
@@ -496,12 +493,16 @@ class APIController extends Controller {
 		}
 
 		// Write file
-		$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-cover-".$image_version.".".$extension);
-
+		$url_full = $destinationPath."/".$imagename."-cover-full.".$extension;
+		$url_thumb = $destinationPath."/".$imagename."-cover-small.".$extension;
+		$imagick->writeImage(public_path()."/".$url_full);
+		$smallsize = env('IMAGE_SIZE_SMALL', 300);
+		$imagick->resizeImage($smallsize, $smallsize, imagick::FILTER_LANCZOS, 1, true);
+		$imagick->writeImage(public_path()."/".$url_thumb);
 		$imagick->clear();
 		$imagick->destroy();
 
-		return $destinationPath."/".$imagename."-cover-".$image_version.".".$extension;
+		return ['thumb' => $url_thumb, 'full' => $url_full];
 	}
 
 	public function get_cover_settings(Request $request) {

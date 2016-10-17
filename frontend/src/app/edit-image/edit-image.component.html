@@ -13,7 +13,7 @@
 <div *ngIf="titleimageChosen" class="row colored">
   <div class="small-8 columns">
     <div class="title-image" [class.processing]="isProcessing">
-      <img [src]="'http://ito.process.studio/api/public/' + coverURL" alt="" width="100%">
+      <img [src]="'http://ito.process.studio/api/public/' + coverURL?.full" alt="" width="100%">
       <div class="loading-container"><div class="loading"></div></div>
     </div>
   </div>

@@ -7,7 +7,7 @@ interface SessionData {
   user?: any;
   images?: any[];
   cover_settings?: any;
-  cover_thumb?: string;
+  cover_urls?: any;
   selectedImage?: any;
 }
 
@@ -25,7 +25,7 @@ export class SessionService {
       user: {},
       images: [],
       cover_settings: {},
-      cover_thumb: null,
+      cover_urls: {},
       selectedImage: null
     };
     let storedData = this.retrieve();

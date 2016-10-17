@@ -9,7 +9,7 @@ import { BackendService } from '../backend.service';
 })
 export class EditImageComponent implements OnInit {
   image;
-  coverURL: string;
+  coverURL: any;
   titleimageChosen: boolean;
   brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia', 'Maserati'];
   brands;
@@ -41,7 +41,7 @@ export class EditImageComponent implements OnInit {
   ngOnInit() {
     let sessionData = this.session.get();
     this.image = sessionData.selectedImage;
-    this.coverURL = sessionData.cover_thumb;
+    this.coverURL = sessionData.cover_urls;
     this.titleimageChosen = this.image;
 
     this.processImage();
@@ -69,8 +69,10 @@ export class EditImageComponent implements OnInit {
     this.backend.setCover(this.image.id, this.coverOptions).subscribe(res => {
       console.info('image processed', res.json());
       this.session.set(res.json().data);
-      // URL with cachebreak
-      this.coverURL = res.json().data.cover_thumb + "?" + new Date().getTime();
+      this.coverURL = res.json().data.cover_urls;
+      let now = new Date().getTime();
+      this.coverURL['full'] += '?' + now;
+      this.coverURL['thumb'] += '?' + now;
       this.isProcessing = false;
     }, err => {
       console.log('error processing image', err.json());
