@@ -499,12 +499,12 @@ class APIController extends Controller {
 			// Add text
 			$text = new ImagickDraw();
 			$text->setFont('fonts/Anton.ttf');
-			$text->setFontSize(30);
+			$text->setFontSize(100);
 			$text->setFillColor('black');
 
 			$text_img = new Imagick();
 			$text_img->newImage(500, 200, 'none');
-			$text_img->annotateImage($text, 0, 30, 0, $eyecatcher_text);
+			$text_img->annotateImage($text, 0, 100, 0, $eyecatcher_text);
 			$text_img->trimImage(0.1);
 			$text_img->resizeImage($eyecatcher_size-$unit*2, $eyecatcher_size-$unit*2, imagick::FILTER_LANCZOS, 1, true);
 			$text_img->borderImage('none', $unit, $unit);
