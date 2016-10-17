@@ -27,10 +27,10 @@ export class EditImageComponent implements OnInit {
       "brand": "fiat"
     },
     "eyecatcher": {
-      "position": 2,
-      "form": "circle",
-      "color": "#ffffff",
-      "text": "HEY!"
+      // "position": 2,
+      // "form": "circle",
+      // "color": "#ffffff",
+      "text": ""
     }
   };
   
@@ -55,7 +55,11 @@ export class EditImageComponent implements OnInit {
     console.log('SUBMIT', brand, stickerChecked, stickerText);
     if (brand == 'none') brand = 'fiat';
     this.coverOptions.logos.brand = brand;
-    this.coverOptions.eyecatcher.text = stickerText;
+    if (this.useSticker) {
+      this.coverOptions.eyecatcher.text = stickerText;
+    } else {
+      this.coverOptions.eyecatcher.text = '';
+    }
     console.log(this.coverOptions);
     this.processImage();
   }
@@ -70,7 +74,7 @@ export class EditImageComponent implements OnInit {
       this.coverURL = res.json().data.cover_thumb + "?" + new Date().getTime();
       this.isProcessing = false;
     }, err => {
-      console.log('error processing image', err);
+      console.log('error processing image', err.json());
       this.isProcessing = false;
     });
   }

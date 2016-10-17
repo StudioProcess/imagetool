@@ -263,23 +263,41 @@ class APIController extends Controller {
 					'message' => 'Set cover; image_id not found.'
 				], 404);
 		}
-
-		$validator = Validator::make($cover_settings, array(
-				'border.color1' => 'required',
-    			'logos.position' => 'required',
-    			'logos.brand' => 'required',
-    			'eyecatcher.position' => 'required',
-    			'eyecatcher.form' => 'required',
-    			'eyecatcher.color' => 'required',
-    			'eyecatcher.text' => 'required',
-			));
-		if ($validator->fails()) {
-			return response()->json(
-            	[
-					'status' => 'error',
-					'message' => 'Set cover failed; Parameters are misssing.'
-				], 400);
-		}
+		
+		$defaults = [
+			'border' => [
+				'color1' => '#ffffff'
+			],
+			'logos' => [
+				'position' => 4,
+				'brand' => ''
+			],
+			'eyecatcher' => [
+				'position' => 2,
+				'form' => 'circle',
+				'color' => '#ffffff',
+				'text' => ''
+			]
+		];
+		
+		$cover_settings = array_replace_recursive($defaults, $cover_settings);
+		
+		// $validator = Validator::make($cover_settings, array(
+		// 		'border.color1' => 'required',
+		// 			'logos.position' => 'required',
+		// 			'logos.brand' => 'required',
+		// 			'eyecatcher.position' => 'required',
+		// 			'eyecatcher.form' => 'required',
+		// 			'eyecatcher.color' => 'required',
+		// 			'eyecatcher.text' => 'required',
+		// 	));
+		// if ($validator->fails()) {
+		// 	return response()->json(
+		//         	[
+		// 			'status' => 'error',
+		// 			'message' => 'Set cover failed; Parameters are misssing.'
+		// 		], 400);
+		// }
 
 		// delete old cover file
 		$destinationPath = 'images/'.$user['id'];
@@ -297,11 +315,15 @@ class APIController extends Controller {
 		} catch (\Exception $e) {
 			$coverError = $e;
 		}
-
+		
+		// $coverUrl = null;
+		
 		if ( !$coverUrl ) {
 			$response = [
 				'status' => 'error',
 				'message' => 'Set cover; There was an error processing the cover.',
+				'cover_settings' => $cover_settings
+				
 			];
 			if ( $coverError ) {
 				$response['exception'] = [
@@ -413,7 +435,7 @@ class APIController extends Controller {
 
 		$logo_compound->compositeImage( $userlogo, imagick::COMPOSITE_OVER, 0, 0);
 		$logo_compound->compositeImage( $brandlogo, imagick::COMPOSITE_OVER, $userlogo->getImageWidth() + $unit, 0);
-
+		
 		$userlogo->clear();
 		$userlogo->destroy();
 		$brandlogo->clear();
@@ -426,41 +448,43 @@ class APIController extends Controller {
 
 		$imagick->compositeImage( $logo_compound, imagick::COMPOSITE_OVER, $offset_x, $offset_y);
 
-		// Place eye catcher
-		$eyecatcher = new ImagickDraw();
-		$color = new ImagickPixel($eyecatcher_color);
-		$eyecatcher->setStrokeOpacity(1);
-    	$eyecatcher->setStrokeColor($color);
-   		$eyecatcher->setFillColor($color);
+		if ( !empty($eyecatcher_text) ) {
+			// Place eye catcher
+			$eyecatcher = new ImagickDraw();
+			$color = new ImagickPixel($eyecatcher_color);
+			$eyecatcher->setStrokeOpacity(1);
+			$eyecatcher->setStrokeColor($color);
+			$eyecatcher->setFillColor($color);
 
-   		$offset = $border_width + $unit + $eyecatcher_size / 2;
+			$offset = $border_width + $unit + $eyecatcher_size / 2;
 
-		$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - $offset : $offset;
-		$offset_y = ($eyecatcher_position == 4 || $eyecatcher_position == 3 ) ? $image_height - $offset : $offset;
+			$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - $offset : $offset;
+			$offset_y = ($eyecatcher_position == 4 || $eyecatcher_position == 3 ) ? $image_height - $offset : $offset;
 
-		if ($eyecatcher_form == "circle") {
-			$eyecatcher->circle($offset_x, $offset_y, $offset_x + $eyecatcher_size / 2, $offset_y);
-		} else {
-			$eyecatcher->rectangle($offset_x - $eyecatcher_size / 2, $offset_y - $eyecatcher_size / 2, $offset_x + $eyecatcher_size / 2, $offset_y + $eyecatcher_size / 2);
+			if ($eyecatcher_form == "circle") {
+				$eyecatcher->circle($offset_x, $offset_y, $offset_x + $eyecatcher_size / 2, $offset_y);
+			} else {
+				$eyecatcher->rectangle($offset_x - $eyecatcher_size / 2, $offset_y - $eyecatcher_size / 2, $offset_x + $eyecatcher_size / 2, $offset_y + $eyecatcher_size / 2);
+			}
+
+			$imagick->drawImage($eyecatcher);
+
+			// Add text
+			$text = new ImagickDraw();
+			$text->setFont('fonts/Asap-Regular.ttf');
+			$text->setFontSize(30);
+			$text->setFillColor('black');
+
+			$text_img = new Imagick();
+			$text_img->newImage(500, 200, 'none');
+			$text_img->annotateImage($text, 0, 30, 0, $eyecatcher_text);
+			$text_img->trimImage(0.1);
+			$text_img->resizeImage($eyecatcher_size-$unit*2, $eyecatcher_size-$unit*2, imagick::FILTER_LANCZOS, 1, true);
+			$text_img->borderImage('none', $unit, $unit);
+			$text_height = $text_img->getImageHeight();
+
+			$imagick->compositeImage( $text_img, imagick::COMPOSITE_OVER, $offset_x - $eyecatcher_size / 2, $offset_y - $text_height / 2);
 		}
-
-		$imagick->drawImage($eyecatcher);
-
-		// Add text
-		$text = new ImagickDraw();
-		$text->setFont('fonts/Asap-Regular.ttf');
-		$text->setFontSize(30);
-		$text->setFillColor('black');
-
-		$text_img = new Imagick();
-		$text_img->newImage(500, 200, 'none');
-		$text_img->annotateImage($text, 0, 30, 0, $eyecatcher_text);
-		$text_img->trimImage(0.1);
-		$text_img->resizeImage($eyecatcher_size-$unit*2, $eyecatcher_size-$unit*2, imagick::FILTER_LANCZOS, 1, true);
-		$text_img->borderImage('none', $unit, $unit);
-		$text_height = $text_img->getImageHeight();
-
-		$imagick->compositeImage( $text_img, imagick::COMPOSITE_OVER, $offset_x - $eyecatcher_size / 2, $offset_y - $text_height / 2);
 
 		// Write file
 		$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-cover-".$image_version.".".$extension);
