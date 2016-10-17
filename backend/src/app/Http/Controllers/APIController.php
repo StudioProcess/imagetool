@@ -274,7 +274,7 @@ class APIController extends Controller {
 			],
 			'eyecatcher' => [
 				'position' => 2,
-				'form' => 'circle',
+				'form' => '',
 				'color' => '#ffffff',
 				'text' => ''
 			]
@@ -354,7 +354,24 @@ class APIController extends Controller {
 			], 200);
 
 	}
+	
+	public static function drawBadge($draw, $width) {
+		// NOTE: canvas is 1000 x 1000
+		$points="500,50 552.3,2.7 593.6,59.8 654.5,24.5 683,88.9 750,67 764.5,135.9 834.6,128.4 834.4,198.9 
+			904.5,206.1 889.7,275 956.8,296.6 928,360.9 989.1,396 947.5,453 1000,500 947.5,547 989.1,604 928,639.1 956.8,703.4 889.7,725 
+			904.5,793.9 834.4,801.1 834.6,871.6 764.5,864.1 750,933 683,911.1 654.5,975.5 593.6,940.2 552.3,997.3 500,950 447.7,997.3 
+			406.4,940.2 345.5,975.5 317,911.1 250,933 235.5,864.1 165.4,871.6 165.6,801.1 95.5,793.9 110.3,725 43.2,703.4 72,639.1 
+			10.9,604 52.5,547 0,500 52.5,453 10.9,396 72,360.9 43.2,296.6 110.3,275 95.5,206.1 165.6,198.9 165.4,128.4 235.5,135.9 250,67 
+			317,88.9 345.5,24.5 406.4,59.8 447.7,2.7";
 
+		$points = array_map(function ($str) use ($width) {
+			$p = explode(',', trim($str));
+			return [ 'x' => floatval($p[0])*$width/1000, 'y' => floatval($p[1])*$width/1000 ];
+		}, explode(' ', $points));
+		
+		$draw->polygon($points);
+	}
+	
 	public static function processCover($cover_settings, $uploaded_images, $user) {
 		$source_image = null;
 		$found = false;
@@ -393,10 +410,11 @@ class APIController extends Controller {
 		$image_height = $imagick->getImageHeight();
 
 		$unit_percentage = 2; // percentage of width
-		$unit = ( $image_width / 100 ) * 2;
+		$unit = ( $image_width / 100 ) * $unit_percentage;
 		$border_width = $unit*2;
 		$logo_height = $unit*4;
-		$eyecatcher_size = $unit*10;
+		// $eyecatcher_size = $unit*10;
+		$eyecatcher_size = 250;
 
 		// Set border
 		if ($border_color2 == "") {
@@ -462,15 +480,18 @@ class APIController extends Controller {
 			$eyecatcher->setStrokeColor($color);
 			$eyecatcher->setFillColor($color);
 
-			$offset = $border_width + $unit + $eyecatcher_size / 2;
+			$offset = $border_width + $unit;
 
-			$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - $offset : $offset;
+			$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - ($offset+$eyecatcher_size) : $offset+$eyecatcher_size;
 			$offset_y = ($eyecatcher_position == 4 || $eyecatcher_position == 3 ) ? $image_height - $offset : $offset;
-
+			$eyecatcher->translate($offset_x, $offset_y);
+			
 			if ($eyecatcher_form == "circle") {
-				$eyecatcher->circle($offset_x, $offset_y, $offset_x + $eyecatcher_size / 2, $offset_y);
+				$eyecatcher->circle($eyecatcher_size / 2, $eyecatcher_size / 2, $eyecatcher_size, $eyecatcher_size / 2);
+			} else if ($eyecatcher_form == "rectangle") {
+				$eyecatcher->rectangle(0, 0, $eyecatcher_size, $eyecatcher_size);
 			} else {
-				$eyecatcher->rectangle($offset_x - $eyecatcher_size / 2, $offset_y - $eyecatcher_size / 2, $offset_x + $eyecatcher_size / 2, $offset_y + $eyecatcher_size / 2);
+				APIController::drawBadge($eyecatcher, $eyecatcher_size);
 			}
 
 			$imagick->drawImage($eyecatcher);
@@ -489,7 +510,7 @@ class APIController extends Controller {
 			$text_img->borderImage('none', $unit, $unit);
 			$text_height = $text_img->getImageHeight();
 
-			$imagick->compositeImage( $text_img, imagick::COMPOSITE_OVER, $offset_x - $eyecatcher_size / 2, $offset_y - $text_height / 2);
+			$imagick->compositeImage( $text_img, imagick::COMPOSITE_OVER, $offset_x, $offset_y - $text_height / 2 + $eyecatcher_size/2);
 		}
 
 		// Write file
