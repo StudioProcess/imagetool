@@ -14,8 +14,8 @@ class APIController extends Controller {
 
 	public function add_images(Request $request) {
 
-		$bigSize = 2000;
-		$smallSize = 300;
+		$bigSize = env('IMAGE_SIZE_LARGE', 1000);
+		$smallSize = env('IMAGE_SIZE_SMALL', 300);
 
 		$user = JWTAuth::toUser($request->input('token'));
 		$tempPath = 'temp/'.$user['id'];
