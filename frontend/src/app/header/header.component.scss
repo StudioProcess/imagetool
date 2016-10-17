@@ -1,8 +1,7 @@
 .header {
   margin-top: 1.5em;
-  padding-bottom: 1.5em;
+  padding-bottom: 0.5em;
   font-weight: 500;
-  vertical-align: middle;
 
   .title {
     padding-top: 0.85em;
@@ -16,42 +15,51 @@
   .ito-logo {
     text-align: left;
   }
-  img {
-    //max-height: 100px;
-    margin-bottom: 0.7em;
-  }
   .title-header {
     font-size: 20px;
     font-weight: lighter;
   }
 
+  .username {
+    text-align: right;
+    vertical-align: text-bottom;
+    font-weight: bold;
+    height: 100%;
+  }
+
   /* Small only */
 @media screen and (max-width: 39.9375em) {
-  .dealer-name {
-    font-size: 18px;
-    font-weight: bold;
-    //line-height: 2;
-    text-transform: uppercase;
+  img {
+    max-height: 70px;
+  }
+  .username {
+    font-size: 19px;
+    line-height: 50px;
   }
 }
 
 /* Medium and up */
 @media screen and (min-width: 40em) {
-  .dealer-name {
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 1.5;
-    text-transform: uppercase;
+  img {
+    //max-height: 100px;
+    //margin-bottom: 0.7em;
+    max-height: 100px;
+  }
+  .username {
+    font-size: 19px;
+    line-height: 90px;
   }
 }
 
 /* Large and up */
-@media screen and (min-width: 64em) {
-  .dealer-name {
-    font-size: 31px;
-    font-weight: bold;
-    line-height: 1.5;
-    text-transform: uppercase;
+@media screen and (min-width: 55em) {
+  img {
+    max-height: 120px;
+  }
+
+  .username {
+    line-height: 120px;
+    font-size: 25px;
   }
 }
 
