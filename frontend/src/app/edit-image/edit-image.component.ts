@@ -80,4 +80,12 @@ export class EditImageComponent implements OnInit {
     });
   }
 
+  allowDownload(){ // image uploaded AND titleimage chosen AND titleimage processed?
+    if((this.session.get().images.length != 0) && (this.session.get().selectedImage != null)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

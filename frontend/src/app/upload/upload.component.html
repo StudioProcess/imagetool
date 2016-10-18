@@ -41,10 +41,7 @@
 
 
 <div class="row column back-forth colored">
-  <button class="medium button float-right" *ngIf="checkEmpty()" routerLink="/titleimage">
-    Weiter <i class="ion-arrow-right-b" title="Continue"></i>
-  </button>
-  <button class="medium button float-right disabled" *ngIf="!checkEmpty()">
+  <button class="medium button float-right" [disabled]="!checkEmpty()" routerLink="/titleimage">
     Weiter <i class="ion-arrow-right-b" title="Continue"></i>
   </button>
 </div>

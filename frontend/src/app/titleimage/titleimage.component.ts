@@ -25,6 +25,14 @@ export class TitleimageComponent implements OnInit {
     this.selectedImage = this.session.get().selectedImage;
   }
 
+  allowEditImage(){ // image uploaded AND titleimage chosen?
+    if((this.session.get().images.length != 0) && (this.session.get().selectedImage != null)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   selectTitleImage(image) {
     this.selectedImage = image;
     this.session.set({selectedImage: image});
