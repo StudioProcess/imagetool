@@ -411,10 +411,9 @@ class APIController extends Controller {
 
 		$unit_percentage = 2; // percentage of width
 		$unit = ( $image_width / 100 ) * $unit_percentage;
-		$border_width = $unit*2;
-		$logo_height = $unit*4;
-		// $eyecatcher_size = $unit*10;
-		$eyecatcher_size = 250;
+		$border_width = env('BORDER_WIDTH', 40);
+		$logo_height = env('LOGO_HEIGHT', 80);
+		$eyecatcher_size = env('STICKER_SIZE', 250);
 
 		// Set border
 		if ($border_color2 == "") {
@@ -447,15 +446,15 @@ class APIController extends Controller {
 			$brandlogo = new Imagick(public_path()."/brand-logos/".str_slug($logos_brand, '_').".png");
 			$brandlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
 		}
-			
-		$logo_compound_width = $userlogo->getImageWidth() + $unit;
+		
+		$logo_spacing = env('LOGO_SPACING', 20);
+		$logo_compound_width = $userlogo->getImageWidth() + $logo_spacing;
 		if (!$brand_missing) { $logo_compound_width += $brandlogo->getImageWidth(); }
 		$logo_compound = new Imagick();
-		$logo_compound->newImage($logo_compound_width, $logo_height, 'none');
-
+		$logo_compound->newImage($logo_compound_width, $logo_height, 'transparent');
 		$logo_compound->compositeImage( $userlogo, imagick::COMPOSITE_OVER, 0, 0);
 		if (!$brand_missing) {
-			$logo_compound->compositeImage( $brandlogo, imagick::COMPOSITE_OVER, $userlogo->getImageWidth() + $unit, 0);
+			$logo_compound->compositeImage( $brandlogo, imagick::COMPOSITE_OVER, $userlogo->getImageWidth() + $logo_spacing, 0);
 		}
 		
 		$userlogo->clear();
@@ -465,8 +464,7 @@ class APIController extends Controller {
 			$brandlogo->destroy();
 		}
 
-		$offset = $border_width + $unit;
-
+		$offset = env('LOGO_OFFSET', 60);
 		$offset_x = ($logos_position == 2 || $logos_position == 3 ) ? $image_width - $offset - $logo_compound_width : $offset;
 		$offset_y = ($logos_position == 4 || $logos_position == 3 ) ? $image_height - $offset - $logo_height : $offset;
 
@@ -480,7 +478,7 @@ class APIController extends Controller {
 			$eyecatcher->setStrokeColor($color);
 			$eyecatcher->setFillColor($color);
 
-			$offset = $border_width + $unit;
+			$offset = env('STICKER_OFFSET', 10);
 
 			$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - ($offset+$eyecatcher_size) : $offset+$eyecatcher_size;
 			$offset_y = ($eyecatcher_position == 4 || $eyecatcher_position == 3 ) ? $image_height - $offset : $offset;
@@ -505,11 +503,11 @@ class APIController extends Controller {
 			$text_img->setGravity(imagick::GRAVITY_CENTER);
 			
 			$scale = 0.70;
-			$supersample = 3;
-			$extra_offset = (1-$scale)/2 * 250;
+			$supersample = 2.5;
+			$centering_offset = (1-$scale)/2 * $eyecatcher_size;
 			$text_img->newPseudoImage($eyecatcher_size*$supersample*$scale, $eyecatcher_size*$supersample*$scale, 'caption:' . $eyecatcher_text);
 			$text_img->resizeImage($eyecatcher_size*$scale, $eyecatcher_size*$scale, imagick::FILTER_LANCZOS, 1, true);
-			$imagick->compositeImage($text_img, imagick::COMPOSITE_OVER, $offset_x+$extra_offset, $offset_y+$extra_offset);
+			$imagick->compositeImage($text_img, imagick::COMPOSITE_OVER, $offset_x+$centering_offset, $offset_y+$centering_offset);
 		}
 
 		// Write file
