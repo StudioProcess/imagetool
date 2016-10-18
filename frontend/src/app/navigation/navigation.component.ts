@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { SessionService } from '../session.service';
 
 @Component({
@@ -8,12 +8,22 @@ import { SessionService } from '../session.service';
 })
 export class NavigationComponent implements OnInit {
 
-  userColor: string;
-
-  constructor(private session: SessionService) { }
+  constructor(private session: SessionService, private el: ElementRef) { }
 
   ngOnInit() {
-    this.userColor = this.session.get().user.theme_color;
+    let user = this.session.get().user;
+    let color = 'black';
+    if (user && user.theme_color && user.theme_color.accent) {
+      color = user.theme_color.accent;
+    }
+    let style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = `
+      a:hover, .activeLink { color: ${color} !important; }
+      a:hover .badge, .activeLink .badge { background: ${color} !important; }
+    `;
+    let el = this.el.nativeElement;
+    el.insertBefore(style, el.firstChild);
   }
 
   allowTitleImage(){ // image uploaded?
