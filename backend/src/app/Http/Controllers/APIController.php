@@ -497,20 +497,19 @@ class APIController extends Controller {
 			$imagick->drawImage($eyecatcher);
 
 			// Add text
-			$text = new ImagickDraw();
-			$text->setFont('fonts/Anton.ttf');
-			$text->setFontSize(100);
-			$text->setFillColor('black');
-
 			$text_img = new Imagick();
-			$text_img->newImage(500, 200, 'none');
-			$text_img->annotateImage($text, 0, 100, 0, $eyecatcher_text);
-			$text_img->trimImage(0.1);
-			$text_img->resizeImage($eyecatcher_size-$unit*2, $eyecatcher_size-$unit*2, imagick::FILTER_LANCZOS, 1, true);
-			$text_img->borderImage('none', $unit, $unit);
-			$text_height = $text_img->getImageHeight();
-
-			$imagick->compositeImage( $text_img, imagick::COMPOSITE_OVER, $offset_x, $offset_y - $text_height / 2 + $eyecatcher_size/2);
+			$text_img->setBackgroundColor('transparent');
+			$text_img->setOption('fill', 'black');
+			$text_img->setOption('interline-spacing', -20);
+			$text_img->setFont('fonts/Anton.ttf');
+			$text_img->setGravity(imagick::GRAVITY_CENTER);
+			
+			$scale = 0.70;
+			$supersample = 3;
+			$extra_offset = (1-$scale)/2 * 250;
+			$text_img->newPseudoImage($eyecatcher_size*$supersample*$scale, $eyecatcher_size*$supersample*$scale, 'caption:' . $eyecatcher_text);
+			$text_img->resizeImage($eyecatcher_size*$scale, $eyecatcher_size*$scale, imagick::FILTER_LANCZOS, 1, true);
+			$imagick->compositeImage($text_img, imagick::COMPOSITE_OVER, $offset_x+$extra_offset, $offset_y+$extra_offset);
 		}
 
 		// Write file
