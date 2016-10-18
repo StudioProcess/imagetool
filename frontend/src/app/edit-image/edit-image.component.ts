@@ -11,7 +11,7 @@ export class EditImageComponent implements OnInit {
   image;
   coverURL: any;
   titleimageChosen: boolean;
-  brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia', 'Maserati'];
+  brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia'];
   brands;
   useSticker: boolean = false;
   isProcessing: boolean = false;
