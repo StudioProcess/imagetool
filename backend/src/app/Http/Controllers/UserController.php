@@ -49,7 +49,6 @@ class UserController extends Controller
 		$destinationPath = 'images/'.$user['id'];
 		File::cleanDirectory($destinationPath);
 		
-		// $user['brands'] = json_decode($user['brands']);
 		$session_data = app('App\Http\Controllers\APIController')
 			->get_session_data($request)->getData()->data;
 		
@@ -76,6 +75,7 @@ class UserController extends Controller
     	$input = $request->all();
     	$input['password'] = Hash::make($input['password']);
     	$input['brands'] = json_encode($input['brands']);
+			$input['theme_color'] = json_encode($input['theme_color']);
 
 		$validator = Validator::make($input,
 			array(
@@ -164,6 +164,7 @@ class UserController extends Controller
     	$user = JWTAuth::toUser($request->input('token'));
 
     	$user['brands'] = json_decode($user['brands']);
+			$user['theme_color'] = json_decode($user['theme_color']);
 
     	// $new_token = JWTAuth::refresh($request->input('token'));
         return response()->json(
@@ -257,6 +258,9 @@ class UserController extends Controller
 			if ( $request->input('brands') ) {
 	    	$input['brands'] = json_encode($input['brands']);
 			}
+			if ( $request->input('theme_color') ) {
+				$input['theme_color'] = json_encode($input['theme_color']);
+			}
 			
 			// Allow change of admin status
 			if ( isset($input['is_admin']) ) {
@@ -266,6 +270,7 @@ class UserController extends Controller
 	    $user->save();
 
 	    $user['brands'] = json_decode($user['brands']);
+			$user['theme_color'] = json_decode($user['theme_color']);
 
 	    // $new_token = JWTAuth::refresh($request->input('token'));
 	    return response()->json(
@@ -320,6 +325,7 @@ class UserController extends Controller
 
     	foreach ($users as $user) {
     		$user['brands'] = json_decode($user['brands']);
+				$user['theme_color'] = json_decode($user['theme_color']);
     	}
 
     	// $new_token = JWTAuth::refresh($request->input('token'));
