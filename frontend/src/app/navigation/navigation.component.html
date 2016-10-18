@@ -3,9 +3,14 @@
     <div class="small-centered columns breadcrumbs">
       <ul>
         <li><a routerLink="/upload" routerLinkActive="activeLink"><span class="badge">1</span> <span class="menu-text">Fotos hochladen</span></a></li>
-        <li><a routerLink="/titleimage" [routerLinkActive]="'activeLink'"><span class="badge">2</span> <span class="menu-text">Titelfoto auswählen</span></a></li>
-        <li><a routerLink="/edit-image" [routerLinkActive]="'activeLink'"><span class="badge">3</span> <span class="menu-text">Titelfoto bearbeiten</span></a></li>
-        <li><a routerLink="/download" [routerLinkActive]="'activeLink'"><span class="badge">4</span> <span class="menu-text">Fotos herunterladen</span></a></li>
+        <li><a routerLink="/titleimage"  *ngIf="allowTitleImage()" [routerLinkActive]="'activeLink'"><span class="badge">2</span> <span class="menu-text">Titelfoto auswählen</span></a></li>
+        <li *ngIf="!allowTitleImage()"><span class="badge disabled">2</span> <span class="menu-text disabled">Titelfoto auswählen</span></li>
+
+        <li><a routerLink="/edit-image" *ngIf="allowEditImage()" [routerLinkActive]="'activeLink'"><span class="badge">3</span> <span class="menu-text">Titelfoto bearbeiten</span></a></li>
+        <li *ngIf="!allowEditImage()"><span class="badge disabled">3</span> <span class="menu-text disabled">Titelfoto bearbeiten</span></li>
+
+        <li><a routerLink="/download" *ngIf="allowDownload()" [routerLinkActive]="'activeLink'"><span class="badge">4</span> <span class="menu-text">Fotos herunterladen</span></a></li>
+        <li *ngIf="!allowDownload()"><span class="badge disabled">4</span> <span class="menu-text disabled">Fotos herunterladen</span></li>
       </ul>
     </div>
   </div>

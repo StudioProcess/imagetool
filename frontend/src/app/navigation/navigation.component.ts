@@ -16,4 +16,28 @@ export class NavigationComponent implements OnInit {
     this.userColor = this.session.get().user.theme_color;
   }
 
+  allowTitleImage(){ // image uploaded?
+    if(this.session.get().images.length == 0){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  allowEditImage(){ // image uploaded AND titleimage chosen?
+    if((this.session.get().images.length != 0) && (this.session.get().selectedImage != null)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  allowDownload(){ // image uploaded AND titleimage chosen AND titleimage processed?
+    if((this.session.get().images.length != 0) && (this.session.get().selectedImage != null)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

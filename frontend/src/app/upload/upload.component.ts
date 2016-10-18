@@ -11,12 +11,20 @@ import { SessionService } from '../session.service';
 export class UploadComponent implements OnInit {
   images = [];
   selectedImage = null;
-  
+
   constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
     this.images = this.session.get().images;
     this.selectedImage = this.session.get().selectedImage;
+  }
+
+  checkEmpty(){
+    if(this.images.length == 0){
+      return false;
+    } else {
+      return true;
+    }
   }
 
   deleteImage(image) {
@@ -25,7 +33,7 @@ export class UploadComponent implements OnInit {
       image.uploadState = { error: true };
       return;
     }
-    
+
     image.uploadState = { deleting: true };
     this.backend.removeImage(image.id).subscribe({
       next: (res) => {
@@ -43,7 +51,7 @@ export class UploadComponent implements OnInit {
       }
     });
   }
-  
+
   onFileSelected(event) {
     event.preventDefault();
     let fileList = event.target.files;
@@ -53,7 +61,7 @@ export class UploadComponent implements OnInit {
     console.log('file selected', file);
     this.uploadImage(file);
   }
-  
+
   onFileDragged(event) {
     event.preventDefault();
     // console.log("file dragged");
@@ -61,7 +69,7 @@ export class UploadComponent implements OnInit {
 
   onFileDropped(event) {
     event.preventDefault();
-    
+
     let fileList = [];
     // If dropped items aren't files, reject them
     let dt = event.dataTransfer;
@@ -78,9 +86,9 @@ export class UploadComponent implements OnInit {
       uploadState: { uploading: true } as any,
       uploadProgress: 0
     };
-    
+
     this.images.push(image);
-    
+
     this.backend.addImage(file).subscribe({
       next: (res) => {
         if (res['isProgressEvent']) {
