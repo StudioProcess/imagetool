@@ -9,12 +9,18 @@
   <span class="page-title">Titelfoto bearbeiten</span>
 </div>
 
+<div class="row column colored" *ngIf="!emptyImagesArray">
+  <p>Hier kann das Titelbild bearbeitet und mit zusätzlichem Inhalt versehen werden. Wählen Sie zuerst die entsprechende Automarke. Ihr Händlerlogo sowie der farbige Rahmen werden automatisch beim Titelfoto hinzugefügt.</p>
+  <p>Optional ist ein Störer (Sticker): Über diesen können weitere Informationen/Eyecatcher ins Bild eingebettet werden. Um den geringen Platz bestmöglich nutzen zu können ist es wichtig, nur kurzen Text zu verwenden. (Beispielsweise "NEU".)</p>
+  <p>Um ihre Einstellungen und das Titelfoto bereits vor dem Herumterladen sehen zu können, klicken Sie auf “Bild generieren”. Sind sie mit den Einstellungen zufrieden, wechseln Sie bitte zum letzten Schitt.</p>
+</div>
+
 <div *ngIf="!titleimageChosen" class="row column empty-array colored">
   Es wurde noch kein Titelfoto gewählt.
 </div>
 
 
-<div *ngIf="titleimageChosen" class="row colored">
+<div *ngIf="titleimageChosen" class="row colored previously-uploaded">
   <div class="small-8 columns">
     <div class="title-image" [class.processing]="isProcessing">
       <img [src]="'http://ito.process.studio/api/public/' + coverURL?.full" alt="" width="100%">

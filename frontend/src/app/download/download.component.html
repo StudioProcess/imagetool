@@ -14,16 +14,21 @@
 </div>
 
 <div class="row column colored" *ngIf="!emptyImagesArray">
-  <span class="sub-title">Archiv herunterladen</span><br /><br />Hier sind alle hochgeladenen und berarbeiteten Fotos zu sehen. Um Änderungen vorzunehmen, einfach zum entsprechenden Menupunkt wechseln. Das gesamte Archiv der bearbeiteten Fotos kann als ZIP-Datei runtergeladen werden.<br /><br />
+  <span class="sub-title">Archiv herunterladen</span>
 </div>
 
 <div class="row column colored" *ngIf="!emptyImagesArray">
+  <p>Im letzten Schritt können Sie das bearbeitete Titelbild inklusive der anderen, automatisch bearbeiteten Fotos als Archiv herunterladen. Dazu klicken Sie einfach auf die Schaltfläche “Download starten”. Es wird eine ZIP-Datei auf ihrem Rechner gespeichert, das sämtliche Fotos enthält.</p>
+  <p>Wenn Sie das ZIP-Archiv nicht finden, sehen Sie in Ihrem “Download”-Ordner nach. Sind sie fertig? Sie können sich von diesem Schritt ausloggen oder neu beginnen.</p>
+</div>
+
+<div class="row column colored previously-uploaded" *ngIf="!emptyImagesArray">
   <button class="large success button float-center" [disabled]="isProcessing" (click)="onDownloadButtonClick($event)">
     {{isProcessing ? 'Wird verarbeitet...' : 'Download starten'}} <i class="ion-arrow-down-a" title="Download" *ngIf="!isProcessing"></i>
   </button>
 </div>
 
-<div class="row column colored" *ngIf="!emptyImagesArray">
+<div class="row column colored previously-uploaded" *ngIf="!emptyImagesArray">
   <div class="row column">
     <span class="sub-title">Das Archiv besteht aus diesen Fotos:</span>
   </div>
