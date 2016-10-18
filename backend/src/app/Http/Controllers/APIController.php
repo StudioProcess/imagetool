@@ -386,12 +386,19 @@ class APIController extends Controller {
 		$destinationPath = 'images/'.$user['id'];
 		$imagename = $source_image['name'];
 		$extension = $source_image['extension'];
-
-		$border_color1 = $cover_settings['border']['color1'];
-		$border_color2 = $border_orientation = "";
-		if (!empty($cover_settings['border']['color2'])) {
-			$border_color2 = $cover_settings['border']['color2'];
-		}
+		
+		$colors = json_decode($user['theme_color']);
+		$border_color1 = isset($colors->border1) ? $colors->border1 : 'black';
+		$border_color2 = isset($colors->border2) ? $colors->border2 : '';
+		$eyecatcher_color1 = isset($colors->sticker1) ? $colors->sticker1 : 'black';
+		$eyecatcher_color2 = isset($colors->sticker2) ? $colors->sticker2 : '';
+		$text_color = isset($colors->stickerText) ? $colors->stickerText : 'black';
+		
+		// $border_color1 = $cover_settings['border']['color1'];
+		// $border_color2 = $border_orientation = "";
+		// if (!empty($cover_settings['border']['color2'])) {
+		// 	$border_color2 = $cover_settings['border']['color2'];
+		// }
 		if (!empty($cover_settings['border']['orientation'])) {
 			$border_orientation = $cover_settings['border']['orientation'];
 		}
@@ -401,7 +408,7 @@ class APIController extends Controller {
 
 		$eyecatcher_position = $cover_settings['eyecatcher']['position'];
 		$eyecatcher_form = $cover_settings['eyecatcher']['form'];
-		$eyecatcher_color = $cover_settings['eyecatcher']['color'];
+		// $eyecatcher_color = $cover_settings['eyecatcher']['color'];
 		$eyecatcher_text = $cover_settings['eyecatcher']['text'];
 
 		$imagick = new Imagick(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
@@ -470,35 +477,41 @@ class APIController extends Controller {
 
 		$imagick->compositeImage( $logo_compound, imagick::COMPOSITE_OVER, $offset_x, $offset_y);
 
+		// Place eye catcher
 		if ( !empty($eyecatcher_text) ) {
-			// Place eye catcher
-			$eyecatcher = new ImagickDraw();
-			$color = new ImagickPixel($eyecatcher_color);
-			$eyecatcher->setStrokeOpacity(1);
-			$eyecatcher->setStrokeColor($color);
-			$eyecatcher->setFillColor($color);
+			$draw = new ImagickDraw();
+			$draw->setStrokeOpacity(1);
+			$draw->setStrokeColor('white');
+			$draw->setFillColor('white');
 
 			$offset = env('STICKER_OFFSET', 10);
 
 			$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - ($offset+$eyecatcher_size) : $offset+$eyecatcher_size;
 			$offset_y = ($eyecatcher_position == 4 || $eyecatcher_position == 3 ) ? $image_height - $offset : $offset;
-			$eyecatcher->translate($offset_x, $offset_y);
 			
 			if ($eyecatcher_form == "circle") {
-				$eyecatcher->circle($eyecatcher_size / 2, $eyecatcher_size / 2, $eyecatcher_size, $eyecatcher_size / 2);
+				$draw->circle($eyecatcher_size / 2, $eyecatcher_size / 2, $eyecatcher_size, $eyecatcher_size / 2);
 			} else if ($eyecatcher_form == "rectangle") {
-				$eyecatcher->rectangle(0, 0, $eyecatcher_size, $eyecatcher_size);
+				$draw->rectangle(0, 0, $eyecatcher_size, $eyecatcher_size);
 			} else {
-				APIController::drawBadge($eyecatcher, $eyecatcher_size);
+				APIController::drawBadge($draw, $eyecatcher_size);
 			}
-
-			$imagick->drawImage($eyecatcher);
+			
+			$mask = new Imagick();
+			$mask->newPseudoImage($eyecatcher_size, $eyecatcher_size, "canvas:transparent");
+			$mask->drawImage($draw);
+			
+			$eyecatcher = new Imagick();
+			$eyecatcher->newPseudoImage($eyecatcher_size, $eyecatcher_size, "gradient:" . $eyecatcher_color1 . "-" . $eyecatcher_color2);
+			$eyecatcher->compositeImage($mask, imagick::COMPOSITE_COPYOPACITY, 0, 0);
+			
+			$imagick->compositeImage($eyecatcher, imagick::COMPOSITE_OVER, $offset_x, $offset_y);
 
 			// Add text
 			$text_img = new Imagick();
 			$text_img->setBackgroundColor('transparent');
-			$text_img->setOption('fill', 'black');
-			$text_img->setOption('interline-spacing', -50);
+			$text_img->setOption('fill', $text_color);
+			$text_img->setOption('interline-spacing', -40);
 			$text_img->setFont('fonts/Anton.ttf');
 			$text_img->setGravity(imagick::GRAVITY_CENTER);
 			
