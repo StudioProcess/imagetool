@@ -498,7 +498,7 @@ class APIController extends Controller {
 			$text_img = new Imagick();
 			$text_img->setBackgroundColor('transparent');
 			$text_img->setOption('fill', 'black');
-			$text_img->setOption('interline-spacing', -20);
+			$text_img->setOption('interline-spacing', -50);
 			$text_img->setFont('fonts/Anton.ttf');
 			$text_img->setGravity(imagick::GRAVITY_CENTER);
 			
