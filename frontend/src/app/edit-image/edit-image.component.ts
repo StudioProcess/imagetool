@@ -55,7 +55,7 @@ export class EditImageComponent implements OnInit {
     console.log('SUBMIT', brand, stickerChecked, stickerText);
     this.coverOptions.logos.brand = brand;
     if (this.useSticker) {
-      this.coverOptions.eyecatcher.text = stickerText;
+      this.coverOptions.eyecatcher.text = stickerText.toUpperCase();
     } else {
       this.coverOptions.eyecatcher.text = '';
     }
