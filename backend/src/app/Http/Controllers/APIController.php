@@ -406,8 +406,10 @@ class APIController extends Controller {
 		$colors = json_decode($user['theme_color']);
 		$border_color1 = isset($colors->border1) ? $colors->border1 : 'black';
 		$border_color2 = isset($colors->border2) ? $colors->border2 : '';
+		$border_angle = isset($colors->borderAngle) ? intval($colors->borderAngle) : 0;
 		$eyecatcher_color1 = isset($colors->sticker1) ? $colors->sticker1 : 'black';
 		$eyecatcher_color2 = isset($colors->sticker2) ? $colors->sticker2 : '';
+		$eyecatcher_angle = isset($colors->stickerAngle) ? intval($colors->stickerAngle) : 0;
 		$text_color = isset($colors->stickerText) ? $colors->stickerText : 'black';
 		
 		// $border_color1 = $cover_settings['border']['color1'];
@@ -444,6 +446,7 @@ class APIController extends Controller {
 			$imagick->borderImage($color, $border_width, $border_width);
 		} else {
 			$gradient = new Imagick();
+			$gradient->setOption('gradient:angle', 180 + $border_angle);
 			if ($border_orientation == "horizontal") {
 				$gradient->newPseudoImage($image_width+$border_width*2, $image_height+$border_width*2, "gradient:".$border_color1."-".$border_color2);
 			} else {
@@ -518,6 +521,7 @@ class APIController extends Controller {
 			$mask->drawImage($draw);
 			
 			$eyecatcher = new Imagick();
+			$eyecatcher->setOption('gradient:angle', 180 + $eyecatcher_angle);
 			$eyecatcher->newPseudoImage($eyecatcher_size, $eyecatcher_size, "gradient:" . $eyecatcher_color1 . "-" . $eyecatcher_color2);
 			$eyecatcher->compositeImage($mask, imagick::COMPOSITE_COPYOPACITY, 0, 0);
 			
