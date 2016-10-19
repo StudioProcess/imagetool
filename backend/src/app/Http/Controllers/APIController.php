@@ -66,18 +66,25 @@ class APIController extends Controller {
 					$image_id = $user->latest_loginstat['uploads'];
 
 					$imagick = new Imagick(public_path()."/".$tempPath."/".$imagename.".".$extension);
-
-				    $imagick->normalizeImage(); // normalize image
-				    $imagick->AutoGammaImage(); // auto gamma
-					$imagick->autoLevelImage(); // adjust color channels
-					$imagick->enhanceImage(); // remove noise
-					//$imagick->contrastImage(0.5); // raise contrast / to strong??
-
 					
 					// Immediately resize to 'IMAGE_SIZE_LARGE'
 					if ( $imagick->getImageWidth() > $bigSize || $imagick->getImageHeight() > $bigSize ) {
 						$imagick->resizeImage($bigSize, $bigSize, imagick::FILTER_CATROM, 1, true);
 					}
+					
+					// Use sRGB color space
+					$imagick->transformImageColorspace(imagick::COLORSPACE_SRGB);
+					
+					// Enhance Option 1: Normalize + Autogamma
+					$imagick->normalizeImage(); // The intensity values are stretched to cover the entire range of possible values. While doing so, black-out at most 2% of the pixels and white-out at most 1% of the pixels.
+					// $imagick->autoLevelImage(); // Like normalize without clipping
+					$imagick->autoGammaImage(); // Auto gamma
+					
+					// Enhance Option 2: Sigmoidal contrast
+					// Parameter sharpen (bool) If true increase the contrast, if false decrease the contrast.
+					// Parameter alpha (float) The amount of contrast to apply. 1 is very little, 5 is a significant amount, 20 is extreme.
+					$imagick->sigmoidalContrastImage(true, 3, 0.5*Imagick::getQuantum());
+
 					$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
 
 					$imagick->resizeImage($smallSize, $smallSize, imagick::FILTER_CATROM, 1, true);
@@ -139,6 +146,13 @@ class APIController extends Controller {
 				], 500);
 		}
 
+	}
+	
+	public static function addVignette($imagick) {
+		// Vignette FIXME: too slow
+		$diagonal = sqrt(pow($imagick->getImageWidth(),2) + pow($imagick->getImageHeight(),2));
+		$imagick->setImageBackgroundColor("black");
+		$imagick->vignetteImage(-100, -100, 0, 0);
 	}
 
 	public function remove_image(Request $request) {
