@@ -32,7 +32,7 @@
           </div>
           <div class="loading"></div>
         </div>
-        <div class="error-container">X</div>
+        <div class="error-container" (click)="removeFailedImage(image)">X</div>
         <div class="uploading-sign">{{image.uploadProgress | number:'1.0-0'}}% hochgeladen</div>
         <div class="processing-sign">Wird verarbeitet...</div>
         <div class="deleting-sign">Wird gelöscht...</div>

@@ -52,6 +52,14 @@ export class UploadComponent implements OnInit {
     });
   }
 
+  removeFailedImage(image) {
+      this.images.splice(this.images.indexOf(image), 1);
+      this.session.set({images: this.images});
+      if (this.selectedImage && this.selectedImage.id == image.id) {
+        this.session.set({selectedImage: null});
+      }
+  }
+
   onFileSelected(event) {
     event.preventDefault();
     let fileList = event.target.files;

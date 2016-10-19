@@ -74,6 +74,10 @@
   }
 }
 
+.image-container.error:hover .delete-button {
+  display: none;
+}
+
 .delete-button {
   display:none;
 }
