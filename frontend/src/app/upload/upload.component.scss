@@ -32,7 +32,8 @@
   margin-top: 1.0em;
   margin-bottom: 1.0em;
   //min-width: 270px;
-  height: 256px;
+  //min-height: 150px;
+  max-height: 256px;
   background-color: #cccccc;
 }
 
@@ -45,7 +46,7 @@
   position: relative;
   padding-bottom: 1.0em;
   //margin-left: 20px;
-  min-width: 300px;
+  min-width: 250px;
   min-height: 256px;
 }
 
