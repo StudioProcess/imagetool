@@ -17,9 +17,12 @@
   <span class="sub-title">Archiv herunterladen</span>
 </div>
 
-<div class="row column colored" *ngIf="!emptyImagesArray">
-  <p>Im letzten Schritt können Sie das bearbeitete Titelbild inklusive der anderen, automatisch bearbeiteten Fotos als Archiv herunterladen. Dazu klicken Sie einfach auf die Schaltfläche “Download starten”. Es wird eine ZIP-Datei auf ihrem Rechner gespeichert, das sämtliche Fotos enthält.</p>
-  <p>Wenn Sie das ZIP-Archiv nicht finden, sehen Sie in Ihrem “Download”-Ordner nach. Sind sie fertig? Sie können sich von diesem Schritt ausloggen oder neu beginnen.</p>
+<div class="row colored" *ngIf="!emptyImagesArray">
+  <div class="column small-10 medium-8 large-8">
+    <p>Im letzten Schritt können Sie das bearbeitete Titelbild inklusive der anderen, automatisch bearbeiteten Fotos als Archiv herunterladen. Dazu klicken Sie einfach auf die Schaltfläche “Download starten”. Es wird eine ZIP-Datei auf ihrem Rechner gespeichert, das sämtliche Fotos enthält.</p>
+    <p>Wenn Sie das ZIP-Archiv nicht finden, sehen Sie in Ihrem “Download”-Ordner nach. Sind sie fertig? Sie können sich von diesem Schritt ausloggen oder neu beginnen.</p>
+</div>
+  <div class="column small-2 medium-4 large-4 icons-steps"> <i class="ion-ios-download"></i></div>
 </div>
 
 <div class="row column colored previously-uploaded" *ngIf="!emptyImagesArray">

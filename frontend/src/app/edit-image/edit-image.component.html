@@ -9,10 +9,13 @@
   <span class="page-title">Titelfoto bearbeiten</span>
 </div>
 
-<div class="row column colored" *ngIf="!emptyImagesArray">
-  <p>Hier kann das Titelbild bearbeitet und mit zusätzlichem Inhalt versehen werden. Wählen Sie zuerst die entsprechende Automarke. Ihr Händlerlogo sowie der farbige Rahmen werden automatisch beim Titelfoto hinzugefügt.</p>
-  <p>Optional ist ein Störer (Sticker): Über diesen können weitere Informationen/Eyecatcher ins Bild eingebettet werden. Um den geringen Platz bestmöglich nutzen zu können ist es wichtig, nur kurzen Text zu verwenden. (Beispielsweise "NEU".)</p>
-  <p>Um ihre Einstellungen und das Titelfoto bereits vor dem Herumterladen sehen zu können, klicken Sie auf “Bild generieren”. Sind sie mit den Einstellungen zufrieden, wechseln Sie bitte zum letzten Schitt.</p>
+<div class="row colored" *ngIf="!emptyImagesArray">
+  <div class="column small-10 medium-8 large-8">
+    <p>Hier kann das Titelbild bearbeitet und mit zusätzlichem Inhalt versehen werden. Wählen Sie zuerst die entsprechende Automarke. Ihr Händlerlogo sowie der farbige Rahmen werden automatisch beim Titelfoto hinzugefügt.</p>
+    <p>Optional ist ein Störer (Sticker): Über diesen können weitere Informationen/Eyecatcher ins Bild eingebettet werden. Um den geringen Platz bestmöglich nutzen zu können ist es wichtig, nur kurzen Text zu verwenden. (Beispielsweise "NEU".)</p>
+    <p>Um ihre Einstellungen und das Titelfoto bereits vor dem Herumterladen sehen zu können, klicken Sie auf “Bild generieren”. Sind sie mit den Einstellungen zufrieden, wechseln Sie bitte zum letzten Schitt.</p>
+  </div>
+  <div class="column small-2 medium-4 large-4 icons-steps"> <i class="ion-paintbrush"></i></div>
 </div>
 
 <div *ngIf="!titleimageChosen" class="row column empty-array colored">
