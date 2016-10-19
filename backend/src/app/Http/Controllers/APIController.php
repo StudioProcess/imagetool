@@ -73,12 +73,14 @@ class APIController extends Controller {
 					$imagick->enhanceImage(); // remove noise
 					//$imagick->contrastImage(0.5); // raise contrast / to strong??
 
+					
+					// Immediately resize to 'IMAGE_SIZE_LARGE'
 					if ( $imagick->getImageWidth() > $bigSize || $imagick->getImageHeight() > $bigSize ) {
-						$imagick->resizeImage($bigSize, $bigSize, imagick::FILTER_LANCZOS, 1, true);
+						$imagick->resizeImage($bigSize, $bigSize, imagick::FILTER_CATROM, 1, true);
 					}
 					$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
 
-					$imagick->resizeImage($smallSize, $smallSize, imagick::FILTER_LANCZOS, 1, true);
+					$imagick->resizeImage($smallSize, $smallSize, imagick::FILTER_CATROM, 1, true);
 					$imagick->writeImage(public_path()."/".$destinationPath."/".$imagename."-thumb.".$extension);
 
 					$imagick->clear();
@@ -447,11 +449,11 @@ class APIController extends Controller {
 		// Place logos
 		$brand_missing = empty($logos_brand) || $logos_brand == 'none' || $logos_brand == 'n/a';
 		$userlogo = new Imagick(public_path()."/user-logos/".str_slug($user->id, '_').".png");
-		$userlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
+		$userlogo->resizeImage(9999, $logo_height, imagick::FILTER_CATROM, 1, true);
 		
 		if (!$brand_missing) {
 			$brandlogo = new Imagick(public_path()."/brand-logos/".str_slug($logos_brand, '_').".png");
-			$brandlogo->resizeImage(9999, $logo_height, imagick::FILTER_LANCZOS, 1, true);
+			$brandlogo->resizeImage(9999, $logo_height, imagick::FILTER_CATROM, 1, true);
 		}
 		
 		$logo_spacing = env('LOGO_SPACING', 20);
@@ -519,7 +521,7 @@ class APIController extends Controller {
 			$supersample = 2.5;
 			$centering_offset = (1-$scale)/2 * $eyecatcher_size;
 			$text_img->newPseudoImage($eyecatcher_size*$supersample*$scale, $eyecatcher_size*$supersample*$scale, 'caption:' . $eyecatcher_text);
-			$text_img->resizeImage($eyecatcher_size*$scale, $eyecatcher_size*$scale, imagick::FILTER_LANCZOS, 1, true);
+			$text_img->resizeImage($eyecatcher_size*$scale, $eyecatcher_size*$scale, imagick::FILTER_CATROM, 1, true);
 			$imagick->compositeImage($text_img, imagick::COMPOSITE_OVER, $offset_x+$centering_offset, $offset_y+$centering_offset);
 		}
 
@@ -528,7 +530,7 @@ class APIController extends Controller {
 		$url_thumb = $destinationPath."/".$imagename."-cover-small.".$extension;
 		$imagick->writeImage(public_path()."/".$url_full);
 		$smallsize = env('IMAGE_SIZE_SMALL', 300);
-		$imagick->resizeImage($smallsize, $smallsize, imagick::FILTER_LANCZOS, 1, true);
+		$imagick->resizeImage($smallsize, $smallsize, imagick::FILTER_CATROM, 1, true);
 		$imagick->writeImage(public_path()."/".$url_thumb);
 		$imagick->clear();
 		$imagick->destroy();
