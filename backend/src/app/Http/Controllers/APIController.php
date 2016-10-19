@@ -388,6 +388,65 @@ class APIController extends Controller {
 		$draw->polygon($points);
 	}
 	
+	public static function parseGravityToVector($str, $width, $height) {
+		$v = [0, 0];
+		switch ( strtolower($str) ) {
+			case strtolower('NorthWest'):
+			case strtolower('TopLeft'):
+				$v = [0, 0];
+				break;
+			case strtolower('North'):
+			case strtolower('Top'):
+				$v = [$width/2, 0];
+				break;
+			case strtolower('NorthEast'):
+			case strtolower('TopRight'):
+				$v = [$width-1, 0];
+				break;
+			case strtolower('West'):
+			case strtolower('Left'):
+				$v = [0, $height/2];
+				break;
+			case strtolower('Center'):
+			case strtolower('Middle'):
+				$v = [$width/2, $height/2];
+				break;
+			case strtolower('East'):
+			case strtolower('Right'):
+				$v = [$width-1, $height/2];
+				break;
+			case strtolower('SouthWest'):
+			case strtolower('BottomLeft'):
+				$v = [0, $height-1];
+				break;
+			case strtolower('South'):
+			case strtolower('Bottom'):
+				$v = [$width/2, $height-1];
+				break;
+			case strtolower('SouthEast'):
+			case strtolower('BottomRight'):
+				$v = [$width-1, $height-1];
+				break;
+			default:
+				$v = null;
+				break;
+		}
+		if (is_null($v)) return null;
+		return $v[0] . ',' . $v[1];
+	}
+	
+	public static function parseDirectionToVector($str, $width, $height) {
+		$parts = explode('-', $str);
+		if (count($parts) == 2) {
+			$v1 = APIController::parseGravityToVector($parts[0], $width, $height);
+			$v2 = APIController::parseGravityToVector($parts[1], $width, $height);
+			if ( !is_null($v1) && !is_null($v2) ) {
+				return $v1 . ',' . $v2;
+			}
+		}
+		return '0,0,0,'. $height;
+	}
+	
 	public static function processCover($cover_settings, $uploaded_images, $user) {
 		$source_image = null;
 		$found = false;
@@ -403,13 +462,35 @@ class APIController extends Controller {
 		$imagename = $source_image['name'];
 		$extension = $source_image['extension'];
 		
+		$imagick = new Imagick(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
+		$image_width = $imagick->getImageWidth();
+		$image_height = $imagick->getImageHeight();
+		
+		$border_width = env('BORDER_WIDTH', 40);
+		$logo_height = env('LOGO_HEIGHT', 80);
+		$eyecatcher_size = env('STICKER_SIZE', 250);
+		
 		$colors = json_decode($user['theme_color']);
 		$border_color1 = isset($colors->border1) ? $colors->border1 : 'black';
 		$border_color2 = isset($colors->border2) ? $colors->border2 : '';
-		$border_angle = isset($colors->borderAngle) ? intval($colors->borderAngle) : 0;
+		$border_option = 'gradient:angle';
+		$border_value = 180;
+		if ( isset($colors->borderAngle) ) {
+			$border_value = intval($colors->borderAngle) + 180;
+		} else if ( isset($colors->borderDirection) ) {
+			$border_option = 'gradient:vector';
+			$border_value = APIController::parseDirectionToVector($colors->borderDirection, $image_width, $image_height);
+		}
 		$eyecatcher_color1 = isset($colors->sticker1) ? $colors->sticker1 : 'black';
 		$eyecatcher_color2 = isset($colors->sticker2) ? $colors->sticker2 : '';
-		$eyecatcher_angle = isset($colors->stickerAngle) ? intval($colors->stickerAngle) : 0;
+		$eyecatcher_option = 'gradient:angle';
+		$eyecatcher_value = 180;
+		if ( isset($colors->stickerAngle) ) {
+			$border_value = intval($colors->stickerAngle) + 180;
+		} else if ( isset($colors->stickerDirection) ) {
+			$eyecatcher_option = 'gradient:vector';
+			$eyecatcher_value = APIController::parseDirectionToVector($colors->stickerDirection, $eyecatcher_size, $eyecatcher_size);
+		}
 		$text_color = isset($colors->stickerText) ? $colors->stickerText : 'black';
 		
 		// $border_color1 = $cover_settings['border']['color1'];
@@ -429,30 +510,14 @@ class APIController extends Controller {
 		// $eyecatcher_color = $cover_settings['eyecatcher']['color'];
 		$eyecatcher_text = $cover_settings['eyecatcher']['text'];
 
-		$imagick = new Imagick(public_path()."/".$destinationPath."/".$imagename."-full.".$extension);
-
-		$image_width = $imagick->getImageWidth();
-		$image_height = $imagick->getImageHeight();
-
-		$unit_percentage = 2; // percentage of width
-		$unit = ( $image_width / 100 ) * $unit_percentage;
-		$border_width = env('BORDER_WIDTH', 40);
-		$logo_height = env('LOGO_HEIGHT', 80);
-		$eyecatcher_size = env('STICKER_SIZE', 250);
-
 		// Set border
 		if ($border_color2 == "") {
 			$color = new ImagickPixel($border_color1);
 			$imagick->borderImage($color, $border_width, $border_width);
 		} else {
 			$gradient = new Imagick();
-			$gradient->setOption('gradient:angle', 180 + $border_angle);
-			if ($border_orientation == "horizontal") {
-				$gradient->newPseudoImage($image_width+$border_width*2, $image_height+$border_width*2, "gradient:".$border_color1."-".$border_color2);
-			} else {
-				$gradient->newPseudoImage($image_height+$border_width*2, $image_width+$border_width*2, "gradient:".$border_color1."-".$border_color2);
-				$gradient->rotateImage("#ffffff", 90);
-			}
+			$gradient->setOption($border_option, $border_value);
+			$gradient->newPseudoImage($image_width+$border_width*2, $image_height+$border_width*2, "gradient:".$border_color1."-".$border_color2);
 			$gradient->compositeImage( $imagick, imagick::COMPOSITE_OVER, $border_width, $border_width);
 			$imagick = clone $gradient;
 			$gradient->clear();
@@ -521,7 +586,7 @@ class APIController extends Controller {
 			$mask->drawImage($draw);
 			
 			$eyecatcher = new Imagick();
-			$eyecatcher->setOption('gradient:angle', 180 + $eyecatcher_angle);
+			$eyecatcher->setOption($eyecatcher_option, $eyecatcher_value);
 			$eyecatcher->newPseudoImage($eyecatcher_size, $eyecatcher_size, "gradient:" . $eyecatcher_color1 . "-" . $eyecatcher_color2);
 			$eyecatcher->compositeImage($mask, imagick::COMPOSITE_COPYOPACITY, 0, 0);
 			
