@@ -20,7 +20,7 @@
 
 <div class="row colored">
   <div class="columns dropzone-style" (drop)="onFileDropped($event)" (dragover)="onFileDragged($event)">
-    <input type="file" name="imageChooser" id="imageChooser" class="inputfile" accept="image/*" (change)="onFileSelected($event)">
+    <input type="file" multiple name="imageChooser" id="imageChooser" class="inputfile" accept="image/*" (change)="onFileSelected($event)">
     <label for="imageChooser" class="imageUploadLabel">Foto(s) auswählen...</label>
 
     <div class="row small-up-1 medium-up-2 large-up-4 previously-uploaded">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { BackendService } from '../backend.service';
 import { SessionService } from '../session.service';
 
@@ -9,6 +10,9 @@ import { SessionService } from '../session.service';
 })
 
 export class UploadComponent implements OnInit {
+  
+  private CONCURRENT_UPLOADS = 3; // Number of max. simultaneous image uploads
+  
   images = [];
   selectedImage = null;
 
@@ -63,11 +67,10 @@ export class UploadComponent implements OnInit {
   onFileSelected(event) {
     event.preventDefault();
     let fileList = event.target.files;
+    fileList = Array.prototype.filter.call(fileList, file => file.type.indexOf('image/') == 0);
     if (!fileList.length) return; // no file selected
-    // TODO: implement for multiple files
-    let file = fileList[0]; // just first file (FIXME)
-    console.log('file selected', file);
-    this.uploadImage(file);
+    console.log('files selected', fileList);
+    this.uploadMultipleImages(fileList);
   }
 
   onFileDragged(event) {
@@ -77,19 +80,21 @@ export class UploadComponent implements OnInit {
 
   onFileDropped(event) {
     event.preventDefault();
-
-    let fileList = [];
-    // If dropped items aren't files, reject them
     let dt = event.dataTransfer;
-    fileList = dt.files;
+    let fileList = dt.files; // If dropped items aren't files, reject them
+    fileList = Array.prototype.filter.call(fileList, file => file.type.indexOf('image/') == 0);
     if (!fileList.length) return; // no file selected
-    // TODO: implement for multiple files
-    let file = fileList[0]; // just first file (FIXME)
-    console.log('file dropped', file);
-    this.uploadImage(file);
+    console.log('files dropped', fileList);
+    this.uploadMultipleImages(fileList);
   }
-
-  uploadImage(file: File) {
+  
+  uploadMultipleImages(files: File[]) {
+    let uploads = files.map(file => this.uploadImage(file));
+    let uploadStream = Observable.from(uploads);
+    uploadStream.mergeAll(this.CONCURRENT_UPLOADS).subscribe();
+  }
+  
+  private uploadImage(file: File): Observable<any> {
     let image = {
       uploadState: { uploading: true } as any,
       uploadProgress: 0
@@ -97,29 +102,27 @@ export class UploadComponent implements OnInit {
 
     this.images.push(image);
 
-    this.backend.addImage(file).subscribe({
-      next: (res) => {
-        if (res['isProgressEvent']) {
-          // console.log('upload progress', res);
-          image.uploadProgress = res['loaded'] / res['total'] * 100;
-          if (image.uploadProgress >= 99.9) {
-            image.uploadState = { processing:true };
-          }
-        } else {
-          console.log('upload success', res.json());
-          let data = res.json().data;
-          // image.data = data.images[0];
-          // Add image properties from server response
-          Object.assign(image, data.images[0]);
-          image.uploadState = {}; // uploading success
-          // Add uploaded image to session
-          this.session.set({images: this.images});
+    return this.backend.addImage(file).do(res => {
+      if (res['isProgressEvent']) {
+        // console.log('upload progress', res);
+        image.uploadProgress = res['loaded'] / res['total'] * 100;
+        if (image.uploadProgress >= 99.9) {
+          image.uploadState = { processing:true };
         }
-      },
-      error: (res) => {
-        console.log('upload error', res.json());
-        image.uploadState = { error:true };
+      } else {
+        console.log('upload success', res.json());
+        let data = res.json().data;
+        // image.data = data.images[0];
+        // Add image properties from server response
+        Object.assign(image, data.images[0]);
+        image.uploadState = {}; // uploading success
+        // Add uploaded image to session
+        this.session.set({images: this.images});
       }
+    }).catch(err => {
+      console.log('upload error', err.json());
+      image.uploadState = { error:true };
+      return Observable.empty(); // Complete the observable chain
     });
   }
 
