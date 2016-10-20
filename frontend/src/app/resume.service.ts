@@ -40,7 +40,6 @@ export class ResumeService {
 
     let resumeSession = refreshSession
       .switchMapTo(updateSession)
-      .do(resolveDone)
       .do(res => {
         console.log('resuming', res.json());
         let url = this.session.get().route;
@@ -49,13 +48,13 @@ export class ResumeService {
         this.router.navigateByUrl(url);
       }).catch(err => {
         if (err.status == 401) { // Unauthorized i.e. not logged in
-          console.info('No valid token, redirecting to login', err);
-          this.router.navigate(['login']);
+          console.info('No valid token, redirecting to login', err.json());
         } else {
           console.error('resume error', err);
         }
+        this.router.navigate(['login']);
         return Observable.empty();
-      });
+      }).finally(resolveDone);
     
     this._resume$ = resumeSession;
   }
