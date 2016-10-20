@@ -37,10 +37,10 @@
   </div>
   <div class="row small-up-4 medium-up-6 large-up-8 previously-uploaded">
     <div class="column image-container">
-      <img [src]="'http://ito.process.studio/api/public/' + coverThumb" class="image-border" alt="">
+      <img [src]="coverThumb" class="image-border" alt="">
     </div>
     <div *ngFor="let image of images" class="column image-container">
-      <img [src]="'http://ito.process.studio/api/public/' + image.urls.thumb" class="image-border" alt="">
+      <img [src]="image.urls.thumb" class="image-border" alt="">
     </div>
 
   </div>

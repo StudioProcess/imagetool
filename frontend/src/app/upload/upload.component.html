@@ -27,7 +27,7 @@
 
       <div *ngFor="let image of images" class="column image-container" [ngClass]="image.uploadState"> <!-- attach classes: uploading, processing, deleting, error -->
         <div class="delete-button"><i class="ion-trash-b" title="Delete Photo" (click)="deleteImage(image)"></i></div>
-        <img [src]="image.urls ? 'http://ito.process.studio/api/public/' + image.urls.thumb : ''" class="uploaded-image" alt="">
+        <img [src]="image.urls ? image.urls.thumb : ''" class="uploaded-image" alt="">
         <div class="uploaded-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i> Fertig</div>
         <div class="loading-container">
           <div class="secondary progress" role="progressbar" tabindex="0">

@@ -58,7 +58,6 @@ export class EditImageComponent implements OnInit {
   // Set appropriate image (unprocessed or processed if available)
   private setTitleImageSrc() {
     this.titleImageSrc = this.coverURLs.full ? this.coverURLs.full : this.selectedImage.urls.full;
-    this.titleImageSrc = 'http://ito.process.studio/api/public/' + this.titleImageSrc;
     // console.log('TITLE image', this.titleImageSrc);
   }
 

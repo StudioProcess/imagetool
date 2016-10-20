@@ -99,8 +99,8 @@ class APIController extends Controller {
 							'name' => $imagename,
 							'extension' => $extension,
 							'urls' => array(
-									'full' => $destinationPath."/".$imagename."-full.".$extension,
-									'thumb' => $destinationPath."/".$imagename."-thumb.".$extension
+									'full' => url('api/public/'.$destinationPath."/".$imagename."-full.".$extension),
+									'thumb' => url('api/public/'.$destinationPath."/".$imagename."-thumb.".$extension)
 								)
 						);
 					
@@ -576,7 +576,7 @@ class APIController extends Controller {
 		$imagick->clear();
 		$imagick->destroy();
 
-		return ['thumb' => $url_thumb, 'full' => $url_full];
+		return ['thumb' => url('api/public/'.$url_thumb), 'full' => url('api/public/'.$url_full)];
 	}
 
 	public function get_cover_settings(Request $request) {
@@ -646,7 +646,7 @@ class APIController extends Controller {
 				'data' =>
 					[
 						'cover_settings' => $cover_settings,
-						'cover_thumb' => $cover_thumb
+						'cover_thumb' => url('api/public/'.$cover_thumb)
 					],
 				// 'token' => $new_token
 			], 200);
@@ -742,7 +742,7 @@ class APIController extends Controller {
 				'message' => 'Get image archive.',
 				'data' =>
 					[
-						'archive' => $destinationPath."/".$zip_name
+						'archive' => url('api/public/'.$destinationPath."/".$zip_name)
 					],
 				// 'token' => $new_token
 			], 200);

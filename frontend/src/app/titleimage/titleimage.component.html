@@ -24,7 +24,7 @@
 <div *ngIf="!emptyImagesArray" class="row small-up-1 medium-up-2 large-up-4 previously-uploaded colored">
   <div *ngFor="let image of images" class="column image-container" [class.selected]="image.id == selectedImage?.id" (mousedown)="selectTitleImage(image)">
     <div class="selected-sign"><i class="ion-checkmark" title="Als Titelfoto wählen"></i></div>
-    <img [src]="'http://ito.process.studio/api/public/' + image.urls.thumb" class="image-border" alt="">
+    <img [src]="image.urls.thumb" class="image-border" alt="">
   </div>
 </div>
 

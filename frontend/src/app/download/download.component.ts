@@ -27,7 +27,7 @@ export class DownloadComponent implements OnInit {
     this.isProcessing = true;
     this.backend.getArchive().subscribe(res => {
       console.log(res.json());
-      window.location.href = "http://ito.process.studio/api/public/" + res.json().data.archive;
+      window.location.href = res.json().data.archive;
       this.isProcessing = false;
     }, err => {
       console.log(err);
