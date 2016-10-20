@@ -568,7 +568,7 @@ class APIController extends Controller {
 
 		// Write file
 		$url_full = $destinationPath."/".$imagename."-cover-full.".$extension;
-		$url_thumb = $destinationPath."/".$imagename."-cover-small.".$extension;
+		$url_thumb = $destinationPath."/".$imagename."-cover-thumb.".$extension;
 		$imagick->writeImage(public_path()."/".$url_full);
 		$smallsize = env('IMAGE_SIZE_SMALL', 300);
 		$imagick->resizeImage($smallsize, $smallsize, imagick::FILTER_CATROM, 1, true);
@@ -630,12 +630,13 @@ class APIController extends Controller {
 		// 		], 400);
 		// }
 		
-		$cover_thumb = '';
+		$cover_urls = [];
 		if ($found) {
 			$destinationPath = 'images/'.$user['id'];
 			$imagename = $source_image['name'];
 			$extension = $source_image['extension'];
-			$cover_thumb = $destinationPath."/".$imagename."-cover-thumb.".$extension;
+			$cover_urls['full'] = url('api/public/'.$destinationPath."/".$imagename."-cover-full.".$extension);
+			$cover_urls['thumb'] = url('api/public/'.$destinationPath."/".$imagename."-cover-thumb.".$extension);
 		}
 
 		// $new_token = JWTAuth::refresh($request->input('token'));
@@ -646,7 +647,7 @@ class APIController extends Controller {
 				'data' =>
 					[
 						'cover_settings' => $cover_settings,
-						'cover_thumb' => url('api/public/'.$cover_thumb)
+						'cover_urls' => $cover_urls
 					],
 				// 'token' => $new_token
 			], 200);
@@ -701,7 +702,7 @@ class APIController extends Controller {
 		    }
 		}
 
-		$coverUrl = APIController::processCover($cover_settings, $uploaded_images, $user, false);
+		$coverUrl = APIController::processCover($cover_settings, $uploaded_images, $user);
 
 		if ( !$coverUrl ) {
 			return response()->json(
