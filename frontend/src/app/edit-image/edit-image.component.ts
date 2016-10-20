@@ -16,6 +16,7 @@ export class EditImageComponent implements OnInit {
   brands;
   useSticker: boolean = false;
   isProcessing: boolean = false;
+  remainingCharacters: number = 30;
 
   coverOptions = {
     "border": {
@@ -36,8 +37,8 @@ export class EditImageComponent implements OnInit {
   };
 
   constructor(
-    private session: SessionService, 
-    private backend: BackendService, 
+    private session: SessionService,
+    private backend: BackendService,
     private resume: ResumeService
   ) {
     this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(' ', '_')}) );
@@ -48,7 +49,7 @@ export class EditImageComponent implements OnInit {
     this.image = sessionData.selectedImage;
     this.coverURL = sessionData.cover_urls;
     this.titleimageChosen = this.image;
-    
+
     this.resume.resumeIsDone().then(() => {
       console.log('processing image');
       this.processImage();
@@ -69,6 +70,10 @@ export class EditImageComponent implements OnInit {
     }
     console.log(this.coverOptions);
     this.processImage();
+  }
+
+  getRemainingTextLenghth(stickerText) {
+    this.remainingCharacters = (30 - stickerText.length);
   }
 
   processImage() {
