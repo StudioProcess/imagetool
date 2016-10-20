@@ -292,8 +292,9 @@ class UserController extends Controller
         		'session_string' => 'session_'.date('y-m-d_H:i:s')
         	]);
 
-    	// clear old data
-    	$user->last_uploaded_images = "";
+		// clear old data
+		$user->last_uploaded_images = "";
+		$user->cover_settings = "";
 		$user->save();
 
 		$tempPath = 'temp/'.$user['id'];
