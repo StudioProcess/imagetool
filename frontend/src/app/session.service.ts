@@ -19,6 +19,17 @@ export class SessionService {
   data: Observable<SessionData>;
 
   constructor() {
+    this.initData();
+    let storedData = this.retrieve();
+    if (storedData) {
+      Object.assign(this._data, storedData);
+    }
+    this.dataSubject = new BehaviorSubject(this._data);
+    this.data = this.dataSubject.asObservable();
+  }
+  
+  // Initialize session data with empty default values
+  private initData() {
     this._data = {
       route: null,
       token: null,
@@ -28,12 +39,6 @@ export class SessionService {
       cover_urls: {},
       selectedImage: null
     };
-    let storedData = this.retrieve();
-    if (storedData) {
-      Object.assign(this._data, storedData);
-    }
-    this.dataSubject = new BehaviorSubject(this._data);
-    this.data = this.dataSubject.asObservable();
   }
 
   private retrieve(): SessionData {
@@ -53,5 +58,11 @@ export class SessionService {
 
   get(): SessionData {
     return Object.assign({}, this._data); // Return copy of data
+  }
+  
+  // Reset data to empty default values and store them
+  reset() {
+    this.initData();
+    this.store();
   }
 }
