@@ -39,15 +39,6 @@ class UserController extends Controller
         	[
         		'session_string' => 'session_'.date('y-m-d_H:i:s')
         	]);
-
-    	// clear old data
-    	$user->last_uploaded_images = "";
-		$user->save();
-
-		$tempPath = 'temp/'.$user['id'];
-		File::cleanDirectory($tempPath);
-		$destinationPath = 'images/'.$user['id'];
-		File::cleanDirectory($destinationPath);
 		
 		$session_data = app('App\Http\Controllers\APIController')
 			->get_session_data($request)->getData()->data;
@@ -61,6 +52,17 @@ class UserController extends Controller
   }
 
     public function logout(Request $request) {
+			$user = JWTAuth::toUser($request->input('token'));
+			
+			// clear old data
+			$user->last_uploaded_images = "";
+			$user->cover_settings = "";
+			$user->save();
+
+			$tempPath = 'temp/'.$user['id'];
+			File::cleanDirectory($tempPath);
+			$destinationPath = 'images/'.$user['id'];
+			File::cleanDirectory($destinationPath);
 
     	JWTAuth::invalidate(JWTAuth::getToken());
 
