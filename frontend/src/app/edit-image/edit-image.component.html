@@ -18,15 +18,15 @@
   <div class="column small-2 medium-4 large-4 icons-steps"> <i class="ion-paintbrush"></i></div>
 </div>
 
-<div *ngIf="!titleimageChosen" class="row column empty-array colored">
+<div *ngIf="!titleImageChosen" class="row column empty-array colored">
   Es wurde noch kein Titelfoto gewählt.
 </div>
 
 
-<div *ngIf="titleimageChosen" class="row colored previously-uploaded">
+<div *ngIf="titleImageChosen" class="row colored previously-uploaded">
   <div class="small-8 columns">
     <div class="title-image" [class.processing]="isProcessing">
-      <img [src]="'http://ito.process.studio/api/public/' + coverURL?.full" alt="" width="100%">
+      <img [src]="titleImageSrc" alt="" width="100%">
       <div class="loading-container"><div class="loading"></div></div>
     </div>
   </div>

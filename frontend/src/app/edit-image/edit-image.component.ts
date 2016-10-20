@@ -9,9 +9,10 @@ import { ResumeService } from '../resume.service';
   styleUrls: ['edit-image.component.scss']
 })
 export class EditImageComponent implements OnInit {
-  image;
-  coverURL: any;
-  titleimageChosen: boolean;
+  selectedImage;
+  coverURLs: any;
+  titleImageSrc: string;
+  titleImageChosen: boolean;
   brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia'];
   brands;
   useSticker: boolean = false;
@@ -45,14 +46,22 @@ export class EditImageComponent implements OnInit {
 
   ngOnInit() {
     let sessionData = this.session.get();
-    this.image = sessionData.selectedImage;
-    this.coverURL = sessionData.cover_urls;
-    this.titleimageChosen = this.image;
+    this.selectedImage = sessionData.selectedImage;
+    this.coverURLs = sessionData.cover_urls;
+    this.titleImageChosen = this.selectedImage;
+    this.setTitleImageSrc();
     
     this.resume.resumeIsDone().then(() => {
       console.log('processing image');
       this.processImage();
     });
+  }
+  
+  // Set appropriate image (unprocessed or processed if available)
+  private setTitleImageSrc() {
+    this.titleImageSrc = this.coverURLs.full ? this.coverURLs.full : this.selectedImage.urls.full;
+    this.titleImageSrc = 'http://ito.process.studio/api/public/' + this.titleImageSrc;
+    // console.log('TITLE image', this.titleImageSrc);
   }
 
   onCheckboxChanged(e) {
@@ -72,15 +81,17 @@ export class EditImageComponent implements OnInit {
   }
 
   processImage() {
-    if (!this.titleimageChosen) return;
+    if (!this.titleImageChosen) return;
     this.isProcessing = true;
-    this.backend.setCover(this.image.id, this.coverOptions).subscribe(res => {
+    this.backend.setCover(this.selectedImage.id, this.coverOptions).subscribe(res => {
       console.info('image processed', res.json());
-      this.session.set(res.json().data);
-      this.coverURL = res.json().data.cover_urls;
+      let data = res.json().data;
       let now = new Date().getTime();
-      this.coverURL['full'] += '?' + now;
-      this.coverURL['thumb'] += '?' + now;
+      data.cover_urls['full'] += '?' + now;
+      data.cover_urls['thumb'] += '?' + now;
+      this.coverURLs = data.cover_urls;
+      this.setTitleImageSrc();
+      this.session.set(data);
       this.isProcessing = false;
     }, err => {
       console.log('error processing image', err.json());
