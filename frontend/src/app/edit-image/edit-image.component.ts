@@ -19,21 +19,9 @@ export class EditImageComponent implements OnInit {
   isProcessing: boolean = false;
 
   coverOptions = {
-    "border": {
-      "color1": "#efe409",
-      "color2": "#ffaf4b",
-      "orientation": "horizontal"
-    },
-    "logos": {
-      // "position": 4,
-      "brand": ""
-    },
-    "eyecatcher": {
-      // "position": 2,
-      // "form": "circle",
-      // "color": "#ffffff",
-      "text": ""
-    }
+    "brand_logo": "",
+    "sticker_text": "",
+    // "sticker_form": "badge" // circle, square or badge (default when empty)
   };
 
   constructor(
@@ -70,13 +58,9 @@ export class EditImageComponent implements OnInit {
 
   onSubmitButtonClicked(brand, stickerChecked, stickerText) {
     console.log('SUBMIT', brand, stickerChecked, stickerText);
-    this.coverOptions.logos.brand = brand;
-    if (this.useSticker) {
-      this.coverOptions.eyecatcher.text = stickerText.toUpperCase();
-    } else {
-      this.coverOptions.eyecatcher.text = '';
-    }
-    console.log(this.coverOptions);
+    this.coverOptions.brand_logo = brand;
+    this.coverOptions.sticker_text = this.useSticker ? stickerText.toUpperCase() : '';
+    // console.log(this.coverOptions);
     this.processImage();
   }
 

@@ -254,8 +254,6 @@ class APIController extends Controller {
 					], 404);
 		}
 
-		$cover_settings = $request->except(['token']);
-
 		$image_id = $request->input('image_id');
 		if ( empty($image_id) ) {
 			return response()->json(
@@ -280,40 +278,14 @@ class APIController extends Controller {
 				], 404);
 		}
 		
-		$defaults = [
-			'border' => [
-				'color1' => '#ffffff'
-			],
-			'logos' => [
-				'position' => 4,
-				'brand' => ''
-			],
-			'eyecatcher' => [
-				'position' => 2,
-				'form' => '',
-				'color' => '#ffffff',
-				'text' => ''
-			]
+		
+		$cover_defaults = [
+			'brand_logo' => '',
+			'sticker_text' => '',
+			'sticker_form' => '' // circle, square or badge (=default)
 		];
-		
-		$cover_settings = array_replace_recursive($defaults, $cover_settings);
-		
-		// $validator = Validator::make($cover_settings, array(
-		// 		'border.color1' => 'required',
-		// 			'logos.position' => 'required',
-		// 			'logos.brand' => 'required',
-		// 			'eyecatcher.position' => 'required',
-		// 			'eyecatcher.form' => 'required',
-		// 			'eyecatcher.color' => 'required',
-		// 			'eyecatcher.text' => 'required',
-		// 	));
-		// if ($validator->fails()) {
-		// 	return response()->json(
-		//         	[
-		// 			'status' => 'error',
-		// 			'message' => 'Set cover failed; Parameters are misssing.'
-		// 		], 400);
-		// }
+		$cover_settings = $request->except(['token']);
+		$cover_settings = array_replace_recursive($cover_defaults, $cover_settings);
 
 		// delete old cover file
 		$destinationPath = 'images/'.$user['id'];
@@ -492,23 +464,10 @@ class APIController extends Controller {
 			$eyecatcher_value = APIController::parseDirectionToVector($colors->stickerDirection, $eyecatcher_size, $eyecatcher_size);
 		}
 		$text_color = isset($colors->stickerText) ? $colors->stickerText : 'black';
-		
-		// $border_color1 = $cover_settings['border']['color1'];
-		// $border_color2 = $border_orientation = "";
-		// if (!empty($cover_settings['border']['color2'])) {
-		// 	$border_color2 = $cover_settings['border']['color2'];
-		// }
-		if (!empty($cover_settings['border']['orientation'])) {
-			$border_orientation = $cover_settings['border']['orientation'];
-		}
 
-		$logos_position = $cover_settings['logos']['position'];
-		$logos_brand = $cover_settings['logos']['brand'];
-
-		$eyecatcher_position = $cover_settings['eyecatcher']['position'];
-		$eyecatcher_form = $cover_settings['eyecatcher']['form'];
-		// $eyecatcher_color = $cover_settings['eyecatcher']['color'];
-		$eyecatcher_text = $cover_settings['eyecatcher']['text'];
+		$logos_brand = $cover_settings['brand_logo'];
+		$eyecatcher_text = $cover_settings['sticker_text'];
+		$eyecatcher_form = $cover_settings['sticker_form'];
 
 		// Set border
 		if ($border_color2 == "") {
@@ -556,8 +515,8 @@ class APIController extends Controller {
 		}
 
 		$offset = env('LOGO_OFFSET', 60);
-		$offset_x = ($logos_position == 2 || $logos_position == 3 ) ? $image_width - $offset - $logo_compound_width : $offset;
-		$offset_y = ($logos_position == 4 || $logos_position == 3 ) ? $image_height - $offset - $logo_height : $offset;
+		$offset_x = $offset;
+		$offset_y = $image_height - $offset - $logo_height;
 
 		$imagick->compositeImage( $logo_compound, imagick::COMPOSITE_OVER, $offset_x, $offset_y);
 
@@ -569,13 +528,12 @@ class APIController extends Controller {
 			$draw->setFillColor('white');
 
 			$offset = env('STICKER_OFFSET', 10);
-
-			$offset_x = ($eyecatcher_position == 2 || $eyecatcher_position == 3 ) ? $image_width - ($offset+$eyecatcher_size) : $offset+$eyecatcher_size;
-			$offset_y = ($eyecatcher_position == 4 || $eyecatcher_position == 3 ) ? $image_height - $offset : $offset;
+			$offset_x = $image_width - ($offset+$eyecatcher_size);
+			$offset_y = $offset;
 			
 			if ($eyecatcher_form == "circle") {
 				$draw->circle($eyecatcher_size / 2, $eyecatcher_size / 2, $eyecatcher_size, $eyecatcher_size / 2);
-			} else if ($eyecatcher_form == "rectangle") {
+			} else if ($eyecatcher_form == "square") {
 				$draw->rectangle(0, 0, $eyecatcher_size, $eyecatcher_size);
 			} else {
 				APIController::drawBadge($draw, $eyecatcher_size);
