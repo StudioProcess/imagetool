@@ -16,10 +16,11 @@ export class EditImageComponent implements OnInit {
   brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia'];
   brands;
   useSticker: boolean = false;
+  // initialStickerText: string = '';
   isProcessing: boolean = false;
   remainingCharacters: number = 30;
 
-  coverOptions = {
+  coverSettings = {
     "brand_logo": "",
     "sticker_text": "",
     // "sticker_form": "badge" // circle, square or badge (default when empty)
@@ -39,6 +40,14 @@ export class EditImageComponent implements OnInit {
     this.coverURLs = sessionData.cover_urls;
     this.titleImageChosen = this.selectedImage;
     this.setTitleImageSrc();
+    
+    let cover_settings = sessionData.cover_settings;
+    if (cover_settings) {
+      if (cover_settings.sticker_text) { this.coverSettings.sticker_text = cover_settings.sticker_text; }
+      if (cover_settings.brand_logo) { this.coverSettings.brand_logo = cover_settings.brand_logo; }
+    }
+    this.useSticker = sessionData.useSticker;
+    console.log('coverSettings', this.coverSettings)
 
     this.resume.resumeIsDone().then(() => {
       console.log('processing image');
@@ -59,8 +68,8 @@ export class EditImageComponent implements OnInit {
 
   onSubmitButtonClicked(brand, stickerChecked, stickerText) {
     console.log('SUBMIT', brand, stickerChecked, stickerText);
-    this.coverOptions.brand_logo = brand;
-    this.coverOptions.sticker_text = this.useSticker ? stickerText.toUpperCase() : '';
+    this.coverSettings.brand_logo = brand;
+    this.coverSettings.sticker_text = this.useSticker ? stickerText.toUpperCase() : '';
     // console.log(this.coverOptions);
     this.processImage();
   }
@@ -72,12 +81,13 @@ export class EditImageComponent implements OnInit {
   processImage() {
     if (!this.titleImageChosen) return;
     this.isProcessing = true;
-    this.backend.setCover(this.selectedImage.id, this.coverOptions).subscribe(res => {
+    this.backend.setCover(this.selectedImage.id, this.coverSettings).subscribe(res => {
       console.info('image processed', res.json());
       let data = res.json().data;
       let now = new Date().getTime();
       data.cover_urls['full'] += '?' + now;
       data.cover_urls['thumb'] += '?' + now;
+      data.useSticker = this.useSticker;
       this.coverURLs = data.cover_urls;
       this.setTitleImageSrc();
       this.session.set(data);

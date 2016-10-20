@@ -39,8 +39,8 @@
         Automarke
       </div>
       <div class="small-9 columns">
-          <select #brandSelect>
-            <option value="none">– keine anzeigen –</option>
+          <select #brandSelect [value]="coverSettings.brand_logo">
+            <option value="">– keine anzeigen –</option>
             <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
           </select>
       </div>
@@ -48,14 +48,14 @@
 
     <div class="row">
       <fieldset class="small-8 columns text-label-badge">
-        <input #stickerCheckbox id="checkbox1" type="checkbox" (change)="onCheckboxChanged($event)"><label for="checkbox1"> <span class="checkbox-text">Sticker verwenden?</span></label>
+        <input #stickerCheckbox [checked]="useSticker" id="checkbox1" type="checkbox" (change)="onCheckboxChanged($event)"><label for="checkbox1"> <span class="checkbox-text">Sticker verwenden?</span></label>
       </fieldset>
       <div class="small-4 column badge-image">
         <img src="../../assets/images/interface/badge1.png" class="float-right">
       </div>
     </div>
     <div class="row column">
-        <input #stickerText type="text" maxlength="30" (input)="getRemainingTextLenghth(stickerText.value)" name="stoererText" placeholder="Text für Sticker" [disabled]="!useSticker">
+        <input #stickerText type="text" maxlength="30" (input)="getRemainingTextLenghth(stickerText.value)" name="stoererText" placeholder="Text für Sticker" [disabled]="!useSticker" [value]="coverSettings.sticker_text">
     </div>
     <div class="row column remaining-characters">
         Zeichen verbleibend: {{ remainingCharacters }}

@@ -9,6 +9,7 @@ interface SessionData {
   cover_settings?: any;
   cover_urls?: any;
   selectedImage?: any;
+  useSticker?: boolean;
 }
 
 @Injectable()
@@ -37,7 +38,8 @@ export class SessionService {
       images: [],
       cover_settings: {},
       cover_urls: {},
-      selectedImage: null
+      selectedImage: null,
+      useSticker: false
     };
   }
 
