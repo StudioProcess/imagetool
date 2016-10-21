@@ -660,7 +660,7 @@ class APIController extends Controller {
 				'data' =>
 					[
 						'cover_settings' => $cover_settings,
-						'cover_urls' => $cover_urls
+						'cover_urls' => (object)$cover_urls
 					],
 				// 'token' => $new_token
 			], 200);
