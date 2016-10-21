@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 
@@ -17,7 +18,7 @@ class APIController extends Controller {
 		$bigSize = env('IMAGE_SIZE_LARGE', 1000);
 		$smallSize = env('IMAGE_SIZE_SMALL', 300);
 
-		$user = JWTAuth::toUser($request->input('token'));
+		$user = JWTAuth::toUser(); // NOTE: DB access
 		$tempPath = 'temp/'.$user['id'];
 		$destinationPath = 'images/'.$user['id'];
 
@@ -42,28 +43,33 @@ class APIController extends Controller {
 		}
 
 		$total_upload_success = true;
-		//$last_uploaded_images = $user->last_uploaded_images;
-		$uploaded_images = json_decode($user->last_uploaded_images, true);
+
 		$new_images = [];
-		
+
 		if ($request->hasFile('images')) {
 			$files = $request->file('images');
+			
+			$image_id = -1;
+			// NOTE: DB access
+			DB::transaction(function () use ($files, &$image_id) {
+				$user = JWTAuth::toUser();
+				$image_id = $user->latest_loginstat->uploads; // initially holds last used image id
+				$user->latest_loginstat->increment('uploads', count($files));
+			});
+			
 			foreach($files as $file){
+				$image_id++;
+				
 				$originalname = $file->getClientOriginalName();
 				$filename = pathinfo($originalname, PATHINFO_FILENAME);
 				$extension = pathinfo($originalname, PATHINFO_EXTENSION);
-
-				$user->latest_loginstat->increment('uploads');
-
-				$upload_id_string = sprintf('%03d', $user->latest_loginstat['uploads']);
-
-				$imagename = $upload_id_string."_".$filename;
+				$imagename = sprintf('%03d', $image_id)."_".$filename;
 
 				$upload_success = $file->move($tempPath, $imagename.".".$extension);
+				
+				$new_images = [];
 
 				if ($upload_success) {
-
-					$image_id = $user->latest_loginstat['uploads'];
 
 					$imagick = new Imagick(public_path()."/".$tempPath."/".$imagename.".".$extension);
 					
@@ -92,8 +98,7 @@ class APIController extends Controller {
 
 					$imagick->clear();
 					$imagick->destroy();
-					
-					
+
 					$new_image = array(
 							'id' => $image_id,
 							'name' => $imagename,
@@ -103,14 +108,12 @@ class APIController extends Controller {
 									'thumb' => url('api/public/'.$destinationPath."/".$imagename."-thumb.".$extension)
 								)
 						);
-					
-					$uploaded_images[] = $new_image;
 					$new_images[] = $new_image;
 
 					File::cleanDirectory($tempPath);
 
 				} else {
-					$user->latest_loginstat->decrement('uploads');
+					// $user->latest_loginstat->decrement('uploads'); // NOTE: DB access
 					$total_upload_success = false;
 				}
 			}
@@ -121,10 +124,21 @@ class APIController extends Controller {
 					'message' => 'Add images; No file(s) given.'
 				], 400);
 		}
-
-		$uploaded_images_json = json_encode($uploaded_images); //JSON_FORCE_OBJECT
-		$user->last_uploaded_images = $uploaded_images_json;
-		$user->save();
+		
+		$all_imgs = [];
+		
+		// Atomically update models // NOTE: DB access
+		DB::transaction(function () use (&$all_imgs, $new_images) {
+			// $user->fresh(); // reload user data
+			$user = JWTAuth::toUser(); // reload user data at this point in time
+			$uploaded_images = json_decode($user->last_uploaded_images, true);
+			if ( is_null($uploaded_images) ) $uploaded_images = [];
+			$uploaded_images = array_merge($uploaded_images, $new_images);
+			$uploaded_images_json = json_encode($uploaded_images);
+			$user->last_uploaded_images = $uploaded_images_json;
+			$user->save();
+			$all_imgs = array_merge($all_imgs, $uploaded_images);
+		});
 
 		if ($total_upload_success) {
 			// $new_token = JWTAuth::refresh($request->input('token'));
@@ -134,7 +148,9 @@ class APIController extends Controller {
 					'message' => 'Add images; Image(s) uploaded.',
 					'data' =>
 						[
-							'images' => $new_images
+							'images' => $new_images,
+							'all_images' => $all_imgs,
+							'user' => $user
 						],
 					// 'token' => $new_token
 				], 200);
