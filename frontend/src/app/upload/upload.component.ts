@@ -10,9 +10,10 @@ import { SessionService } from '../session.service';
 })
 
 export class UploadComponent implements OnInit {
-  
+
   private CONCURRENT_UPLOADS = 3; // Number of max. simultaneous image uploads
-  
+  private USER_NAME: number;
+
   images = [];
   selectedImage = null;
 
@@ -21,6 +22,8 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.images = this.session.get().images;
     this.selectedImage = this.session.get().selectedImage;
+    this.USER_NAME = this.session.get().user.name;
+    console.log("USERNAME: "+this.USER_NAME);
   }
 
   checkEmpty(){
@@ -87,13 +90,13 @@ export class UploadComponent implements OnInit {
     console.log('files dropped', fileList);
     this.uploadMultipleImages(fileList);
   }
-  
+
   uploadMultipleImages(files: File[]) {
     let uploads = files.map(file => this.uploadImage(file));
     let uploadStream = Observable.from(uploads);
     uploadStream.mergeAll(this.CONCURRENT_UPLOADS).subscribe();
   }
-  
+
   private uploadImage(file: File): Observable<any> {
     let image = {
       uploadState: { uploading: true } as any,
