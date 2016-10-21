@@ -125,10 +125,8 @@ class APIController extends Controller {
 				], 400);
 		}
 		
-		$all_imgs = [];
-		
 		// Atomically update models // NOTE: DB access
-		DB::transaction(function () use (&$all_imgs, $new_images) {
+		DB::transaction(function () use ($new_images) {
 			// $user->fresh(); // reload user data
 			$user = JWTAuth::toUser(); // reload user data at this point in time
 			$uploaded_images = json_decode($user->last_uploaded_images, true);
@@ -137,7 +135,6 @@ class APIController extends Controller {
 			$uploaded_images_json = json_encode($uploaded_images);
 			$user->last_uploaded_images = $uploaded_images_json;
 			$user->save();
-			$all_imgs = array_merge($all_imgs, $uploaded_images);
 		});
 
 		if ($total_upload_success) {
@@ -148,9 +145,7 @@ class APIController extends Controller {
 					'message' => 'Add images; Image(s) uploaded.',
 					'data' =>
 						[
-							'images' => $new_images,
-							'all_images' => $all_imgs,
-							'user' => $user
+							'images' => $new_images
 						],
 					// 'token' => $new_token
 				], 200);
@@ -205,6 +200,8 @@ class APIController extends Controller {
 				File::delete($destinationPath."/".$imagename."-cover-full.".$extension);
 				File::delete($destinationPath."/".$imagename."-cover-thumb.".$extension);
 				unset($uploaded_images[$image_key]);
+				$uploaded_images = array_values($uploaded_images); // reindex so we preserve array characteristics in JSON (would be object otherwise)
+				break;
 			}
 		}
 
@@ -216,7 +213,7 @@ class APIController extends Controller {
 				], 404);
 		}
 
-		$uploaded_images_json = json_encode($uploaded_images); //JSON_FORCE_OBJECT
+		$uploaded_images_json = json_encode($uploaded_images);
 		$user->last_uploaded_images = $uploaded_images_json;
 		$user->save();
 
