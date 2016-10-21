@@ -21,7 +21,7 @@ export class RestartComponent implements OnInit {
     this.backend.resetSession().subscribe({
       next: (res) => {
         console.info('success restarting session', res.json());
-        this.session.reset();
+        this.session.reset( {user: this.session.get().user} ); // keep user data
         this.router.navigate(['upload']);
       },
       error: (err) => {

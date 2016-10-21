@@ -14,13 +14,13 @@ interface SessionData {
 
 @Injectable()
 export class SessionService {
-
+  
   private _data: SessionData;
   private dataSubject: BehaviorSubject<SessionData>;
   data: Observable<SessionData>;
 
   constructor() {
-    this.initData();
+    this._data = this.emptyData(); // Initialize session data with empty default values
     let storedData = this.retrieve();
     if (storedData) {
       Object.assign(this._data, storedData);
@@ -29,9 +29,8 @@ export class SessionService {
     this.data = this.dataSubject.asObservable();
   }
   
-  // Initialize session data with empty default values
-  private initData() {
-    this._data = {
+  private emptyData(initial: SessionData = {}): SessionData {
+    return Object.assign({
       route: null,
       token: null,
       user: {},
@@ -40,9 +39,9 @@ export class SessionService {
       cover_urls: {},
       selectedImage: null,
       useSticker: false
-    };
+    }, initial);
   }
-
+  
   private retrieve(): SessionData {
     return JSON.parse( localStorage.getItem('session') );
   }
@@ -63,8 +62,9 @@ export class SessionService {
   }
   
   // Reset data to empty default values and store them
-  reset() {
-    this.initData();
+  // Can provide partial initial values
+  reset(initial: SessionData = {}) {
+    this._data = this.emptyData(initial);
     this.store();
   }
 }
