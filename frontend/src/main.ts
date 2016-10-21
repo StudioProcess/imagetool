@@ -6,8 +6,8 @@ import { environment } from './environments/environment';
 import { AppModule } from './app/';
 
 // init foundation
-declare var $;
-$(document).foundation();
+declare var jQuery; // redeclare with type any for 'foundation' property
+jQuery(document).foundation();
 
 // init environment
 if (environment.production) {
