@@ -23,12 +23,14 @@ export class BackendService {
   processToken = (response) => {
     if (response.isProgressEvent) return response; // Skip progress response
     if (response.headers && response.headers.get('Content-Type') == 'application/json') {
-      let responseJSON = response.json();
-      if (responseJSON.token) {
-        this.headers.set('X-Access-Token', responseJSON.token);
-        this.session.store({token: responseJSON.token});
-        console.log('token set:', responseJSON.token);
-      }
+      try {
+        let responseJSON = response.json();
+        if (responseJSON.token) {
+          this.headers.set('X-Access-Token', responseJSON.token);
+          this.session.store({token: responseJSON.token});
+          console.log('token set:', responseJSON.token);
+        }
+      } catch (e) {}
     }
     if (!response.ok) return Observable.throw(response); // for use with catch
     return response; // for use with map

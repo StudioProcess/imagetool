@@ -123,7 +123,7 @@ export class UploadComponent implements OnInit {
         this.session.set({images: this.images});
       }
     }).catch(err => {
-      console.log('upload error', err.json());
+      console.log('upload error', err);
       image.uploadState = { error:true };
       return Observable.empty(); // Complete the observable chain
     });
