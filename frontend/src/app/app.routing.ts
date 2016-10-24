@@ -32,6 +32,9 @@ const appRoutes: Routes = [
     component: RestartComponent,
     data: { title: 'Neu anfangen' }
   },
+  { path: 'reset',
+    redirectTo: 'restart'
+  },
   { path: 'login',
     component: LoginComponent,
     data: { title: 'Einloggen' }
