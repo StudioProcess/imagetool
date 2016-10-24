@@ -41,10 +41,11 @@ export class ResumeService {
     let resumeSession = refreshSession
       .switchMapTo(updateSession)
       .do(res => {
-        console.log('resuming', res.json());
+        console.log('resuming');
+        // Don't resume to URL if /logout or /restart are requested
+        if (this.router.url == '/logout' || this.router.url == '/restart') return;
         let url = this.session.get().route;
         if (!url) url = '/upload';
-        console.info('resuming to', url);
         this.router.navigateByUrl(url);
       }).catch(err => {
         if (err.status == 401) { // Unauthorized i.e. not logged in
