@@ -32,9 +32,12 @@ const appRoutes: Routes = [
     component: RestartComponent,
     data: { title: 'Neu anfangen' }
   },
-  { path: '**',
+  { path: 'login',
     component: LoginComponent,
     data: { title: 'Einloggen' }
+  },
+  { path: '**',
+    redirectTo: '/login'
   }
 ];
 
