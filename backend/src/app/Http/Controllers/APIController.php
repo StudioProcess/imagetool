@@ -299,14 +299,20 @@ class APIController extends Controller {
 		];
 		$cover_settings = $request->except(['token']);
 		$cover_settings = array_replace_recursive($cover_defaults, $cover_settings);
-
-		// delete old cover file
-		$destinationPath = 'images/'.$user['id'];
-		$log_files = File::glob($destinationPath.'/*cover*');
-		if ($log_files !== false) {
-		    foreach ($log_files as $file) {
-		    	File::delete($file);
-		    }
+		
+		// Delete old cover file
+		$old_cover_settings = json_decode($user->cover_settings, true);
+		$old_cover_id = $old_cover_settings['image_id'];
+		$old_cover = array_reduce($uploaded_images, function($carry, $image) use ($old_cover_id) {
+			if ($image['id'] == $old_cover_id) return $image;
+			return $carry;
+		});
+		if (!is_null($old_cover)) {
+			$destinationPath = 'images/'.$user['id'];
+			$imagename = $old_cover['name'];
+			$extension = $old_cover['extension'];
+			File::delete($destinationPath."/".$imagename."-cover-full.".$extension);
+			File::delete($destinationPath."/".$imagename."-cover-thumb.".$extension);
 		}
 
 		$coverUrls = false;
