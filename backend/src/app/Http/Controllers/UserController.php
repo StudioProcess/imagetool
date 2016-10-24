@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\User;
 use Hash, Validator;
 use JWTAuth, Auth, File;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class UserController extends Controller
 {
@@ -51,26 +52,33 @@ class UserController extends Controller
 		], 200);
   }
 
-    public function logout(Request $request) {
-			$user = JWTAuth::toUser($request->input('token'));
-			
-			// clear old data
-			$user->last_uploaded_images = "";
-			$user->cover_settings = "";
-			$user->save();
+	public function logout(Request $request) {
+		$user = JWTAuth::toUser();
+		
+		// clear old data
+		$user->last_uploaded_images = "";
+		$user->cover_settings = "";
+		$user->save();
 
-			$tempPath = 'temp/'.$user['id'];
-			File::cleanDirectory($tempPath);
-			$destinationPath = 'images/'.$user['id'];
-			File::cleanDirectory($destinationPath);
+		$tempPath = 'temp/'.$user['id'];
+		File::cleanDirectory($tempPath);
+		$destinationPath = 'images/'.$user['id'];
+		File::cleanDirectory($destinationPath);
 
-    	JWTAuth::invalidate(JWTAuth::getToken());
+		try {
+			JWTAuth::invalidate( JWTAuth::getToken() );
+		} catch (JWTException $e) {
+			return response()->json([
+					'status' => 'error',
+					'message' => 'Reset session; Error invalidating token.',
+					'exception' => $e->getMessage()
+				], 403);
+		}
 
-	    return response()->json(
-        	[
-				'status' => 'success',
-				'message' => 'Logged out.'
-			], 200);
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Logged out.'
+		], 200);
 	}
 
     public function register_user(Request $request) {        
@@ -285,14 +293,12 @@ class UserController extends Controller
 	}
 
 	public function reset_session(Request $request) {
+		$user = JWTAuth::toUser();
 
-    	$user = JWTAuth::toUser($request->input('token'));
-
-        // set loginstat for this session
-    	$user->loginstats()->create(
-        	[
-        		'session_string' => 'session_'.date('y-m-d_H:i:s')
-        	]);
+		// set loginstat for this session
+		$user->loginstats()->create([
+			'session_string' => 'session_'.date('y-m-d_H:i:s')
+		]);
 
 		// clear old data
 		$user->last_uploaded_images = "";
@@ -304,9 +310,17 @@ class UserController extends Controller
 		$destinationPath = 'images/'.$user['id'];
 		File::cleanDirectory($destinationPath);
 
-		$new_token = JWTAuth::refresh($request->input('token'));
-	    return response()->json(
-        	[
+		try {
+			$new_token = JWTAuth::refresh($request->input('token'));
+		} catch (JWTException $e) {
+			return response()->json([
+					'status' => 'error',
+					'message' => 'Reset session; Error refreshing token.',
+					'exception' => $e->getMessage()
+				], 403);
+		}
+		
+		return response()->json([
 				'status' => 'success',
 				'message' => 'Reset session.',
 				'token' => $new_token
