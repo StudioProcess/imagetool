@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 import { BackendService } from '../backend.service';
 import { SessionService } from '../session.service';
+import { ResumeService } from '../resume.service';
 
 
 @Component({
@@ -13,12 +15,16 @@ export class RestartComponent implements OnInit {
   constructor(
     private router: Router, 
     private backend: BackendService, 
-    private session: SessionService
+    private session: SessionService,
+    private resume: ResumeService
   ) {}
 
   ngOnInit() {
-    console.log('restarting session...');
-    this.backend.resetSession().subscribe({
+    Observable.fromPromise(this.resume.resumeIsDone())
+    .ignoreElements() // make sure this doesn't emit values
+    .do(() => console.log('restarting session...'))
+    .concat(this.backend.resetSession())
+    .subscribe({
       next: (res) => {
         console.info('success restarting session', res.json());
         this.session.reset( {user: this.session.get().user} ); // keep user data

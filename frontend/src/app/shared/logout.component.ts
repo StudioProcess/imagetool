@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 import { BackendService } from '../backend.service';
 import { SessionService } from '../session.service';
+import { ResumeService } from '../resume.service';
 
 @Component({
   selector: 'app-logout',
@@ -12,12 +14,16 @@ export class LogoutComponent implements OnInit {
   constructor(
     private router: Router, 
     private backend: BackendService, 
-    private session: SessionService
+    private session: SessionService,
+    private resume: ResumeService
   ) {}
 
   ngOnInit() {
-    console.log('logging out...');
-    this.backend.logout().subscribe({
+    Observable.fromPromise(this.resume.resumeIsDone())
+    .ignoreElements() // make sure this doesn't emit values
+    .do(() => console.log('logging out...'))
+    .concat(this.backend.logout())
+    .subscribe({
       next: (res) => {
         console.info('success logging out', res.json());
         this.session.reset();
