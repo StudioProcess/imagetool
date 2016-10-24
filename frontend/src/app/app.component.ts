@@ -30,11 +30,13 @@ export class AppComponent implements OnInit {
       this.loading = false;
       
       // Keep stored route up to date
+      // Don't store 'special' routes, that redirect anyway (login, logout, restart)
       this.router.events
         .filter(e => e instanceof NavigationEnd)
-        .subscribe((e) => {
-          console.log('ROUTE:', e.url);
-          this.session.store({route: e.url});
+        .do(e => console.log('ROUTE:', e.url))
+        .filter((e:any) => ['/login', '/logout', '/restart'].indexOf(e.urlAfterRedirects) == -1)
+        .subscribe((e: any) => {
+          this.session.store({route: e.urlAfterRedirects});
       });
       
       console.log("RESUME DONE");
