@@ -21,6 +21,7 @@ class authJWT {
     public function handle($request, Closure $next) {
       
       try {
+        
         // Check for X-Access-Token header
         $x_access_token = $request->header('x-access-token');
         $x_auth_token = $request->header('x-auth-token');
@@ -29,7 +30,9 @@ class authJWT {
           // Set as 'token' request param
           $request->merge(['token' => $header_token]);
         }
-        $user = JWTAuth::parseToken()->authenticate();
+        $token = $request->input('token');
+        JWTAuth::authenticate($token);
+        JWTAuth::setToken($token);
 
       } catch (JWTException $e) {
         
@@ -50,7 +53,17 @@ class authJWT {
           return response()->json([
             'status' => 'error',
             'message' => 'Authentication failed; Something is wrong. Maybe no token provided.',
-            'exception' => $e->getMessage()
+            'exception' => [
+              'message' => $e->getMessage(),
+    					'code' => $e->getCode(),
+    					'file' => $e->getFile(),
+    					'line' => $e->getLine()
+            ],
+            'tokens' => [
+              'x-access-token' => $x_access_token,
+              'x-auth-token' => $x_auth_token,
+              'token' => $request->input('token')
+            ]
           ], 401);
         }
 
