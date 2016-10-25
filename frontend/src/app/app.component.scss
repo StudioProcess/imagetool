@@ -73,3 +73,14 @@ main.loading {
   text-align: left;
   padding-left: 1.5em;
 }
+
+.collapsible {
+  display: none;
+}
+
+.collapsible-trigger {
+  height: 3em;
+  &:hover {
+    color: #8f8f8f;
+  }
+}

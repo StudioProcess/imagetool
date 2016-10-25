@@ -1,9 +1,11 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { BackendService } from './backend.service';
 import { SessionService } from './session.service';
 import { ResumeService } from './resume.service';
+
+declare var jQuery: any;
 
 @Component({
   selector: 'app-root',
@@ -12,9 +14,11 @@ import { ResumeService } from './resume.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
-  
+
   loading = true;
-  
+
+  public expanded: boolean = false;
+
   constructor(
     private router: Router,
     private backend: BackendService,
@@ -23,12 +27,12 @@ export class AppComponent implements OnInit {
   ) {
     console.log('SESSION:', session.get());
   }
-  
+
   ngOnInit() {
     // Resume the session (if possible)
     this.resume.resumeSession().finally(() => {
       this.loading = false;
-      
+
       // Keep stored route up to date
       // Don't store 'special' routes, that redirect anyway (login, logout, restart)
       this.router.events
@@ -38,9 +42,25 @@ export class AppComponent implements OnInit {
         .subscribe((e: any) => {
           this.session.store({route: e.urlAfterRedirects});
       });
-      
+
       console.log("RESUME DONE");
     }).subscribe();
   }
-  
+
+  ngAfterViewChecked(){
+    jQuery(".collapsible-trigger").unbind().click(() => {
+      jQuery(".collapsible" ).slideToggle("slow", function() {
+      });
+      console.log(this.expanded);
+      this.expanded = !this.expanded;
+    });
+
+    // jQuery(".collapsible-trigger").unbind().click(function() {
+    //   jQuery(".collapsible" ).slideToggle("slow", function() {
+    //   });
+    //   console.log(this.expanded);
+    //   this.expanded = !this.expanded;
+    //
+    // });
+  }
 }
