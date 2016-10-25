@@ -9,7 +9,11 @@
   <span class="page-title">Titelfoto bearbeiten</span>
 </div>
 
-<div class="row colored" *ngIf="!emptyImagesArray">
+<div class="row colored column collapsible-trigger" *ngIf="!emptyImagesArray">
+  Hilfe anzeigen/verbergen...
+</div>
+
+<div class="row colored collapsible" *ngIf="!emptyImagesArray">
   <div class="column small-10 medium-8 large-8">
     <p>Hier kann das Titelbild bearbeitet und mit zusätzlichem Inhalt versehen werden. Wählen Sie zuerst die entsprechende Automarke. Ihr Händlerlogo sowie der farbige Rahmen werden automatisch beim Titelfoto hinzugefügt.</p>
     <p>Optional ist ein Störer (Sticker): Über diesen können weitere Informationen/Eyecatcher ins Bild eingebettet werden. Um den geringen Platz bestmöglich nutzen zu können ist es wichtig, nur kurzen Text zu verwenden. (Beispielsweise "NEU".)</p>

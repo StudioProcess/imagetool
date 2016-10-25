@@ -51,8 +51,8 @@ export class AppComponent implements OnInit {
     jQuery(".collapsible-trigger").unbind().click(() => {
       jQuery(".collapsible" ).slideToggle("slow", function() {
       });
-      console.log(this.expanded);
-      this.expanded = !this.expanded;
+      // console.log(this.expanded);
+      // this.expanded = !this.expanded;
     });
 
     // jQuery(".collapsible-trigger").unbind().click(function() {

@@ -9,15 +9,15 @@
   <span class="page-title">Fotos herunterladen</span>
 </div>
 
+<div class="row colored column collapsible-trigger" *ngIf="!emptyImagesArray">
+  Hilfe anzeigen/verbergen...
+</div>
+
 <div *ngIf="emptyImagesArray" class="row column empty-array colored">
   Es wurden noch keine Fotos hochgeladen.
 </div>
 
-<div class="row column colored" *ngIf="!emptyImagesArray">
-  <span class="sub-title">Archiv herunterladen</span>
-</div>
-
-<div class="row colored" *ngIf="!emptyImagesArray">
+<div class="row colored collapsible" *ngIf="!emptyImagesArray">
   <div class="column small-10 medium-8 large-8">
     <p>Im letzten Schritt können Sie das bearbeitete Titelbild inklusive der anderen, automatisch bearbeiteten Fotos als Archiv herunterladen. Dazu klicken Sie einfach auf die Schaltfläche “Download starten”. Es wird eine ZIP-Datei auf ihrem Rechner gespeichert, das sämtliche Fotos enthält.</p>
     <p>Wenn Sie das ZIP-Archiv nicht finden, sehen Sie in Ihrem “Download”-Ordner nach. Sind sie fertig? Sie können sich von diesem Schritt ausloggen oder neu beginnen.</p>

@@ -9,7 +9,11 @@
   <span class="page-title">Titelfoto auswählen</span>
 </div>
 
-<div class="row colored" *ngIf="!emptyImagesArray">
+<div class="row colored column collapsible-trigger" *ngIf="!emptyImagesArray">
+  Hilfe anzeigen/verbergen...
+</div>
+
+<div class="row colored collapsible" *ngIf="!emptyImagesArray">
   <div class="column small-10 medium-8 large-8">
     <p>Aus den hochgeladenen und automatisch bearbeiteten Fotos können Sie bestimmen, welches Foto als Titelbild verwendet werden soll. Um dieses festzulegen, einfach auf das gewünsche Foto klicken.</p>
     <p>Das Titelfoto wird auf Autobörsen als erstes Bild des Angebots angezeigt. Es sollte daher das Foto sein, welches das Auto am besten präsentiert.</p>
