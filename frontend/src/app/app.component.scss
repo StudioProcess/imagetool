@@ -78,9 +78,35 @@ main.loading {
   display: none;
 }
 
-.collapsible-trigger {
+#collapsible-trigger {
   height: 3em;
   &:hover {
     color: #8f8f8f;
+    cursor: pointer;
+  }
+}
+
+.show-help {
+  display: block;
+}
+.remove-help {
+  display: none;
+}
+
+.expanded-trigger {
+  .show-help {
+    display: none;
+  }
+  .remove-help {
+    display: block;
+  }
+}
+
+.help {
+  display: none;
+}
+.expanded {
+  .help {
+    display: block;
   }
 }

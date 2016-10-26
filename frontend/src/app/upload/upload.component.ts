@@ -47,7 +47,7 @@ export class UploadComponent implements OnInit {
     // });
 
   }
-  
+
   checkEmpty(){
     if(this.images.length == 0){
       return false;

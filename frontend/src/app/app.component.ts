@@ -48,19 +48,20 @@ export class AppComponent implements OnInit {
   }
 
   ngAfterViewChecked(){
-    jQuery(".collapsible-trigger").unbind().click(() => {
-      jQuery(".collapsible" ).slideToggle("slow", function() {
-      });
-      // console.log(this.expanded);
-      // this.expanded = !this.expanded;
-    });
 
-    // jQuery(".collapsible-trigger").unbind().click(function() {
-    //   jQuery(".collapsible" ).slideToggle("slow", function() {
-    //   });
-    //   console.log(this.expanded);
-    //   this.expanded = !this.expanded;
-    //
-    // });
+    jQuery("#collapsible-trigger").unbind().click(() => {
+      // ist klasse drauf?
+      if(jQuery("#collapsible").hasClass("expanded")){
+        // ja -> remove klasse expanded && slideUp
+        jQuery("#collapsible").slideUp("slow", function(){
+          jQuery("#collapsible-trigger").removeClass("expanded-trigger");
+          jQuery("#collapsible").removeClass("expanded");
+        });
+      } else {         // nein -> adde klasse expanded && slideDown
+        jQuery("#collapsible").addClass("expanded"); // mit ID statt klasse
+        jQuery("#collapsible").slideDown("slow");
+        jQuery("#collapsible-trigger").addClass("expanded-trigger");
+      }
+    });
   }
 }

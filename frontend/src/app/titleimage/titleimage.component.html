@@ -9,16 +9,19 @@
   <span class="page-title">Titelfoto auswählen</span>
 </div>
 
-<div class="row colored column collapsible-trigger" *ngIf="!emptyImagesArray">
-  Hilfe anzeigen/verbergen...
+<div class="row colored column" id="collapsible-trigger">
+  <div class="show-help"><i class="ion-chevron-down"></i> Hilfe anzeigen...</div>
+  <div class="remove-help"><i class="ion-chevron-up"></i> Hilfe verbergen...</div>
 </div>
 
-<div class="row colored collapsible" *ngIf="!emptyImagesArray">
-  <div class="column small-10 medium-8 large-8">
-    <p>Aus den hochgeladenen und automatisch bearbeiteten Fotos können Sie bestimmen, welches Foto als Titelbild verwendet werden soll. Um dieses festzulegen, einfach auf das gewünsche Foto klicken.</p>
-    <p>Das Titelfoto wird auf Autobörsen als erstes Bild des Angebots angezeigt. Es sollte daher das Foto sein, welches das Auto am besten präsentiert.</p>
+<div class="row colored" id="collapsible" *ngIf="!emptyImagesArray">
+  <div class="help">
+    <div class="column small-10 medium-8 large-8">
+      <p>Aus den hochgeladenen und automatisch bearbeiteten Fotos können Sie bestimmen, welches Foto als Titelbild verwendet werden soll. Um dieses festzulegen, einfach auf das gewünsche Foto klicken.</p>
+      <p>Das Titelfoto wird auf Autobörsen als erstes Bild des Angebots angezeigt. Es sollte daher das Foto sein, welches das Auto am besten präsentiert.</p>
+    </div>
+    <div class="column small-2 medium-4 large-4 icons-steps"> <i class="ion-image"></i></div>
   </div>
-  <div class="column small-2 medium-4 large-4 icons-steps"> <i class="ion-image"></i></div>
 </div>
 
 <div *ngIf="emptyImagesArray" class="row column empty-array colored">
