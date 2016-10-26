@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { BackendService } from './backend.service';
@@ -41,27 +41,30 @@ export class AppComponent implements OnInit {
         .filter((e:any) => ['/login', '/logout', '/restart'].indexOf(e.urlAfterRedirects) == -1)
         .subscribe((e: any) => {
           this.session.store({route: e.urlAfterRedirects});
+          this.initCollapsibleHelp(); // When route is changed init help
       });
 
       console.log("RESUME DONE");
     }).subscribe();
   }
 
-  ngAfterViewChecked(){
-
-    jQuery("#collapsible-trigger").unbind().click(() => {
-      // ist klasse drauf?
-      if(jQuery("#collapsible").hasClass("expanded")){
-        // ja -> remove klasse expanded && slideUp
-        jQuery("#collapsible").slideUp("slow", function(){
-          jQuery("#collapsible-trigger").removeClass("expanded-trigger");
-          jQuery("#collapsible").removeClass("expanded");
-        });
-      } else {         // nein -> adde klasse expanded && slideDown
-        jQuery("#collapsible").addClass("expanded"); // mit ID statt klasse
-        jQuery("#collapsible").slideDown("slow");
-        jQuery("#collapsible-trigger").addClass("expanded-trigger");
-      }
+  initCollapsibleHelp() {
+    jQuery(() => { // wait for DOM loaded (just in case)
+      jQuery("#collapsible-trigger").click(() => {
+        // ist klasse drauf?
+        if(jQuery("#collapsible").hasClass("expanded")){
+          // ja -> remove klasse expanded && slideUp
+          jQuery("#collapsible").slideUp("slow", function(){
+            jQuery("#collapsible-trigger").removeClass("expanded-trigger");
+            jQuery("#collapsible").removeClass("expanded");
+          });
+        } else {         // nein -> adde klasse expanded && slideDown
+          jQuery("#collapsible").addClass("expanded"); // mit ID statt klasse
+          jQuery("#collapsible").slideDown("slow");
+          jQuery("#collapsible-trigger").addClass("expanded-trigger");
+        }
+      });
     });
   }
+
 }
