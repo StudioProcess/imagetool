@@ -26,12 +26,12 @@ export class NavigationComponent implements OnInit {
     el.insertBefore(style, el.firstChild);
   }
 
-  allowTitleImage(){ // image uploaded?
-    if(this.session.get().images.length == 0){
-      return false;
-    } else {
-      return true;
-    }
+  allowTitleImage() { // At least one image (sucessfully) uploaded?
+    let images = this.session.get().images;
+    return images.some( (img) => 
+      img.uploadState ? // IF there is an uploadState set...
+      img.uploadState.success : // ...it HAS to be 'success'
+      true );
   }
 
   allowEditImage(){ // image uploaded AND titleimage chosen?

@@ -18,6 +18,7 @@ export class UploadComponent implements OnInit {
 
   images = [];
   selectedImage = null;
+  nextButtonEnabled: boolean = false;
 
   constructor(private backend: BackendService, private session: SessionService, private _elRef: ElementRef) { }
 
@@ -26,12 +27,12 @@ export class UploadComponent implements OnInit {
     this.selectedImage = this.session.get().selectedImage;
   }
 
-  checkEmpty(){
-    if(this.images.length == 0){
-      return false;
-    } else {
-      return true;
-    }
+  // Check if successfully uploaded images are present
+  imagesPresent() {
+    return this.images.some( (img) => 
+      img.uploadState ? // IF there is an uploadState set...
+      img.uploadState.success : // ...it HAS to be 'success'
+      true );
   }
 
   deleteImage(image) {
@@ -118,7 +119,7 @@ export class UploadComponent implements OnInit {
         // image.data = data.images[0];
         // Add image properties from server response
         Object.assign(image, data.images[0]);
-        image.uploadState = {}; // uploading success
+        image.uploadState = { success:true }; // uploading success
         // Add uploaded image to session
         this.session.set({images: this.images});
       }
