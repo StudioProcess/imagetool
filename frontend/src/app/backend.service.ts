@@ -7,6 +7,7 @@ import { SessionService } from './session.service';
 export class BackendService {
 
   API_URL = 'http://ito.process.studio/api';
+  UPLOAD_TIMEOUT = 180; // timeout in seconds (upload + processing)
 
   private headers = new Headers();
 
@@ -94,7 +95,7 @@ export class BackendService {
     return this.buildRequest(
       () => this.http.post(`${this.API_URL}/session/images`, data, {headers:this.headers}),
       true
-    );
+    ).timeout(this.UPLOAD_TIMEOUT * 60);
   }
 
   removeImage(id: number): Observable<any> {
