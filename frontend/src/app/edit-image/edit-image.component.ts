@@ -3,6 +3,8 @@ import { SessionService } from '../session.service';
 import { BackendService } from '../backend.service';
 import { ResumeService } from '../resume.service';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-edit-image',
   templateUrl: 'edit-image.component.html',
@@ -35,12 +37,17 @@ export class EditImageComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    jQuery(() => { // scroll to top
+      jQuery(".progress-meter").scrollTop();
+    });
+
     let sessionData = this.session.get();
     this.selectedImage = sessionData.selectedImage;
     this.coverURLs = sessionData.cover_urls;
     this.titleImageChosen = this.selectedImage;
     this.setTitleImageSrc();
-    
+
     let cover_settings = sessionData.cover_settings;
     if (cover_settings) {
       if (cover_settings.sticker_text) { this.coverSettings.sticker_text = cover_settings.sticker_text; }
@@ -54,7 +61,7 @@ export class EditImageComponent implements OnInit {
       this.processImage();
     });
   }
-  
+
   // Set appropriate image (unprocessed or processed if available)
   private setTitleImageSrc() {
     this.titleImageSrc = this.coverURLs.full ? this.coverURLs.full : this.selectedImage.urls.full;

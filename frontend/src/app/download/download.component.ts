@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 import { BackendService } from '../backend.service';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-download',
   templateUrl: 'download.component.html',
@@ -16,13 +18,18 @@ export class DownloadComponent implements OnInit {
   constructor(private backend: BackendService, private session: SessionService) { }
 
   ngOnInit() {
+
+    jQuery(() => { // scroll to top
+      jQuery(".progress-meter").scrollTop();
+    });
+
     let coverId = this.session.get().cover_settings.image_id;
     this.coverThumb = this.session.get().cover_urls.thumb;
     this.images = this.session.get().images;
     this.emptyImagesArray = !this.images.length;
     this.images = this.images.filter(img => img.id != coverId);
   }
-  
+
   onDownloadButtonClick(e) {
     this.isProcessing = true;
     this.backend.getArchive().subscribe(res => {

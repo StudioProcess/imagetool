@@ -23,13 +23,17 @@ export class UploadComponent implements OnInit {
   constructor(private backend: BackendService, private session: SessionService, private _elRef: ElementRef) { }
 
   ngOnInit() {
+    jQuery(() => { // scroll to top
+      jQuery(".progress-meter").scrollTop();
+    });
+    
     this.images = this.session.get().images;
     this.selectedImage = this.session.get().selectedImage;
   }
 
   // Check if successfully uploaded images are present
   imagesPresent() {
-    return this.images.some( (img) => 
+    return this.images.some( (img) =>
       img.uploadState ? // IF there is an uploadState set...
       img.uploadState.success : // ...it HAS to be 'success'
       true );

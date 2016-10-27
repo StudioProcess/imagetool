@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 import { BackendService } from '../backend.service';
 
+declare var jQuery: any;
 
 @Component({
   selector: 'app-titleimage',
@@ -16,6 +17,11 @@ export class TitleimageComponent implements OnInit {
   constructor(private backend: BackendService, private session: SessionService) {}
 
   ngOnInit() {
+
+    jQuery(() => { // scroll to top
+      jQuery(".progress-meter").scrollTop();
+    });
+
     this.images = this.session.get().images;
     if(this.images.length == 0){
       this.emptyImagesArray = true;
