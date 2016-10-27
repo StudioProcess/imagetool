@@ -28,11 +28,14 @@ export class UploadComponent implements OnInit {
   }
 
   // Check if successfully uploaded images are present
-  imagesPresent() {
-    return this.images.some( (img) => 
+  nextStepAvailable() {
+    let sucessfulImagesPresent = this.images.some( (img) => 
       img.uploadState ? // IF there is an uploadState set...
       img.uploadState.success : // ...it HAS to be 'success'
-      true );
+      true);
+    let inprogressImagesPresent = this.images.some( (img) => 
+      img.uploadState ? img.uploadState.uploading || img.uploadState.processing : false);
+    return sucessfulImagesPresent && !inprogressImagesPresent;
   }
 
   deleteImage(image) {

@@ -26,12 +26,15 @@ export class NavigationComponent implements OnInit {
     el.insertBefore(style, el.firstChild);
   }
 
-  allowTitleImage() { // At least one image (sucessfully) uploaded?
+  allowTitleImage() {
     let images = this.session.get().images;
-    return images.some( (img) => 
+    let sucessfulImagesPresent = images.some( (img) => 
       img.uploadState ? // IF there is an uploadState set...
       img.uploadState.success : // ...it HAS to be 'success'
-      true );
+      true);
+    let inprogressImagesPresent = images.some( (img) => 
+      img.uploadState ? img.uploadState.uploading || img.uploadState.processing : false);
+    return sucessfulImagesPresent && !inprogressImagesPresent;
   }
 
   allowEditImage(){ // image uploaded AND titleimage chosen?
