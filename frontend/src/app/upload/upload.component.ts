@@ -15,7 +15,6 @@ declare var jQuery: any;
 export class UploadComponent implements OnInit {
 
   private CONCURRENT_UPLOADS = 3; // Number of max. simultaneous image uploads
-  private USER_NAME: number;
 
   images = [];
   selectedImage = null;
@@ -25,27 +24,6 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.images = this.session.get().images;
     this.selectedImage = this.session.get().selectedImage;
-    this.USER_NAME = this.session.get().user.name;
-    console.log("USERNAME: "+this.USER_NAME);
-
-    // jQuery("#testjes").click(function() {
-    //     //alert("test");
-    //     jQuery( "#test" ).slideDown( "slow", function() {
-    // // Animation complete.
-    // // content hier
-    // // #test = id
-    // // .test = class
-    //   });
-    // });
-
-    // jQuery(".collapsible-trigger").click(function() {
-    //   if ((jQuery( ".collapsible")).is( ":hidden" ) ) {
-    //     jQuery( ".collapsible" ).slideDown( "slow");
-    //   } else {
-    //     jQuery( ".collapsible" ).slideUp( "slow" );
-    //   }
-    // });
-
   }
 
   checkEmpty(){
