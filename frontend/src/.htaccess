@@ -1,0 +1,22 @@
+## .htaccess for http://ito.process.studio (root)
+## Assuming backend API is at /api
+
+# Set PHP Version 5.6 (for hoststar.at)
+Action php /cgi-php56/php
+AddHandler php56 .php
+
+# Direct requests to app or api
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+# leave everything beginning with 'api/' as is
+RewriteRule ^api/ - [L]
+# leave 'index.html' as is
+RewriteRule ^index\.html$ - [L]
+# if requested file not found...
+RewriteCond %{REQUEST_FILENAME} !-f
+# ...or requested directory not found...
+RewriteCond %{REQUEST_FILENAME} !-d
+# ...serve the apps main file ('index.html')
+RewriteRule . /index.html [L]
+</IfModule>
