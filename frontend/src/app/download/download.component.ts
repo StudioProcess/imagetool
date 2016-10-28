@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 import { BackendService } from '../backend.service';
+import { AnalyticsService } from '../analytics.service';
 
 declare var jQuery: any;
 
@@ -15,10 +16,13 @@ export class DownloadComponent implements OnInit {
   emptyImagesArray: boolean;
   isProcessing: boolean = false;
 
-  constructor(private backend: BackendService, private session: SessionService) { }
+  constructor(
+    private backend: BackendService, 
+    private session: SessionService,
+    private analytics: AnalyticsService
+  ) {}
 
   ngOnInit() {
-
     jQuery(() => { // scroll to top
       jQuery(".progress-meter").scrollTop();
     });
@@ -36,6 +40,11 @@ export class DownloadComponent implements OnInit {
       console.log(res.json());
       window.location.href = res.json().data.archive;
       this.isProcessing = false;
+      this.analytics.sendEvent({
+        eventCategory: 'Images', 
+        eventAction: 'download', 
+        eventValue: this.images.length + 1
+      });
     }, err => {
       console.log(err);
       this.isProcessing = false;

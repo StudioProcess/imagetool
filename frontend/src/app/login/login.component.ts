@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendService } from '../backend.service';
 import { SessionService } from '../session.service';
+import { AnalyticsService } from '../analytics.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   constructor (
     private api: BackendService,
     private session: SessionService,
-    private router: Router
+    private router: Router,
+    private analytics: AnalyticsService
   ) {}
 
   error: 'LoginWrong'|'Other' = null;
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         console.log('login success', res.json());
         this.session.store( res.json().data ); // save session data
+        this.analytics.init();
         this.router.navigate(['/upload']); // navigate to upload view
       },
       error: (res) => {

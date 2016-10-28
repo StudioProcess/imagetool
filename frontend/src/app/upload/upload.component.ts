@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { BackendService } from '../backend.service';
 import { SessionService } from '../session.service';
-import { ElementRef } from '@angular/core';
+import { AnalyticsService } from '../analytics.service';
 
 declare var jQuery: any;
 
@@ -20,7 +21,12 @@ export class UploadComponent implements OnInit {
   selectedImage = null;
   nextButtonEnabled: boolean = false;
 
-  constructor(private backend: BackendService, private session: SessionService, private _elRef: ElementRef) { }
+  constructor(
+    private backend: BackendService,
+    private session: SessionService,
+    private analytics: AnalyticsService,
+    private _elRef: ElementRef
+  ) {}
 
   ngOnInit() {
     jQuery(() => { // scroll to top
@@ -102,7 +108,14 @@ export class UploadComponent implements OnInit {
   uploadMultipleImages(files: File[]) {
     let uploads = files.map(file => this.uploadImage(file));
     let uploadStream = Observable.from(uploads);
-    uploadStream.mergeAll(this.CONCURRENT_UPLOADS).subscribe();
+    uploadStream.mergeAll(this.CONCURRENT_UPLOADS).do({ complete: () => {
+      console.log('upload complete', files.length);
+      this.analytics.sendEvent({
+        eventCategory: 'Images',
+        eventAction: 'upload',
+        eventValue: files.length
+      });
+    }}).subscribe();
   }
 
   private uploadImage(file: File): Observable<any> {

@@ -3,13 +3,19 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs/Rx';
 import { BackendService } from './backend.service';
 import { SessionService } from './session.service';
+import { AnalyticsService } from './analytics.service';
 
 @Injectable()
 export class ResumeService {
   private _resume$: Observable<any>;
   private _done: Promise<any>;
   
-  constructor(private router:Router, private backend:BackendService, private session:SessionService) { 
+  constructor(
+    private router:Router,
+    private backend:BackendService,
+    private session:SessionService,
+    private analytics:AnalyticsService
+  ) { 
     /*
      get user data
      -> error (401 unauthorized)
@@ -42,6 +48,7 @@ export class ResumeService {
       .switchMapTo(updateSession)
       .do(res => {
         console.log('resuming');
+        this.analytics.init();
         // Don't resume to URL if /logout or /restart are requested
         if (this.router.url == '/logout' || this.router.url == '/restart') return;
         let url = this.session.get().route;

@@ -20,6 +20,7 @@ import { LogoutComponent, RestartComponent } from './shared';
 import { BackendService } from './backend.service';
 import { SessionService } from './session.service';
 import { ResumeService } from './resume.service';
+import { AnalyticsService } from './analytics.service';
 
 import { XHRBackend } from '@angular/http';
 import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
@@ -50,6 +51,7 @@ import { CustomXHRBackend, CustomBrowserXhr } from './xhr-custom';
     BackendService,
     SessionService,
     ResumeService,
+    AnalyticsService,
     { provide: XHRBackend, useClass: CustomXHRBackend },
     CustomBrowserXhr
   ],
