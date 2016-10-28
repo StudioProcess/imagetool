@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { UploadComponent } from './upload/upload.component';
-import { TitleimageComponent } from './titleimage/titleimage.component';
+import { TitleImageComponent } from './title-image/title-image.component';
 import { EditImageComponent } from './edit-image/edit-image.component';
 import { DownloadComponent } from './download/download.component';
 import { LogoutComponent, RestartComponent } from './shared';
@@ -12,11 +12,11 @@ const appRoutes: Routes = [
     component: UploadComponent,
     data: { title: 'Fotos hochladen' }
   },
-  { path: 'titleimage',
-    component: TitleimageComponent,
+  { path: 'title',
+    component: TitleImageComponent,
     data: { title: 'Titelfoto wählen' }
   },
-  { path: 'edit-image',
+  { path: 'edit',
     component: EditImageComponent,
     data: { title: 'Titelfoto bearbeiten' }
   },

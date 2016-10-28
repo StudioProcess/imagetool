@@ -3,7 +3,7 @@ export * from './app.module';
 export * from './download';
 export * from './edit-image';
 export * from './login';
-export * from './titleimage';
+export * from './title-image';
 export * from './upload';
 export * from './backend.service';
 export * from './session.service';

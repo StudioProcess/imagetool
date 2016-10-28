@@ -5,11 +5,11 @@ import { BackendService } from '../backend.service';
 declare var jQuery: any;
 
 @Component({
-  selector: 'app-titleimage',
-  templateUrl: 'titleimage.component.html',
-  styleUrls: ['titleimage.component.scss']
+  selector: 'app-title-image',
+  templateUrl: 'title-image.component.html',
+  styleUrls: ['title-image.component.scss']
 })
-export class TitleimageComponent implements OnInit {
+export class TitleImageComponent implements OnInit {
   images = [];
   selectedImage;
   emptyImagesArray: boolean;
