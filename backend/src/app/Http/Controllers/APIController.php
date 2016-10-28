@@ -733,16 +733,27 @@ class APIController extends Controller {
 
 		$zip_name = 'archive_'.date('ymdHis').'.zip';
 		$zip = new ZipArchive;
-		// exclude cover original
-		$imagename = $cover_image['name'].'-full.'.$cover_image['extension'];
+		// Cover image
+		$cover_unprocessed = $cover_image['name'].'-full.'.$cover_image['extension'];
+		$cover_processed   = $cover_image['name'].'-cover-full.'.$cover_image['extension'];
 
 		if ( $zip->open(public_path().'/'.$destinationPath.'/'.$zip_name, ZipArchive::CREATE) === true ) {
-			foreach ( File::glob($destinationPath.'/*-full*') as $fileName ) {
-				if ( basename( $fileName ) != $imagename ) {
-					$file = basename( $fileName );
-					$zip->addFile( $fileName, $file );
-				}
-			}
+			// Prepare file list by globbing
+			$files = File::glob($destinationPath.'/*-full.*');
+			// Filter out cover (processed and unprocessed)
+			$files = array_filter($files, function($path) use ($cover_unprocessed, $cover_processed) {
+				$path = basename($path);
+				return $path != $cover_unprocessed && $path != $cover_processed;
+			});
+			// Place cover at the top
+			array_unshift($files, $destinationPath.'/'.$cover_processed);
+			// Add to zip (w/reindexing)
+			$i = 0;
+			array_map(function($path) use ($zip, &$i) {
+				// Reindex digits in front of filename
+				$name = preg_replace( '/^\d+_/', sprintf('%03d', $i++).'_', basename($path) );
+				$zip->addFile($path, $name);
+			}, $files);
 			$zip->close();
 		}
 
