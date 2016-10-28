@@ -49,8 +49,8 @@ export class ResumeService {
       .do(res => {
         console.log('resuming');
         this.analytics.init();
-        // Don't resume to URL if /logout or /restart are requested
-        if (this.router.url == '/logout' || this.router.url == '/restart') return;
+        // Don't resume to URL if /login, /logout or /restart are requested
+        if (['/login', '/logout', '/restart'].indexOf(this.router.url) > -1) return;
         let url = this.session.get().route;
         if (!url) url = '/upload';
         this.router.navigateByUrl(url);
