@@ -34,12 +34,6 @@ class UserController extends Controller
         }
 
         $user = JWTAuth::toUser($token);
-
-        // set loginstat for this session
-    	$user->loginstats()->create(
-        	[
-        		'session_string' => 'session_'.date('y-m-d_H:i:s')
-        	]);
 		
 		$session_data = app('App\Http\Controllers\APIController')
 			->get_session_data($request)->getData()->data;
@@ -64,6 +58,11 @@ class UserController extends Controller
 		File::cleanDirectory($tempPath);
 		$destinationPath = 'images/'.$user['id'];
 		File::cleanDirectory($destinationPath);
+		
+		// new stats session
+		$user->loginstats()->create([
+			'session_string' => 'session_'.date('y-m-d_H:i:s')
+		]);
 
 		try {
 			JWTAuth::invalidate( JWTAuth::getToken() );
@@ -309,6 +308,11 @@ class UserController extends Controller
 		File::cleanDirectory($tempPath);
 		$destinationPath = 'images/'.$user['id'];
 		File::cleanDirectory($destinationPath);
+		
+		// new stats session
+		$user->loginstats()->create([
+			'session_string' => 'session_'.date('y-m-d_H:i:s')
+		]);
 
 		try {
 			$new_token = JWTAuth::refresh($request->input('token'));
