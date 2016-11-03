@@ -41,12 +41,17 @@ export class DownloadComponent implements OnInit {
       window.location.href = res.json().data.archive;
       this.isProcessing = false;
       this.analytics.sendEvent({
-        eventCategory: 'Images', 
-        eventAction: 'download', 
+        eventCategory: 'download',
+        eventAction: 'download',
         eventValue: this.images.length + 1
       });
     }, err => {
       console.log(err);
+      this.analytics.sendEvent({
+        eventCategory: 'error',
+        eventAction: 'download',
+        eventValue: 1
+      });
       this.isProcessing = false;
     });
   }

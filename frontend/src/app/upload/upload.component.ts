@@ -111,7 +111,7 @@ export class UploadComponent implements OnInit {
     uploadStream.mergeAll(this.CONCURRENT_UPLOADS).do({ complete: () => {
       console.log('upload complete', files.length);
       this.analytics.sendEvent({
-        eventCategory: 'Images',
+        eventCategory: 'upload',
         eventAction: 'upload',
         eventValue: files.length
       });
@@ -146,6 +146,11 @@ export class UploadComponent implements OnInit {
     }).catch(err => {
       console.log('upload error', err);
       image.uploadState = { error:true };
+      this.analytics.sendEvent({
+        eventCategory: 'error',
+        eventAction: 'upload',
+        eventValue: 1
+      });
       return Observable.empty(); // Complete the observable chain
     });
   }
