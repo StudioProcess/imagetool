@@ -26,8 +26,15 @@ export class AnalyticsService {
     this.router.events
       .filter(e => e instanceof NavigationEnd)
       .subscribe((e: any) => {
-        this.sendPageview({page: e.urlAfterRedirects});
+        this.sendPageview({
+          page: e.urlAfterRedirects,
+          title: this.titleFromPath(e.urlAfterRedirects)
+        });
     });
+  }
+  
+  private titleFromPath(path: string): string {
+    return path.replace('/', '').toUpperCase();
   }
   
   private processId(user) {
