@@ -54,9 +54,7 @@ export class LoginComponent implements OnInit {
   loginUserKey(email: string, password: string, ev: KeyboardEvent){
     if(ev.keyCode == 13){
       this.loginUser(email, password);
-    } else {
-      console.log("wrong key");
-    }
+    } 
   }
 
 }
