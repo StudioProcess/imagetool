@@ -67,4 +67,17 @@ export class SessionService {
     this._data = this.emptyData(initial);
     this.store();
   }
+  
+  
+  // Resume sesssion with new data. Discard (almost all) old data if user has changed.
+  resume(newData: SessionData) {
+    let oldData = this.get();
+    if (oldData.user && newData.user && oldData.user.id != newData.user.id) {
+      // console.log('User changed.');
+      // User change. Only keep token and route.
+      this.reset({ token:oldData.token, route:oldData.route });
+    }
+    this.store(newData); // Save session data
+  }
+  
 }

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.api.login(email, password).subscribe({
       next: (res) => {
         console.log('login success', res.json());
-        this.session.store( res.json().data ); // save session data
+        this.session.resume( res.json().data ); // save session data
         this.analytics.init();
         this.router.navigate(['/upload']); // navigate to upload view
       },

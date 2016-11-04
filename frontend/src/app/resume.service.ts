@@ -31,7 +31,7 @@ export class ResumeService {
     
     // Update local session data
     let updateSession = this.backend.sessionData().do(res => {
-      this.session.store(res.json().data); // Save session data
+      this.session.resume(res.json().data); // save session data
     });
      
      
