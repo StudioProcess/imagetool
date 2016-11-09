@@ -33,8 +33,10 @@ export class AnalyticsService {
     });
   }
   
+  // Process path to generate a readable page title
   private titleFromPath(path: string): string {
-    return path.replace('/', '').toUpperCase();
+    path = path.replace('/', ''); // Remove leading slash
+    return path.charAt(0).toUpperCase() + path.slice(1); // Uppercase first letter
   }
   
   private processId(user) {
