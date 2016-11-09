@@ -47,11 +47,14 @@ export class AnalyticsService {
     return id + '_' + name;
   }
   
+  // Initialize analytics with user id data
   init() {
     let user = this.session.get().user;
     if (user) {
       // console.log('ANALYTICS: userId', this.processId(user));
-      ga('set', 'userId', this.processId(user));
+      let userId = this.processId(user);
+      ga('set', 'userId', userId); // Set analytics userId featrue
+      ga('set', 'dimension1', userId); // Set custom dimension
     }
   }
   
