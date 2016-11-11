@@ -15,7 +15,7 @@ export class EditImageComponent implements OnInit {
   coverURLs: any;
   titleImageSrc: string;
   titleImageChosen: boolean;
-  brandNames = ['Abarth', 'Alfa Romeo', 'Chrysler', 'Fiat', 'Fiat Professional', 'Jeep', 'Lancia'];
+  brandNames = ['Abarth', 'Alfa Romeo', 'Audi', 'BMW', 'Chrysler', 'Fiat', 'Fiat Professional', 'Ford', 'Honda', 'Hyundai', 'Iveco', 'Jeep', 'Lancia', 'Mercedes-Benz', 'Nissan', 'Opel', 'Peugeot', 'Renault', 'Seat', 'Skoda', 'Subaru', 'Toyota'];
   brands;
   useSticker: boolean = false;
   // initialStickerText: string = '';
@@ -33,7 +33,7 @@ export class EditImageComponent implements OnInit {
     private backend: BackendService,
     private resume: ResumeService
   ) {
-    this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(' ', '_')}) );
+    this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(/[\s\-]/, '_')}) );
   }
 
   ngOnInit() {
