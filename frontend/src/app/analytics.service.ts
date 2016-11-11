@@ -16,6 +16,8 @@ interface EventOptions {
   eventAction: string;
   eventLabel?: string;
   eventValue?: number;
+  dimension2?: string; // Car Brand
+  dimension3?: string; // Sticker Text
 }
 
 @Injectable()
@@ -54,7 +56,7 @@ export class AnalyticsService {
       // console.log('ANALYTICS: userId', this.processId(user));
       let userId = this.processId(user);
       ga('set', 'userId', userId); // Set analytics userId featrue
-      ga('set', 'dimension1', userId); // Set custom dimension
+      ga('set', 'dimension1', userId); // Set custom dimension (User ID)
     }
   }
   

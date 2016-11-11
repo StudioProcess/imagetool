@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 import { BackendService } from '../backend.service';
 import { ResumeService } from '../resume.service';
+import { AnalyticsService } from '../analytics.service';
 
 declare var jQuery: any;
 
@@ -31,7 +32,8 @@ export class EditImageComponent implements OnInit {
   constructor(
     private session: SessionService,
     private backend: BackendService,
-    private resume: ResumeService
+    private resume: ResumeService,
+    private analytics: AnalyticsService
   ) {
     this.brands = this.brandNames.map( name => ({name, id:name.toLowerCase().replace(/[\s\-]/, '_')}) );
   }
@@ -101,6 +103,12 @@ export class EditImageComponent implements OnInit {
     }, err => {
       console.log('error processing image', err.json());
       this.isProcessing = false;
+    });
+    this.analytics.sendEvent({
+      eventCategory:'generate', 
+      eventAction:'generate',
+      dimension2:this.coverSettings.brand_logo,
+      dimension3:this.coverSettings.sticker_text
     });
   }
 
