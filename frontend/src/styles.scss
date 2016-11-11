@@ -9,6 +9,10 @@
 
 @include foundation-everything;
 
+body, html {
+  height: auto;
+}
+
 .page-title {
   font-weight: bold;
   font-size: 26px;
