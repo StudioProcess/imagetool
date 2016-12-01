@@ -20,6 +20,13 @@ export class RestartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Don't process restart for Rudi ("Rudi Rule")
+    let user = this.session.get().user;
+    if ( user && user.id == 10 ) {
+      this.router.navigate(['upload']);
+      return;
+    }
+    
     Observable.fromPromise(this.resume.resumeIsDone())
     .ignoreElements() // make sure this doesn't emit values
     .do(() => console.log('restarting session...'))
