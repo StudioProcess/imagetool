@@ -1,0 +1,1054 @@
+{
+	"info": {
+		"_postman_id": "f0223f6c-6064-d77f-5ce8-ac1350c4154d",
+		"name": "Imagetool (ITO)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login (Super Admin)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"admin@admin\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/login",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login (crux123)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"crux123@gmail.com\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/login",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login (martin)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"martin@process.studio\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/login",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login (moritz)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"moritz@process.studio\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/login",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"martin@process.studio\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/logout",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/data",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/userdata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/userdata",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"userdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/userdata (query param auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/userdata?token={{token}}",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"userdata"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/userdata (x-auth-token) ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/userdata",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"userdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/reset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"martin@process.studio\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/reset",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/refresh",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"martin@process.studio\",\n\t\"password\":\"mypassword\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/refresh",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/images",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/images",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/images",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "images[]",
+							"type": "file"
+						},
+						{
+							"key": "images[]",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/images",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/images",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image_id\": 1\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/images",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/cover",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image_id\": 2,\n\t\"border\": {\n\t\t\"color1\":\"#efe409\",\n\t\t\"color2\":\"#ffaf4b\",\n\t\t\"orientation\":\"horizontal\"\n\t},\n\t\"logos\": {\n\t\t\"position\":4,\n\t\t\"brand\":\"toyota\"\n\t},\n\t\"eyecatcher\": {\n\t\t\"position\":2,\n\t\t\"form\":\"circle\",\n\t\t\"color\":\"#ffffff\",\n\t\t\"text\":\"10.000,-\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/cover",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/cover",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/cover",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/session/archive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/session/archive",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"session",
+						"archive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/user (Create user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Moritz Resl\",\n\t\"email\":\"moritz@process.studio\",\n\t\"password\":\"mypassword\",\n\t\"brands\":null,\n\t\"is_admin\": false\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/admin/user",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/user (Update user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 4,\n\t\"brands\": null,\n\t\"theme_color\": {\n\t\t\"accent\": \"red\",\n  \t\t\"border1\": \"green\",\n  \t\t\"border2\": \"blue\",\n  \t\t\"borderDirection\":\"TopLeft-BottomRight\",\n  \t\t\"sticker1\": \"cyan\",\n  \t\t\"sticker2\": \"magenta\",\n  \t\t\"stickerText\": \"yellow\",\n  \t\t\"stickerDirection\":\"TopRight-BottomLeft\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/admin/user",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/user (Delete user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 0\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/admin/user",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/user_list (List users)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"{{token}}\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/admin/user_list",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/user_stats (Single user stats)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"if (response['token']) {",
+							"    postman.setGlobalVariable(\"token\", response.token);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"{{token}}\"\n}"
+				},
+				"url": {
+					"raw": "http://ito.process.studio/api/admin/user_stats?id=2",
+					"protocol": "http",
+					"host": [
+						"ito",
+						"process",
+						"studio"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user_stats"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
