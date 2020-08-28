@@ -1,6 +1,11 @@
 ## .htaccess for http://ito.process.studio (root)
 ## Assuming backend API is at /api
 
+# Disable https
+RewriteEngine On
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
 # Set PHP Version 7.1 (for hoststar.at)
 Action php /cgi-php71/php
 AddHandler php71 .php
